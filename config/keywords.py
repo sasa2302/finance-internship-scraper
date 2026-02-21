@@ -1,4 +1,4 @@
-# Primary role keywords
+# Primary role keywords - Finance de Marché only
 ROLE_KEYWORDS = [
     "trading",
     "sales",
@@ -18,13 +18,26 @@ ROLE_KEYWORDS = [
     "exotic",
     "global markets",
     "capital markets",
+    "commodities",
+    "FX",
+    "forex",
+    "interest rate",
+    "volatility",
+    "pricing",
+    "front office",
+    "middle office",
+    "market making",
+    "electronic trading",
+    "algo trading",
+    "delta one",
 ]
 
 # Internship-type identifiers
-INTERNSHIP_PREFIXES_FR = ["stage", "stagiaire", "alternance", "cesure", "césure"]
+# NOTE: alternance is EXCLUDED on purpose (user does not want alternance)
+INTERNSHIP_PREFIXES_FR = ["stage", "stagiaire", "cesure", "césure"]
 INTERNSHIP_PREFIXES_EN = ["internship", "intern", "placement", "graduate program", "summer analyst"]
 
-# Duration filter patterns (regex)
+# Duration filter patterns (regex) - only 6-month internships
 DURATION_PATTERNS = [
     r"6\s*mois",
     r"6\s*months?",
@@ -40,9 +53,27 @@ DURATION_PATTERNS = [
     r"5\s*[àa]\s*6\s*mois",
 ]
 
-# Negative keywords (filter out irrelevant results)
+# Duration patterns to EXCLUDE (12-month stages, alternance)
+EXCLUDE_DURATION_PATTERNS = [
+    r"12\s*mois",
+    r"12\s*months?",
+    r"twelve\s*months?",
+    r"1\s*an\b",
+    r"1\s*year",
+    r"one\s*year",
+    r"24\s*mois",
+    r"18\s*mois",
+    r"alternance",
+    r"apprenti",
+    r"contrat\s*pro",
+    r"contrat\s*d.apprentissage",
+]
+
+# Negative keywords (filter out irrelevant results) - applied to TITLE
 EXCLUDE_KEYWORDS = [
+    # Seniority / permanent roles
     "CDI",
+    "CDD",
     "permanent",
     "experienced",
     "senior",
@@ -54,4 +85,192 @@ EXCLUDE_KEYWORDS = [
     "managing director",
     "executive",
     "principal",
+    # NOTE: "analyst" and "associate" are NOT excluded because
+    # "Summer Analyst" and "Summer Associate" are valid internship titles
+    # Roles with experience required (not internships)
+    "1-3 ans",
+    "1-3 years",
+    "2-5 years",
+    "3+ years",
+    "expérience requise",
+    # M&A / Private Equity / Corporate Finance - NOT finance de marché
+    "M&A",
+    "mergers",
+    "acquisitions",
+    "private equity",
+    "leveraged finance",
+    "corporate finance",
+    "corporate banking",
+    "investment banking",
+    "advisory",
+    "ECM",
+    "DCM",
+    # Alternance
+    "alternance",
+    "alternant",
+    "apprenti",
+    "contrat pro",
+]
+
+# Companies/sectors to exclude from results (non-finance-de-marché sales)
+EXCLUDE_COMPANIES = [
+    "claire's",
+    "galeries lafayette",
+    "galerie lafayette",
+    "l'oreal",
+    "l'oréal",
+    "loreal",
+    "lvmh",
+    "kering",
+    "hermes",
+    "hermès",
+    "chanel",
+    "dior",
+    "gucci",
+    "sephora",
+    "zara",
+    "h&m",
+    "carrefour",
+    "auchan",
+    "leclerc",
+    "danone",
+    "nestle",
+    "nestlé",
+    "procter",
+    "unilever",
+    "coca cola",
+    "pepsi",
+    "decathlon",
+    "ikea",
+    "leroy merlin",
+    "amazon",
+    "apple",
+    "google",
+    "microsoft",
+    "salesforce",
+    "sap",
+    "oracle",
+    "accenture",
+    "capgemini",
+    "deloitte",
+    "pwc",
+    "kpmg",
+    "ey ",
+    "ernst & young",
+    "mckinsey",
+    "bain",
+    "bcg",
+]
+
+# Non-finance-de-marché title keywords to exclude
+EXCLUDE_TITLE_KEYWORDS = [
+    "retail sales",
+    "commercial",
+    "business development",
+    "account manager",
+    "vente",
+    "vendeur",
+    "vendeuse",
+    "chef de rayon",
+    "responsable magasin",
+    "store manager",
+    "marketing",
+    "communication",
+    "ressources humaines",
+    "human resources",
+    "supply chain",
+    "logistics",
+    "logistique",
+    "IT support",
+    "helpdesk",
+    "comptabilité",
+    "audit",
+    "compliance",  # not market-facing
+    "legal",
+    "juridique",
+    "relation client",
+    "customer service",
+    "after sales",
+    "après-vente",
+]
+
+# Locations to EXCLUDE (secondary French cities)
+EXCLUDE_LOCATIONS = [
+    "toulouse",
+    "lyon",
+    "marseille",
+    "aix-en-provence",
+    "aix en provence",
+    "nantes",
+    "bordeaux",
+    "lille",
+    "strasbourg",
+    "montpellier",
+    "rennes",
+    "grenoble",
+    "nice",
+    "toulon",
+    "dijon",
+    "clermont-ferrand",
+    "clermont ferrand",
+    "saint-etienne",
+    "saint etienne",
+    "reims",
+    "rouen",
+    "metz",
+    "nancy",
+    "orleans",
+    "orléans",
+    "caen",
+    "angers",
+    "brest",
+    "le mans",
+    "amiens",
+    "limoges",
+    "perpignan",
+    "poitiers",
+    "pau",
+    "valence",
+]
+
+# Locations to ACCEPT
+ACCEPTED_LOCATIONS = [
+    "paris",
+    "la defense",
+    "la défense",
+    "puteaux",
+    "courbevoie",
+    "levallois",
+    "neuilly",
+    "issy",
+    "boulogne",
+    "ile-de-france",
+    "île-de-france",
+    "idf",
+    "92",
+    "75",
+    "london",
+    "canary wharf",
+    "city of london",
+    "switzerland",
+    "suisse",
+    "zurich",
+    "zürich",
+    "geneva",
+    "genève",
+    "geneve",
+    "bern",
+    "basel",
+    "bâle",
+    "luxembourg",
+    "germany",
+    "allemagne",
+    "frankfurt",
+    "francfort",
+    "munich",
+    "münchen",
+    "berlin",
+    "hamburg",
+    "düsseldorf",
+    "dusseldorf",
 ]

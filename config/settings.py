@@ -17,5 +17,9 @@ CSV_PATH = "data/internships.csv"
 HASHES_PATH = "data/seen_hashes.json"
 RUN_LOG_PATH = "data/run_log.json"
 
-# Locations to search
-LOCATIONS = ["France", "United Kingdom", "Paris", "London"]
+# Locations to search (aggregators)
+LOCATIONS = [
+    "France", "United Kingdom", "Paris", "London",
+    "Switzerland", "Luxembourg", "Germany", "Frankfurt",
+    "Zurich", "Geneva",
+]

@@ -49,8 +49,17 @@ class AggregatorScraper:
         # Limit queries to avoid rate limiting
         search_terms = search_terms[:10]
 
+        # Search locations with their Indeed country codes
+        search_locations = [
+            ("France", "france"),
+            ("United Kingdom", "uk"),
+            ("Switzerland", "switzerland"),
+            ("Luxembourg", "luxembourg"),
+            ("Germany", "germany"),
+        ]
+
         for search_term in search_terms:
-            for location in ["France", "United Kingdom"]:
+            for location, indeed_country in search_locations:
                 try:
                     logger.info(f"[Aggregators] Searching '{search_term}' in {location}...")
                     jobs_df = scrape_jobs(
@@ -59,7 +68,7 @@ class AggregatorScraper:
                         location=location,
                         results_wanted=AGGREGATOR_RESULTS_WANTED,
                         hours_old=AGGREGATOR_HOURS_OLD,
-                        country_indeed="france" if location == "France" else "uk",
+                        country_indeed=indeed_country,
                     )
 
                     if jobs_df is None or jobs_df.empty:

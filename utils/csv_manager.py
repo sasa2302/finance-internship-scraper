@@ -10,16 +10,14 @@ class CSVManager:
         "duration", "department", "relevance_score", "status",
     ]
 
-    def __init__(self, csv_path="data/internships.csv"):
-        self.csv_path = Path(csv_path)
+    def __init__(self, csv_dir="data"):
+        self.csv_dir = Path(csv_dir)
+        # Each run creates a new file with today's date
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        self.csv_path = self.csv_dir / f"internships_{today}.csv"
 
-    def load_existing(self) -> pd.DataFrame:
-        if self.csv_path.exists() and self.csv_path.stat().st_size > 0:
-            return pd.read_csv(self.csv_path)
-        return pd.DataFrame(columns=self.COLUMNS)
-
-    def append_new_offers(self, new_offers, dedup_manager) -> int:
-        existing_df = self.load_existing()
+    def save_offers(self, new_offers, dedup_manager) -> int:
+        """Save today's offers to a new dated CSV file (no appending to old files)."""
         added_count = 0
         rows = []
 
@@ -48,11 +46,7 @@ class CSVManager:
 
         if rows:
             new_df = pd.DataFrame(rows, columns=self.COLUMNS)
-            if existing_df.empty:
-                combined = new_df
-            else:
-                combined = pd.concat([existing_df, new_df], ignore_index=True)
-            self.csv_path.parent.mkdir(parents=True, exist_ok=True)
-            combined.to_csv(self.csv_path, index=False)
+            self.csv_dir.mkdir(parents=True, exist_ok=True)
+            new_df.to_csv(self.csv_path, index=False)
 
         return added_count

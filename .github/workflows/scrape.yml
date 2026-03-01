@@ -34,6 +34,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/internships.csv data/seen_hashes.json data/run_log.json
-          git diff --staged --quiet || git commit -m "Update internship listings - $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git add data/internships_*.csv data/seen_hashes.json data/run_log.json
+          git diff --staged --quiet || git commit -m "Scrape $(date -u +'%Y-%m-%d') - new internship listings"
           git push

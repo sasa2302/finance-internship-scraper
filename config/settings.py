@@ -13,7 +13,7 @@ AGGREGATOR_RESULTS_WANTED = 30  # per keyword per site
 AGGREGATOR_HOURS_OLD = 72  # only jobs posted in last 72 hours
 
 # Output settings
-CSV_PATH = "data/internships.csv"
+CSV_DIR = "data"  # New CSV file created each day: data/internships_YYYY-MM-DD.csv
 HASHES_PATH = "data/seen_hashes.json"
 RUN_LOG_PATH = "data/run_log.json"
 

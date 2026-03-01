@@ -93,11 +93,11 @@ def main():
     filtered_offers = job_filter.filter_and_score(all_offers)
     logger.info(f"    -> {len(filtered_offers)} relevant offers after filtering")
 
-    # Phase 4: Deduplicate and save to CSV
-    logger.info("Phase 4: Deduplicating and saving to CSV...")
-    added_count = csv_mgr.append_new_offers(filtered_offers, dedup)
+    # Phase 4: Deduplicate and save to today's CSV
+    logger.info(f"Phase 4: Deduplicating and saving to {csv_mgr.csv_path.name}...")
+    added_count = csv_mgr.save_offers(filtered_offers, dedup)
     dedup.save()
-    logger.info(f"    -> {added_count} NEW offers added to CSV")
+    logger.info(f"    -> {added_count} NEW offers saved to {csv_mgr.csv_path.name}")
 
     # Phase 5: Write run log
     run_log = {

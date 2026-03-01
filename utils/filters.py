@@ -10,7 +10,15 @@ from config.keywords import (
     EXCLUDE_TITLE_KEYWORDS,
     EXCLUDE_LOCATIONS,
     ACCEPTED_LOCATIONS,
+    EXCLUDE_UK_LOCATIONS,
 )
+
+# Non-stage job types to reject outright
+NON_STAGE_TYPES = [
+    "full-time", "full_time", "permanent", "cdi", "cdd",
+    "alternance", "apprenticeship", "contrat pro", "freelance",
+    "contractor", "temporary", "interim", "vie",
+]
 
 
 class JobFilter:
@@ -48,7 +56,7 @@ class JobFilter:
         return False
 
     def is_location_excluded(self, offer) -> bool:
-        """Check if the offer is in an excluded location (secondary French cities)."""
+        """Check if the offer is in an excluded location (secondary French cities + non-London/Dublin UK)."""
         location_lower = (offer.location or "").lower()
 
         # If no location info, don't exclude (let it through)
@@ -57,16 +65,24 @@ class JobFilter:
 
         # Check if it's in a secondary French city
         is_in_excluded_city = any(city in location_lower for city in EXCLUDE_LOCATIONS)
+        if is_in_excluded_city:
+            is_in_accepted = any(loc in location_lower for loc in ACCEPTED_LOCATIONS)
+            if not is_in_accepted:
+                return True
 
-        if not is_in_excluded_city:
-            return False
+        # Check UK locations - only London and Dublin are accepted
+        uk_indicators = ["united kingdom", "uk", "great britain", "england", "scotland",
+                         "wales", "ireland", "northern ireland"]
+        is_uk = any(ind in location_lower for ind in uk_indicators)
+        is_in_excluded_uk = any(city in location_lower for city in EXCLUDE_UK_LOCATIONS)
 
-        # If it's in an excluded city BUT also mentions an accepted location, keep it
-        is_in_accepted = any(loc in location_lower for loc in ACCEPTED_LOCATIONS)
-        if is_in_accepted:
-            return False
+        if is_uk or is_in_excluded_uk:
+            # Must mention London or Dublin to be accepted
+            uk_accepted = ["london", "canary wharf", "city of london", "dublin"]
+            if not any(loc in location_lower for loc in uk_accepted):
+                return True
 
-        return True
+        return False
 
     def is_location_accepted(self, offer) -> bool:
         """Check if the offer is in an accepted location."""
@@ -86,6 +102,15 @@ class JobFilter:
                           "levallois", "neuilly", "issy", "boulogne", "ile-de-france",
                           "île-de-france", "idf", "92", "75"]
             return any(loc in location_lower for loc in paris_area)
+
+        # Check for UK specifically - only London and Dublin are OK
+        uk_indicators = ["united kingdom", "uk", "great britain", "england",
+                         "scotland", "wales", "ireland"]
+        is_uk = any(ind in location_lower for ind in uk_indicators)
+
+        if is_uk:
+            uk_accepted = ["london", "canary wharf", "city of london", "dublin"]
+            return any(loc in location_lower for loc in uk_accepted)
 
         # Check for accepted locations
         if any(loc in location_lower for loc in ACCEPTED_LOCATIONS):
@@ -139,14 +164,44 @@ class JobFilter:
 
         return min(round(score, 2), 1.0)
 
+    def is_non_stage(self, offer) -> bool:
+        """Reject offers that are clearly NOT stages (CDI, CDD, alternance, VIE, etc.)."""
+        job_type_lower = (offer.job_type or "").lower()
+        title_lower = offer.title.lower()
+        text_lower = f"{offer.title} {offer.description_snippet}".lower()
+
+        # Check job_type field directly
+        for non_stage in NON_STAGE_TYPES:
+            if non_stage in job_type_lower:
+                return True
+
+        # Check if title explicitly says it's NOT a stage
+        non_stage_title_markers = [
+            "poste", "emploi", "recrutement", "embauche",
+            "cdi", "cdd", "full-time", "full time",
+            "temps plein", "permanent position",
+        ]
+        for marker in non_stage_title_markers:
+            if marker in title_lower:
+                # Exception: "poste de stage" or "poste stagiaire" is fine
+                if marker == "poste" and ("stage" in title_lower or "stagiaire" in title_lower):
+                    continue
+                return True
+
+        return False
+
     def filter_and_score(self, offers) -> list:
         results = []
         for offer in offers:
+            # Step 0: Must be a stage (reject CDI, CDD, alternance, VIE, etc.)
+            if self.is_non_stage(offer):
+                continue
+
             # Step 1: Exclude by title/company/duration
             if self.is_excluded(offer):
                 continue
 
-            # Step 2: Exclude by location (secondary French cities)
+            # Step 2: Exclude by location (secondary French cities + UK filtering)
             if self.is_location_excluded(offer):
                 continue
 

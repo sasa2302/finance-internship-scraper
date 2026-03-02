@@ -1,5 +1,6 @@
-# Primary role keywords - Finance de Marché only
+# Primary role keywords - Finance de Marché + Hedge Funds
 ROLE_KEYWORDS = [
+    # Trading / Sales / Structuring
     "trading",
     "sales",
     "structuration",
@@ -30,6 +31,27 @@ ROLE_KEYWORDS = [
     "electronic trading",
     "algo trading",
     "delta one",
+    # Hedge Fund / Alternative / Quantitative
+    "hedge fund",
+    "alternative investments",
+    "absolute return",
+    "long short",
+    "long/short",
+    "systematic",
+    "macro trading",
+    "global macro",
+    "quantitative research",
+    "quant research",
+    "quant trading",
+    "portfolio management",
+    "fund management",
+    "asset allocation",
+    "prime brokerage",
+    "prime services",
+    "equity research",
+    "fund of funds",
+    "multi-strategy",
+    "multi strategy",
 ]
 
 # Internship-type identifiers

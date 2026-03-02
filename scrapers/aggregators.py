@@ -40,14 +40,15 @@ class AggregatorScraper:
         # Build search queries - combine internship prefix with key role terms
         search_terms = []
         core_keywords = ["trading", "sales", "structuration", "derivatives",
-                         "fixed income", "quant", "risk management", "market risk"]
+                         "fixed income", "quant", "risk management", "market risk",
+                         "hedge fund", "portfolio management", "global markets"]
 
         for kw in core_keywords:
             search_terms.append(f"stage {kw}")
             search_terms.append(f"internship {kw}")
 
         # Limit queries to avoid rate limiting
-        search_terms = search_terms[:10]
+        search_terms = search_terms[:14]
 
         # Search locations with their Indeed country codes
         search_locations = [
@@ -108,7 +109,8 @@ class AggregatorScraper:
         offers = []
         seen_urls = set()
         core_keywords = ["trading", "sales", "structuration", "derivatives",
-                         "quant", "risk", "fixed income"]
+                         "quant", "risk", "fixed income", "hedge fund",
+                         "portfolio management", "global markets"]
 
         for kw in core_keywords:
             query = f"stage {kw}"

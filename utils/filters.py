@@ -71,8 +71,10 @@ class JobFilter:
                 return True
 
         # Check UK locations - only London and Dublin are accepted
-        uk_indicators = ["united kingdom", "uk", "great britain", "england", "scotland",
-                         "wales", "ireland", "northern ireland"]
+        # Include short codes like "ENG, GB", "SCT, GB" used by LinkedIn/Indeed
+        uk_indicators = ["united kingdom", "great britain", "england", "scotland",
+                         "wales", "ireland", "northern ireland",
+                         ", gb", ",gb", "eng,", "sct,", "wls,", "nir,"]
         is_uk = any(ind in location_lower for ind in uk_indicators)
         is_in_excluded_uk = any(city in location_lower for city in EXCLUDE_UK_LOCATIONS)
 
@@ -104,8 +106,9 @@ class JobFilter:
             return any(loc in location_lower for loc in paris_area)
 
         # Check for UK specifically - only London and Dublin are OK
-        uk_indicators = ["united kingdom", "uk", "great britain", "england",
-                         "scotland", "wales", "ireland"]
+        uk_indicators = ["united kingdom", "great britain", "england",
+                         "scotland", "wales", "ireland",
+                         ", gb", ",gb", "eng,", "sct,", "wls,", "nir,"]
         is_uk = any(ind in location_lower for ind in uk_indicators)
 
         if is_uk:

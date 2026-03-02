@@ -35,7 +35,7 @@ ROLE_KEYWORDS = [
 # Internship-type identifiers
 # NOTE: alternance is EXCLUDED on purpose (user does not want alternance)
 INTERNSHIP_PREFIXES_FR = ["stage", "stagiaire", "cesure", "césure"]
-INTERNSHIP_PREFIXES_EN = ["internship", "intern", "placement", "graduate program", "summer analyst"]
+INTERNSHIP_PREFIXES_EN = ["internship", "intern", "placement", "graduate program", "summer analyst", "off-cycle", "off cycle"]
 
 # Duration filter patterns (regex) - only 6-month internships
 DURATION_PATTERNS = [
@@ -77,7 +77,8 @@ EXCLUDE_KEYWORDS = [
     "permanent",
     "experienced",
     "senior",
-    "manager",
+    # NOTE: "manager" retiré car vire "Stage Risk Manager", "Stage Portfolio Manager"
+    # NOTE: "consultant" retiré car vire "Stage Consultant Trading"
     "director",
     "VP",
     "vice president",
@@ -89,10 +90,9 @@ EXCLUDE_KEYWORDS = [
     "full time",
     "temps plein",
     "freelance",
-    "consultant",
     "contractor",
     "intérimaire",
-    "interim",
+    "intérim",
     # NOTE: "analyst" and "associate" are NOT excluded because
     # "Summer Analyst" and "Summer Associate" are valid internship titles
     # Roles with experience required (not internships)
@@ -188,7 +188,7 @@ EXCLUDE_COMPANIES = [
     "aldi",
     "intermarché",
     "intermarche",
-    "casino",
+    "casino group",
     "monoprix",
     "franprix",
     # Sports / Home / DIY
@@ -246,8 +246,8 @@ EXCLUDE_COMPANIES = [
     "restos du coeur",
     "restos du cœur",
     "apprentis d'auteuil",
-    "fondation",
-    "association",
+    # NOTE: "fondation" et "association" retirés car trop larges
+    # (ex: "Fondation Banque de France", "Association Française des Marchés Financiers")
     # Pharma / Healthcare (not finance)
     "sanofi",
     "pfizer",
@@ -299,13 +299,47 @@ EXCLUDE_COMPANIES = [
     "starbucks",
     "subway",
     "domino's",
-    "paul",
     "flunch",
+    # NOTE: "paul" retiré car trop large (matche des noms de personnes)
+    # Retail / Supermarkets UK
+    "sainsbury",
+    "tesco",
+    "asda",
+    "waitrose",
+    "marks & spencer",
+    "john lewis",
+    "boots",
+    "argos",
+    # Real estate / Hotels / Travel
+    "allsopp",
+    "kew green hotel",
+    "trivago",
+    # NOTE: "booking" retiré car trop large
+    "accor",
+    "marriott",
+    "hilton",
+    "hyatt",
+    "aviareps",
+    # Random non-finance companies seen in scrape results
+    "red bird enterprises",
+    "tiktok",
+    "shared humanity",
+    "jobster",
+    "flogas",
+    "negu enterprises",
+    "kartaca",
+    # NOTE: "funded" retiré car trop large
 ]
 
 # Non-finance-de-marché title keywords to exclude
 EXCLUDE_TITLE_KEYWORDS = [
+    # Retail / Non-finance sales roles
     "retail sales",
+    "sales assistant",
+    "sales negotiator",
+    "sales coordinator",
+    "sales office",
+    "trading assistant",  # Sainsbury's-style retail "trading"
     "commercial",
     "business development",
     "account manager",
@@ -315,6 +349,25 @@ EXCLUDE_TITLE_KEYWORDS = [
     "chef de rayon",
     "responsable magasin",
     "store manager",
+    "merchandiser",
+    "monetisation",
+    "monetization",
+    # Corporate finance / Gestion Privée / ESG (NOT finance de marché)
+    "gestion privée",
+    "gestion privee",
+    "gestion priv",
+    "private banking",
+    "wealth management",
+    "patrimoine",
+    "patrimonial",
+    "finance operations",
+    "finance ops",
+    "esg",
+    "isr",
+    "responsable invest",
+    "développement gestion",
+    "developpement gestion",
+    # General non-finance
     "marketing",
     "communication",
     "ressources humaines",
@@ -334,12 +387,21 @@ EXCLUDE_TITLE_KEYWORDS = [
     "customer service",
     "after sales",
     "après-vente",
+    # Tech / Engineering (not finance)
     "data engineer",
     "data scientist",
+    "data & automatisation",
+    "ingénieur data",
+    "ingenieur data",
     "software engineer",
     "développeur",
     "developer",
     "devops",
+    "mechanical engineer",
+    "go-to-market",
+    "founder's associate",
+    "founder associate",
+    # Social / Charity / Creative
     "social worker",
     "éducateur",
     "educateur",
@@ -355,6 +417,10 @@ EXCLUDE_TITLE_KEYWORDS = [
     "humanitaire",
     "associatif",
     "travailleur social",
+    "journalist",
+    "videographer",
+    "creative & social",
+    # PM / Design / Marketing
     "chef de projet",
     "project manager",
     "product manager",
@@ -369,6 +435,9 @@ EXCLUDE_TITLE_KEYWORDS = [
     "social media",
     "seo",
     "sea",
+    # Other non-relevant
+    "strategy & operations",
+    "growth &",
 ]
 
 # Locations to EXCLUDE (secondary French cities)

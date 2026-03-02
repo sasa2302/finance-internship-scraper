@@ -330,4 +330,141 @@ COMPANIES = [
         "base_url": "https://groupebpce.com/carrieres",
         "search_url": "https://groupebpce.com/carrieres",
     },
+    # === Brokers / Interdealer ===
+    {
+        "name": "Tradition Securities (TSAF)",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.tradition.com/careers.html",
+        "search_url": "https://www.tradition.com/careers.html",
+    },
+    {
+        "name": "ICAP (TP ICAP)",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.tpicap.com/careers",
+        "search_url": "https://www.tpicap.com/careers",
+    },
+    {
+        "name": "BGC Partners",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.bgcg.com/careers",
+        "search_url": "https://www.bgcg.com/careers",
+    },
+    # === Swiss Private Banks / Asset Managers ===
+    {
+        "name": "Lombard Odier",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.lombardodier.com/home/careers.html",
+        "search_url": "https://www.lombardodier.com/home/careers.html",
+    },
+    {
+        "name": "Pictet",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.group.pictet/careers",
+        "search_url": "https://www.group.pictet/careers",
+    },
+    {
+        "name": "Julius Baer",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.juliusbaer.com/en/careers/",
+        "search_url": "https://www.juliusbaer.com/en/careers/",
+    },
+    {
+        "name": "Vontobel",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.vontobel.com/en-int/careers/",
+        "search_url": "https://www.vontobel.com/en-int/careers/",
+    },
+    # === French Boutiques / Specialist AM ===
+    {
+        "name": "CIC Market Solutions",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.cic-marketsolutions.eu/en/careers",
+        "search_url": "https://www.cic-marketsolutions.eu/en/careers",
+    },
+    {
+        "name": "Tikehau Capital",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.tikehaucapital.com/en/careers",
+        "search_url": "https://www.tikehaucapital.com/en/careers",
+    },
+    {
+        "name": "Sycomore AM",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.sycomore-am.com/Nous-rejoindre",
+        "search_url": "https://www.sycomore-am.com/Nous-rejoindre",
+    },
+    {
+        "name": "CPR Asset Management",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.cpr-am.com/careers",
+        "search_url": "https://www.cpr-am.com/careers",
+    },
+    {
+        "name": "Rothschild Martin Maurel",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.rothschildmartinmaurel.com/fr/carrieres/",
+        "search_url": "https://www.rothschildmartinmaurel.com/fr/carrieres/",
+    },
+    # === UK / International Asset Managers ===
+    {
+        "name": "Schroders",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.schroders.com/en/global/individual/careers/",
+        "search_url": "https://www.schroders.com/en/global/individual/careers/",
+    },
+    {
+        "name": "Aviva Investors",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.avivainvestors.com/en-gb/about/careers/",
+        "search_url": "https://www.avivainvestors.com/en-gb/about/careers/",
+    },
+    {
+        "name": "Man Group",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.man.com/careers",
+        "search_url": "https://www.man.com/careers",
+    },
+    # === Prop Trading / Quant / HF ===
+    {
+        "name": "Two Sigma",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.twosigma.com/careers/",
+        "search_url": "https://www.twosigma.com/careers/",
+    },
+    {
+        "name": "DE Shaw",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.deshaw.com/careers",
+        "search_url": "https://www.deshaw.com/careers",
+    },
+    {
+        "name": "Virtu Financial",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.virtu.com/careers/",
+        "search_url": "https://www.virtu.com/careers/",
+    },
+    {
+        "name": "Flow Traders",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.flowtraders.com/careers",
+        "search_url": "https://www.flowtraders.com/careers",
+    },
+    {
+        "name": "IMC Trading",
+        "scraper_type": "custom_html",
+        "base_url": "https://www.imc.com/eu/careers/",
+        "search_url": "https://www.imc.com/eu/careers/",
+    },
+    {
+        "name": "DRW",
+        "scraper_type": "custom_html",
+        "base_url": "https://drw.com/careers/",
+        "search_url": "https://drw.com/careers/",
+    },
+    {
+        "name": "Susquehanna (SIG)",
+        "scraper_type": "custom_html",
+        "base_url": "https://sig.com/careers/",
+        "search_url": "https://sig.com/careers/",
+    },
 ]

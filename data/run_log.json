@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-04-25T08:22:11.903355+00:00",
-  "total_raw_offers": 1463,
-  "total_after_filter": 380,
-  "new_offers_added": 104,
+  "timestamp": "2026-04-26T08:33:35.653644+00:00",
+  "total_raw_offers": 1307,
+  "total_after_filter": 303,
+  "new_offers_added": 30,
   "companies_scraped": 91,
   "errors_count": 0,
   "errors": []

@@ -1,7 +1,12 @@
 import logging
 from typing import List
 from scrapers.base import BaseScraper, JobOffer
-from config.settings import AGGREGATOR_RESULTS_WANTED, AGGREGATOR_HOURS_OLD
+from config.settings import (
+    AGGREGATOR_RESULTS_WANTED,
+    AGGREGATOR_HOURS_OLD,
+    AGGREGATOR_MAX_QUERIES,
+)
+from config.locations import AGGREGATOR_SEARCH_LOCATIONS
 
 logger = logging.getLogger(__name__)
 
@@ -37,27 +42,20 @@ class AggregatorScraper:
         offers = []
         seen_urls = set()
 
-        # Build search queries - combine internship prefix with key role terms
+        # Requetes : on interroge explicitement les DEUX calendriers
+        # (off-cycle et summer) pour alimenter les deux onglets du rapport.
+        core_keywords = ["trading", "sales trading", "structuration", "derivatives",
+                         "fixed income", "quantitative", "market risk",
+                         "hedge fund", "global markets", "portfolio management"]
+
         search_terms = []
-        core_keywords = ["trading", "sales", "structuration", "derivatives",
-                         "fixed income", "quant", "risk management", "market risk",
-                         "hedge fund", "portfolio management", "global markets"]
-
         for kw in core_keywords:
-            search_terms.append(f"stage {kw}")
-            search_terms.append(f"internship {kw}")
+            search_terms.append(f"stage {kw}")            # off-cycle FR
+            search_terms.append(f"off-cycle internship {kw}")
+            search_terms.append(f"summer internship {kw}")
 
-        # Limit queries to avoid rate limiting
-        search_terms = search_terms[:14]
-
-        # Search locations with their Indeed country codes
-        search_locations = [
-            ("France", "france"),
-            ("United Kingdom", "uk"),
-            ("Switzerland", "switzerland"),
-            ("Luxembourg", "luxembourg"),
-            ("Germany", "germany"),
-        ]
+        search_terms = search_terms[:AGGREGATOR_MAX_QUERIES]
+        search_locations = AGGREGATOR_SEARCH_LOCATIONS
 
         for search_term in search_terms:
             for location, indeed_country in search_locations:
@@ -89,7 +87,9 @@ class AggregatorScraper:
                             date_posted=str(row.get("date_posted", "")),
                             description_snippet=str(row.get("description", ""))[:300],
                             source=str(row.get("site", "aggregator")),
-                            job_type="internship",
+                            # Le vrai type renvoye par jobspy : ne pas forcer
+                            # "internship", sinon tout passe le test is_internship.
+                            job_type=str(row.get("job_type", "") or ""),
                             duration=None,
                             department=None,
                         )
@@ -108,8 +108,8 @@ class AggregatorScraper:
 
         offers = []
         seen_urls = set()
-        core_keywords = ["trading", "sales", "structuration", "derivatives",
-                         "quant", "risk", "fixed income", "hedge fund",
+        core_keywords = ["trading", "sales trading", "structuration", "derivatives",
+                         "quant", "market risk", "fixed income", "hedge fund",
                          "portfolio management", "global markets"]
 
         for kw in core_keywords:
@@ -118,7 +118,6 @@ class AggregatorScraper:
                 "https://www.welcometothejungle.com/fr/jobs"
                 f"?query={query}"
                 "&refinementList%5Bcontract_type%5D%5B%5D=internship"
-                "&refinementList%5Bcontract_type%5D%5B%5D=VIE"
             )
 
             try:

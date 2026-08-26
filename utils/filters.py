@@ -1,220 +1,195 @@
+"""Chaine de filtrage des offres.
+
+Ordre des controles (du moins couteux / plus discriminant au plus fin) :
+  1. Est-ce un stage ?                       (rejet CDI, CDD, alternance, VIE)
+  2. Employeur de finance de marche ?        (whitelist, cf. utils.employer_match)
+  3. Intitule hors finance de marche ?       (M&A, gestion privee, ESG, marketing...)
+  4. Localisation ciblee ?                   (cf. utils.location_match)
+  5. Metier de finance de marche ?           (mots-cles roles)
+  6. Classification Off-Cycle / Summer + score
+"""
+
+import logging
 import re
+from collections import Counter
+
 from config.keywords import (
     ROLE_KEYWORDS,
     INTERNSHIP_PREFIXES_FR,
     INTERNSHIP_PREFIXES_EN,
-    DURATION_PATTERNS,
-    EXCLUDE_DURATION_PATTERNS,
     EXCLUDE_KEYWORDS,
-    EXCLUDE_COMPANIES,
     EXCLUDE_TITLE_KEYWORDS,
-    EXCLUDE_LOCATIONS,
-    ACCEPTED_LOCATIONS,
-    EXCLUDE_UK_LOCATIONS,
+    EXCLUDE_DURATION_PATTERNS,
+    NON_STAGE_TYPES,
 )
+from utils.textnorm import norm_text, has_any, has_phrase
+from utils.employer_match import classify_employer
+from utils.location_match import evaluate as evaluate_location, zone_bonus
+from utils.classify import classify as classify_period, extract_duration, LABELS
 
-# Non-stage job types to reject outright
-NON_STAGE_TYPES = [
-    "full-time", "full_time", "permanent", "cdi", "cdd",
-    "alternance", "apprenticeship", "contrat pro", "freelance",
-    "contractor", "temporary", "interim", "vie",
-]
+logger = logging.getLogger(__name__)
+
+_ALL_PREFIXES = INTERNSHIP_PREFIXES_FR + INTERNSHIP_PREFIXES_EN
 
 
 class JobFilter:
+    def __init__(self):
+        self.rejections = Counter()
+
+    # --- etapes unitaires -------------------------------------------------
     def is_internship(self, offer) -> bool:
-        text = f"{offer.title} {offer.description_snippet} {offer.job_type or ''}".lower()
-        all_prefixes = INTERNSHIP_PREFIXES_FR + INTERNSHIP_PREFIXES_EN
-        return any(prefix in text for prefix in all_prefixes)
+        text = norm_text(f"{offer.title} {offer.description_snippet} {offer.job_type or ''}")
+        return has_any(text, _ALL_PREFIXES)
 
-    def matches_keywords(self, offer) -> bool:
-        text = f"{offer.title} {offer.description_snippet}".lower()
-        return any(kw.lower() in text for kw in ROLE_KEYWORDS)
+    def matches_role(self, offer) -> bool:
+        text = norm_text(f"{offer.title} {offer.description_snippet}")
+        return has_any(text, ROLE_KEYWORDS)
 
-    def is_excluded(self, offer) -> bool:
-        title_lower = offer.title.lower()
-        text_lower = f"{offer.title} {offer.description_snippet}".lower()
+    def is_non_stage(self, offer) -> bool:
+        """Rejette ce qui n'est manifestement pas un stage."""
+        job_type = norm_text(offer.job_type or "")
+        title = norm_text(offer.title)
 
-        # Exclude based on title keywords (M&A, PE, corporate, seniority, etc.)
-        if any(kw.lower() in title_lower for kw in EXCLUDE_KEYWORDS):
+        if has_any(job_type, NON_STAGE_TYPES):
             return True
 
-        # Exclude non-finance-de-marché title patterns
-        if any(kw.lower() in title_lower for kw in EXCLUDE_TITLE_KEYWORDS):
-            return True
+        # Un intitule de poste permanent, sauf s'il precise "stage"
+        if has_any(title, ["cdi", "cdd", "full time", "temps plein", "permanent position",
+                           "emploi", "recrutement", "embauche"]):
+            return not has_any(title, ["stage", "stagiaire", "internship", "intern"])
 
-        # Exclude based on company name (retail, luxury, FMCG, consulting, etc.)
-        company_lower = (offer.company or "").lower()
-        if any(exc.lower() in company_lower for exc in EXCLUDE_COMPANIES):
-            return True
+        return has_any(title, ["alternance", "alternant", "apprenti", "vie",
+                               "volontariat international"])
 
-        # Exclude bad durations (12 months, alternance, etc.)
+    def is_excluded_title(self, offer) -> bool:
+        title = norm_text(offer.title)
+        text = norm_text(f"{offer.title} {offer.description_snippet}")
+
+        if has_any(title, EXCLUDE_KEYWORDS):
+            return True
+        if has_any(title, EXCLUDE_TITLE_KEYWORDS):
+            return True
         for pattern in EXCLUDE_DURATION_PATTERNS:
-            if re.search(pattern, text_lower, re.IGNORECASE):
+            if re.search(pattern, text, re.IGNORECASE):
                 return True
-
         return False
 
-    def is_location_excluded(self, offer) -> bool:
-        """Check if the offer is in an excluded location (secondary French cities + non-London/Dublin UK)."""
-        location_lower = (offer.location or "").lower()
-
-        # If no location info, don't exclude (let it through)
-        if not location_lower or location_lower.strip() == "":
-            return False
-
-        # Check if it's in a secondary French city
-        is_in_excluded_city = any(city in location_lower for city in EXCLUDE_LOCATIONS)
-        if is_in_excluded_city:
-            is_in_accepted = any(loc in location_lower for loc in ACCEPTED_LOCATIONS)
-            if not is_in_accepted:
-                return True
-
-        # Check UK locations - only London and Dublin are accepted
-        # Include short codes like "ENG, GB", "SCT, GB" used by LinkedIn/Indeed
-        uk_indicators = ["united kingdom", "great britain", "england", "scotland",
-                         "wales", "ireland", "northern ireland",
-                         ", gb", ",gb", "eng,", "sct,", "wls,", "nir,"]
-        is_uk = any(ind in location_lower for ind in uk_indicators)
-        is_in_excluded_uk = any(city in location_lower for city in EXCLUDE_UK_LOCATIONS)
-
-        if is_uk or is_in_excluded_uk:
-            # Must mention London or Dublin to be accepted
-            uk_accepted = ["london", "canary wharf", "city of london", "dublin"]
-            if not any(loc in location_lower for loc in uk_accepted):
-                return True
-
-        return False
-
-    def is_location_accepted(self, offer) -> bool:
-        """Check if the offer is in an accepted location."""
-        location_lower = (offer.location or "").lower()
-
-        # If no location, accept it (don't filter out unknowns)
-        if not location_lower or location_lower.strip() == "":
-            return True
-
-        # Check for France specifically - only Paris area is OK
-        france_indicators = ["france", "français", "francais"]
-        is_france = any(ind in location_lower for ind in france_indicators)
-
-        if is_france:
-            # Must also mention Paris area
-            paris_area = ["paris", "la defense", "la défense", "puteaux", "courbevoie",
-                          "levallois", "neuilly", "issy", "boulogne", "ile-de-france",
-                          "île-de-france", "idf", "92", "75"]
-            return any(loc in location_lower for loc in paris_area)
-
-        # Check for UK specifically - only London and Dublin are OK
-        uk_indicators = ["united kingdom", "great britain", "england",
-                         "scotland", "wales", "ireland",
-                         ", gb", ",gb", "eng,", "sct,", "wls,", "nir,"]
-        is_uk = any(ind in location_lower for ind in uk_indicators)
-
-        if is_uk:
-            uk_accepted = ["london", "canary wharf", "city of london", "dublin"]
-            return any(loc in location_lower for loc in uk_accepted)
-
-        # Check for accepted locations
-        if any(loc in location_lower for loc in ACCEPTED_LOCATIONS):
-            return True
-
-        # If location doesn't match any known pattern, keep it (don't over-filter)
-        return True
-
-    def detect_duration(self, offer) -> str:
-        text = f"{offer.description_snippet} {offer.duration or ''}"
-        for pattern in DURATION_PATTERNS:
-            match = re.search(pattern, text, re.IGNORECASE)
-            if match:
-                return match.group(0)
-        return ""
-
+    # --- score ------------------------------------------------------------
     def compute_relevance_score(self, offer) -> float:
         score = 0.0
-        text = f"{offer.title} {offer.description_snippet}".lower()
-        title_lower = offer.title.lower()
+        title = norm_text(offer.title)
+        text = norm_text(f"{offer.title} {offer.description_snippet}")
 
-        # Title keyword match (high weight)
-        for kw in ROLE_KEYWORDS:
-            if kw.lower() in title_lower:
-                score += 0.3
-                break
+        # Metier present dans l'intitule (poids fort)
+        if has_any(title, ROLE_KEYWORDS):
+            score += 0.30
 
-        # Description keyword matches
-        kw_count = sum(1 for kw in ROLE_KEYWORDS if kw.lower() in text)
-        score += min(kw_count * 0.05, 0.2)
+        # Densite de mots-cles metier dans le texte
+        hits = sum(1 for kw in ROLE_KEYWORDS if has_phrase(text, kw))
+        score += min(hits * 0.05, 0.20)
 
-        # Internship confirmation
+        # Confirmation "stage"
         if self.is_internship(offer):
-            score += 0.2
-
-        # Duration match
-        if self.detect_duration(offer):
             score += 0.15
 
-        # Location bonus - Paris or London get highest bonus
-        location_lower = (offer.location or "").lower()
-        if "paris" in location_lower or "london" in location_lower:
-            score += 0.1
-        elif any(loc in location_lower for loc in ["zurich", "geneva", "luxembourg", "frankfurt"]):
-            score += 0.08
+        # Duree identifiee
+        if offer.duration:
+            score += 0.10
 
-        # Department match
-        dept = (offer.department or "").lower()
-        if any(kw in dept for kw in ["global markets", "cib", "capital markets", "markets"]):
+        # Calendrier identifie (off-cycle ou summer, pas "a trier")
+        if offer.internship_type in ("off_cycle", "summer"):
+            score += 0.05
+
+        # Priorite geographique
+        score += zone_bonus(offer.zone)
+
+        # Employeur formellement identifie
+        if offer.employer_category and not offer.employer_category.startswith("A verifier"):
             score += 0.05
 
         return min(round(score, 2), 1.0)
 
-    def is_non_stage(self, offer) -> bool:
-        """Reject offers that are clearly NOT stages (CDI, CDD, alternance, VIE, etc.)."""
-        job_type_lower = (offer.job_type or "").lower()
-        title_lower = offer.title.lower()
-        text_lower = f"{offer.title} {offer.description_snippet}".lower()
-
-        # Check job_type field directly
-        for non_stage in NON_STAGE_TYPES:
-            if non_stage in job_type_lower:
-                return True
-
-        # Check if title explicitly says it's NOT a stage
-        non_stage_title_markers = [
-            "poste", "emploi", "recrutement", "embauche",
-            "cdi", "cdd", "full-time", "full time",
-            "temps plein", "permanent position",
-        ]
-        for marker in non_stage_title_markers:
-            if marker in title_lower:
-                # Exception: "poste de stage" or "poste stagiaire" is fine
-                if marker == "poste" and ("stage" in title_lower or "stagiaire" in title_lower):
-                    continue
-                return True
-
-        return False
-
+    # --- pipeline ---------------------------------------------------------
     def filter_and_score(self, offers) -> list:
+        self.rejections = Counter()
         results = []
+
         for offer in offers:
-            # Step 0: Must be a stage (reject CDI, CDD, alternance, VIE, etc.)
             if self.is_non_stage(offer):
+                self.rejections["pas un stage (CDI/CDD/alternance/VIE)"] += 1
                 continue
 
-            # Step 1: Exclude by title/company/duration
-            if self.is_excluded(offer):
+            ok, category, why = classify_employer(offer)
+            if not ok:
+                self.rejections[why] += 1
+                continue
+            offer.employer_category = category
+
+            if self.is_excluded_title(offer):
+                self.rejections["intitule hors finance de marche"] += 1
                 continue
 
-            # Step 2: Exclude by location (secondary French cities + UK filtering)
-            if self.is_location_excluded(offer):
+            loc_ok, zone, zone_label, loc_why = evaluate_location(offer.location or "")
+            if not loc_ok:
+                self.rejections[loc_why] += 1
+                continue
+            offer.zone = zone
+            offer.zone_label = zone_label
+
+            # Stage ET metier de marche : le "ou" laissait passer des postes
+            # temps plein (ex. "Commodities Volatility Trader").
+            if not self.is_internship(offer):
+                self.rejections["pas identifie comme stage"] += 1
+                continue
+            if not self.matches_role(offer):
+                self.rejections["metier hors finance de marche"] += 1
                 continue
 
-            # Step 3: Must match internship OR role keywords
-            if not self.is_internship(offer) and not self.matches_keywords(offer):
-                continue
-
-            offer.duration = self.detect_duration(offer) or offer.duration
+            offer.duration = extract_duration(
+                norm_text(f"{offer.description_snippet} {offer.duration or ''} {offer.title}")
+            ) or (offer.duration or "")
+            offer.internship_type, offer.type_reason = classify_period(offer)
             offer.relevance_score = self.compute_relevance_score(offer)
             results.append(offer)
 
-        results.sort(key=lambda x: x.relevance_score, reverse=True)
-        return results
+        results.sort(key=lambda o: (-o.relevance_score, o.company or "", o.title))
+        return self._collapse_near_duplicates(results)
+
+    def _collapse_near_duplicates(self, offers) -> list:
+        """Fusionne les doublons intra-run.
+
+        Une meme offre remontee par plusieurs sources (site carriere + LinkedIn,
+        ou deux jours d'archives) a des URL differentes mais le meme couple
+        societe/intitule. On garde la mieux notee. La zone fait partie de la cle :
+        un meme programme ouvert a Paris, Londres et Zurich reste 3 lignes.
+        """
+        best = {}
+        order = []
+        for offer in offers:
+            key = (norm_text(offer.company or ""), norm_text(offer.title), offer.zone_label)
+            current = best.get(key)
+            if current is None:
+                best[key] = offer
+                order.append(key)
+            elif offer.relevance_score > current.relevance_score:
+                best[key] = offer
+            else:
+                self.rejections["doublon (meme societe/intitule/zone)"] += 1
+                continue
+            if current is not None:
+                self.rejections["doublon (meme societe/intitule/zone)"] += 1
+        return [best[k] for k in order]
+
+    def split_by_period(self, offers) -> dict:
+        """Separe les offres retenues en off_cycle / summer / unknown."""
+        buckets = {"off_cycle": [], "summer": [], "unknown": []}
+        for offer in offers:
+            buckets.get(offer.internship_type, buckets["unknown"]).append(offer)
+        return buckets
+
+    def log_rejections(self):
+        if not self.rejections:
+            return
+        logger.info("    Motifs de rejet :")
+        for reason, count in self.rejections.most_common():
+            logger.info(f"      - {reason}: {count}")

@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
 """
-Finance Internship Scraper - Daily autonomous job scraper
-Scrapes bank career sites and aggregators for trading/sales/structuring internships.
+Finance Internship Scraper - run quotidien.
+
+Scrape les sites carriere des acteurs de finance de marche + les agregateurs,
+filtre sur l'univers finance de marche (banques, hedge funds, prop firms,
+brokers, asset managers), puis produit un classeur Excel avec un onglet
+Off-Cycle et un onglet Summer.
 """
 
-import logging
+import argparse
 import json
+import logging
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-# Ensure project root is in path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from config.companies import COMPANIES
 from config.keywords import ROLE_KEYWORDS
-from config.settings import MIN_DELAY, MAX_DELAY, MAX_RETRIES, REQUEST_TIMEOUT
+from config.settings import MIN_DELAY, MAX_DELAY, MAX_RETRIES, REQUEST_TIMEOUT, RUN_LOG_PATH
 from utils.http_client import HttpClient
 from utils.dedup import DeduplicationManager
 from utils.csv_manager import CSVManager
@@ -37,96 +41,127 @@ SCRAPER_REGISTRY = {
 }
 
 
-def main():
-    logger.info("=" * 60)
-    logger.info("Finance Internship Scraper - Starting daily run")
-    logger.info("=" * 60)
+def collect_offers(http_client, skip_companies=False, skip_aggregators=False):
+    """Phase de collecte brute. Renvoie (offres, erreurs)."""
+    all_offers, errors = [], []
 
-    # Initialize components
+    if not skip_companies:
+        logger.info(f"Phase 1 : {len(COMPANIES)} sites carriere...")
+        for company_config in COMPANIES:
+            scraper_type = company_config["scraper_type"]
+            name = company_config["name"]
+
+            if scraper_type not in SCRAPER_REGISTRY:
+                logger.warning(f"  Type de scraper inconnu '{scraper_type}' pour {name}")
+                continue
+            try:
+                scraper = SCRAPER_REGISTRY[scraper_type](company_config, http_client)
+                offers = scraper.scrape(ROLE_KEYWORDS)
+                logger.info(f"  {name}: {len(offers)} offres brutes")
+                # Le nom de la societe fait foi pour la whitelist employeur
+                for offer in offers:
+                    if not offer.company:
+                        offer.company = name
+                all_offers.extend(offers)
+            except Exception as e:
+                logger.error(f"  ECHEC {name}: {e}")
+                errors.append({"company": name, "scraper": scraper_type, "error": str(e)})
+
+    if not skip_aggregators:
+        logger.info("Phase 2 : agregateurs (LinkedIn, Indeed, Glassdoor, WTTJ)...")
+        try:
+            agg_offers = AggregatorScraper(http_client).scrape(ROLE_KEYWORDS)
+            logger.info(f"  {len(agg_offers)} offres brutes depuis les agregateurs")
+            all_offers.extend(agg_offers)
+        except Exception as e:
+            logger.error(f"  ECHEC agregateurs: {e}")
+            errors.append({"company": "aggregators", "scraper": "aggregators", "error": str(e)})
+
+    return all_offers, errors
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Scraper stages finance de marche")
+    parser.add_argument("--skip-companies", action="store_true",
+                        help="Ne pas scraper les sites carriere")
+    parser.add_argument("--skip-aggregators", action="store_true",
+                        help="Ne pas scraper les agregateurs")
+    parser.add_argument("--no-dedup", action="store_true",
+                        help="Ignorer l'historique de deduplication (rapport complet)")
+    args = parser.parse_args()
+
+    logger.info("=" * 64)
+    logger.info("Finance Internship Scraper - stages de finance de marche")
+    logger.info("=" * 64)
+
     http_client = HttpClient(
-        min_delay=MIN_DELAY,
-        max_delay=MAX_DELAY,
-        max_retries=MAX_RETRIES,
-        timeout=REQUEST_TIMEOUT,
+        min_delay=MIN_DELAY, max_delay=MAX_DELAY,
+        max_retries=MAX_RETRIES, timeout=REQUEST_TIMEOUT,
     )
     dedup = DeduplicationManager()
+    if args.no_dedup:
+        # Rapport complet : on ignore l'historique SANS l'ecraser ensuite.
+        dedup.seen = set()
+        logger.info("Deduplication desactivee (l'historique ne sera pas modifie).")
+
     csv_mgr = CSVManager()
     job_filter = JobFilter()
 
-    all_offers = []
-    errors = []
+    all_offers, errors = collect_offers(http_client, args.skip_companies, args.skip_aggregators)
 
-    # Phase 1: Scrape individual company career sites
-    logger.info(f"Phase 1: Scraping {len(COMPANIES)} company career sites...")
-    for company_config in COMPANIES:
-        scraper_type = company_config["scraper_type"]
-        company_name = company_config["name"]
+    logger.info(f"Phase 3 : filtrage de {len(all_offers)} offres brutes...")
+    kept = job_filter.filter_and_score(all_offers)
+    job_filter.log_rejections()
+    buckets = job_filter.split_by_period(kept)
+    logger.info(f"    -> {len(kept)} offres retenues "
+                f"(off-cycle {len(buckets['off_cycle'])}, "
+                f"summer {len(buckets['summer'])}, "
+                f"a trier {len(buckets['unknown'])})")
 
-        if scraper_type not in SCRAPER_REGISTRY:
-            logger.warning(f"Unknown scraper type '{scraper_type}' for {company_name}, skipping")
-            continue
+    logger.info("Phase 4 : deduplication et ecriture des rapports...")
+    run_stats = {
+        "Offres brutes collectees": len(all_offers),
+        "Retenues apres filtrage": len(kept),
+        "Sites carriere interroges": 0 if args.skip_companies else len(COMPANIES),
+        "Erreurs de scraping": len(errors),
+    }
+    added, fresh_buckets = csv_mgr.save(kept, buckets, dedup, run_stats=run_stats)
+    if args.no_dedup:
+        logger.info("Historique de deduplication laisse intact (--no-dedup).")
+    else:
+        dedup.save()
 
-        try:
-            scraper_class = SCRAPER_REGISTRY[scraper_type]
-            scraper = scraper_class(company_config, http_client)
-            logger.info(f"  Scraping {company_name} ({scraper_type})...")
-            offers = scraper.scrape(ROLE_KEYWORDS)
-            logger.info(f"    -> {len(offers)} raw offers from {company_name}")
-            all_offers.extend(offers)
-        except Exception as e:
-            logger.error(f"    FAILED: {company_name}: {e}")
-            errors.append({"company": company_name, "scraper": scraper_type, "error": str(e)})
-
-    # Phase 2: Scrape aggregator sites
-    logger.info("Phase 2: Scraping aggregator sites (LinkedIn, Indeed, Glassdoor, WTTJ)...")
-    try:
-        agg_scraper = AggregatorScraper(http_client)
-        agg_offers = agg_scraper.scrape(ROLE_KEYWORDS)
-        logger.info(f"    -> {len(agg_offers)} offers from aggregators")
-        all_offers.extend(agg_offers)
-    except Exception as e:
-        logger.error(f"    FAILED: aggregators: {e}")
-        errors.append({"company": "aggregators", "scraper": "aggregators", "error": str(e)})
-
-    # Phase 3: Filter and score
-    logger.info(f"Phase 3: Filtering {len(all_offers)} raw offers...")
-    filtered_offers = job_filter.filter_and_score(all_offers)
-    logger.info(f"    -> {len(filtered_offers)} relevant offers after filtering")
-
-    # Phase 4: Deduplicate and save to today's CSV
-    logger.info(f"Phase 4: Deduplicating and saving to {csv_mgr.csv_path.name}...")
-    added_count = csv_mgr.save_offers(filtered_offers, dedup)
-    dedup.save()
-    logger.info(f"    -> {added_count} NEW offers saved to {csv_mgr.csv_path.name}")
-
-    # Phase 5: Write run log
     run_log = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "total_raw_offers": len(all_offers),
-        "total_after_filter": len(filtered_offers),
-        "new_offers_added": added_count,
-        "companies_scraped": len(COMPANIES),
+        "total_after_filter": len(kept),
+        "new_offers_added": added,
+        "by_type": {k: len(v) for k, v in fresh_buckets.items()},
+        "companies_scraped": run_stats["Sites carriere interroges"],
+        "rejections": dict(job_filter.rejections),
         "errors_count": len(errors),
         "errors": errors,
+        "excel_report": str(csv_mgr.excel_path),
     }
-
-    log_path = Path("data/run_log.json")
+    log_path = Path(RUN_LOG_PATH)
     log_path.parent.mkdir(parents=True, exist_ok=True)
     log_path.write_text(json.dumps(run_log, indent=2, ensure_ascii=False))
 
-    # Summary
-    logger.info("=" * 60)
-    logger.info("RUN COMPLETE")
-    logger.info(f"  Raw offers collected:  {len(all_offers)}")
-    logger.info(f"  After filtering:       {len(filtered_offers)}")
-    logger.info(f"  New offers added:      {added_count}")
-    logger.info(f"  Errors:                {len(errors)}")
-    if errors:
-        for err in errors:
-            logger.info(f"    - {err['company']}: {err['error'][:80]}")
-    logger.info("=" * 60)
+    logger.info("=" * 64)
+    logger.info("RUN TERMINE")
+    logger.info(f"  Offres brutes        : {len(all_offers)}")
+    logger.info(f"  Retenues (marche)    : {len(kept)}")
+    logger.info(f"  Nouvelles ce jour    : {added}")
+    logger.info(f"    - Off-Cycle        : {len(fresh_buckets['off_cycle'])}")
+    logger.info(f"    - Summer           : {len(fresh_buckets['summer'])}")
+    logger.info(f"    - A trier          : {len(fresh_buckets['unknown'])}")
+    logger.info(f"  Rapport Excel        : {csv_mgr.excel_path}")
+    logger.info(f"  Erreurs              : {len(errors)}")
+    for err in errors[:10]:
+        logger.info(f"    - {err['company']}: {err['error'][:70]}")
+    logger.info("=" * 64)
 
-    return 0 if not errors or added_count > 0 else 1
+    return 0
 
 
 if __name__ == "__main__":

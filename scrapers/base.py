@@ -19,6 +19,12 @@ class JobOffer:
     duration: Optional[str] = None
     department: Optional[str] = None
     relevance_score: float = 0.0
+    # Champs remplis par les filtres
+    employer_category: str = ""      # Banque / Hedge Fund / Prop Trading / ...
+    internship_type: str = ""        # off_cycle | summer | unknown
+    type_reason: str = ""            # motif de la classification calendaire
+    zone: str = ""                   # CORE | EUROPE | GLOBAL | INCONNU
+    zone_label: str = ""             # "Paris / IDF", "Londres", "Hong Kong"...
 
 
 class BaseScraper(ABC):

@@ -1,25 +1,22 @@
-# HTTP client settings
-MIN_DELAY = 1.5  # seconds between requests
+# Parametres HTTP
+MIN_DELAY = 1.5  # secondes entre deux requetes
 MAX_DELAY = 3.0
 MAX_RETRIES = 3
-REQUEST_TIMEOUT = 30  # seconds
+REQUEST_TIMEOUT = 30
 
-# Scraping settings
-MAX_RESULTS_PER_QUERY = 50  # max results to fetch per keyword query
-MAX_PAGES = 5  # max pagination pages per query
+# Parametres de scraping
+MAX_RESULTS_PER_QUERY = 50
+MAX_PAGES = 5
 
-# Aggregator settings
-AGGREGATOR_RESULTS_WANTED = 30  # per keyword per site
-AGGREGATOR_HOURS_OLD = 72  # only jobs posted in last 72 hours
+# Agregateurs
+AGGREGATOR_RESULTS_WANTED = 30   # par mot-cle et par site
+AGGREGATOR_HOURS_OLD = 72        # offres publiees dans les 72 dernieres heures
+AGGREGATOR_MAX_QUERIES = 16      # garde-fou anti rate-limit
 
-# Output settings
-CSV_DIR = "data"  # New CSV file created each day: data/internships_YYYY-MM-DD.csv
+# Sorties
+CSV_DIR = "data"
 HASHES_PATH = "data/seen_hashes.json"
 RUN_LOG_PATH = "data/run_log.json"
 
-# Locations to search (aggregators)
-LOCATIONS = [
-    "France", "United Kingdom", "Paris", "London",
-    "Switzerland", "Luxembourg", "Germany", "Frankfurt",
-    "Zurich", "Geneva",
-]
+# La geographie ciblee est definie dans config/locations.py
+# (AGGREGATOR_SEARCH_LOCATIONS pour les requetes agregateurs)

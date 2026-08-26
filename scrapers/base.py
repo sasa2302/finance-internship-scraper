@@ -40,10 +40,18 @@ class BaseScraper(ABC):
         pass
 
     def _build_search_queries(self, keywords: List[str]) -> List[str]:
-        prefixes = ["stage", "internship", "stagiaire", "intern"]
+        """Requetes de recherche, prefixes ALTERNES.
+
+        Les appelants tronquent cette liste (ex. les 12 premieres). En groupant
+        par prefixe, la troncature ne gardait que les requetes "stage ..." et
+        n'envoyait jamais "internship" ni "summer" : les programmes Summer
+        anglophones passaient donc a la trappe. On alterne pour que toute
+        troncature conserve un melange francais / anglais.
+        """
+        prefixes = ["stage", "internship", "summer internship", "off-cycle internship"]
         queries = []
-        for prefix in prefixes:
-            for kw in keywords:
+        for kw in keywords:
+            for prefix in prefixes:
                 queries.append(f"{prefix} {kw}")
         return queries
 

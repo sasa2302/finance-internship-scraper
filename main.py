@@ -19,7 +19,11 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from config.companies import COMPANIES
 from config.keywords import ROLE_KEYWORDS
-from config.settings import MIN_DELAY, MAX_DELAY, MAX_RETRIES, REQUEST_TIMEOUT, RUN_LOG_PATH
+from config.settings import (
+    MIN_DELAY, MAX_DELAY, MAX_RETRIES, REQUEST_TIMEOUT, RUN_LOG_PATH,
+    MAX_RUNTIME_MINUTES, COMPANIES_BUDGET_SHARE,
+)
+from utils.budget import Deadline
 from utils.http_client import HttpClient
 from utils.dedup import DeduplicationManager
 from utils.csv_manager import CSVManager
@@ -42,14 +46,28 @@ SCRAPER_REGISTRY = {
 
 
 def collect_offers(http_client, skip_companies=False, skip_aggregators=False):
-    """Phase de collecte brute. Renvoie (offres, erreurs)."""
+    """Phase de collecte brute, sous contrainte de temps.
+
+    Renvoie (offres, erreurs, stats). La collecte s'interrompt proprement quand
+    le budget est epuise : mieux vaut un rapport partiel qu'un job tue par le
+    timeout GitHub sans avoir rien ecrit.
+    """
     all_offers, errors = [], []
+    skipped_companies = 0
+
+    companies_budget = MAX_RUNTIME_MINUTES * COMPANIES_BUDGET_SHARE
+    deadline = Deadline(companies_budget)
 
     if not skip_companies:
-        logger.info(f"Phase 1 : {len(COMPANIES)} sites carriere...")
+        logger.info(f"Phase 1 : {len(COMPANIES)} sites carriere "
+                    f"(budget {companies_budget:.0f} min)...")
         for company_config in COMPANIES:
             scraper_type = company_config["scraper_type"]
             name = company_config["name"]
+
+            if deadline.expired():
+                skipped_companies += 1
+                continue
 
             if scraper_type not in SCRAPER_REGISTRY:
                 logger.warning(f"  Type de scraper inconnu '{scraper_type}' pour {name}")
@@ -67,17 +85,25 @@ def collect_offers(http_client, skip_companies=False, skip_aggregators=False):
                 logger.error(f"  ECHEC {name}: {e}")
                 errors.append({"company": name, "scraper": scraper_type, "error": str(e)})
 
+    if skipped_companies:
+        logger.warning(f"  {skipped_companies} sites carriere non interroges (budget epuise). "
+                       f"Ils passeront en tete au prochain run.")
+    logger.info(f"  Phase 1 terminee : {deadline.summary()}")
+
     if not skip_aggregators:
-        logger.info("Phase 2 : agregateurs (LinkedIn, Indeed, Glassdoor, WTTJ)...")
+        agg_budget = MAX_RUNTIME_MINUTES - (deadline.elapsed / 60.0)
+        agg_deadline = Deadline(max(agg_budget, 3.0))
+        logger.info(f"Phase 2 : agregateurs (budget {agg_deadline.limit / 60:.0f} min)...")
         try:
-            agg_offers = AggregatorScraper(http_client).scrape(ROLE_KEYWORDS)
+            agg_offers = AggregatorScraper(http_client).scrape(ROLE_KEYWORDS, deadline=agg_deadline)
             logger.info(f"  {len(agg_offers)} offres brutes depuis les agregateurs")
             all_offers.extend(agg_offers)
         except Exception as e:
             logger.error(f"  ECHEC agregateurs: {e}")
             errors.append({"company": "aggregators", "scraper": "aggregators", "error": str(e)})
 
-    return all_offers, errors
+    stats = {"companies_skipped": skipped_companies}
+    return all_offers, errors, stats
 
 
 def main():
@@ -107,7 +133,8 @@ def main():
     csv_mgr = CSVManager()
     job_filter = JobFilter()
 
-    all_offers, errors = collect_offers(http_client, args.skip_companies, args.skip_aggregators)
+    all_offers, errors, collect_stats = collect_offers(
+        http_client, args.skip_companies, args.skip_aggregators)
 
     logger.info(f"Phase 3 : filtrage de {len(all_offers)} offres brutes...")
     kept = job_filter.filter_and_score(all_offers)
@@ -124,6 +151,7 @@ def main():
         "Retenues apres filtrage": len(kept),
         "Sites carriere interroges": 0 if args.skip_companies else len(COMPANIES),
         "Erreurs de scraping": len(errors),
+        "Sites non interroges (budget)": collect_stats["companies_skipped"],
     }
     added, fresh_buckets = csv_mgr.save(kept, buckets, dedup, run_stats=run_stats)
     if args.no_dedup:

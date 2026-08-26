@@ -8,6 +8,23 @@ REQUEST_TIMEOUT = 30
 MAX_RESULTS_PER_QUERY = 50
 MAX_PAGES = 5
 
+# ---------------------------------------------------------------------------
+# BUDGET DE TEMPS
+# ---------------------------------------------------------------------------
+# Duree maximale de la phase de collecte. Le workflow GitHub Actions a un
+# timeout de 45 min : en s'arretant a 30, on garantit qu'un rapport est ecrit.
+MAX_RUNTIME_MINUTES = 30
+
+# Part du budget reservee aux sites carriere (le reste va aux agregateurs)
+COMPANIES_BUDGET_SHARE = 0.55
+
+# ---------------------------------------------------------------------------
+# FRAICHEUR
+# ---------------------------------------------------------------------------
+# On ne garde que les offres publiees recemment. Une offre sans date de
+# publication exploitable est conservee (la deduplication fait le tri).
+MAX_OFFER_AGE_DAYS = 30
+
 # Agregateurs
 AGGREGATOR_RESULTS_WANTED = 30   # par mot-cle et par site
 AGGREGATOR_HOURS_OLD = 72        # offres publiees dans les 72 dernieres heures

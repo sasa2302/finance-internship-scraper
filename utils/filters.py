@@ -12,6 +12,7 @@ Ordre des controles (du moins couteux / plus discriminant au plus fin) :
 import logging
 import re
 from collections import Counter
+from datetime import date, datetime, timedelta
 
 from config.keywords import (
     ROLE_KEYWORDS,
@@ -27,9 +28,28 @@ from utils.employer_match import classify_employer
 from utils.location_match import evaluate as evaluate_location, zone_bonus
 from utils.classify import classify as classify_period, extract_duration, LABELS
 from utils.period import detect_period, format_period, summer_ok, off_cycle_ok
-from config.settings import TARGET_SUMMER_YEARS, OFF_CYCLE_START_MIN
+from config.settings import (
+    TARGET_SUMMER_YEARS, OFF_CYCLE_START_MIN, MAX_OFFER_AGE_DAYS,
+)
 
 logger = logging.getLogger(__name__)
+
+_DATE_FORMATS = ("%Y-%m-%d", "%d/%m/%Y", "%Y/%m/%d", "%d-%m-%Y")
+
+
+def parse_posted_date(value):
+    """Date de publication, ou None si illisible."""
+    if not value:
+        return None
+    text = str(value).strip()[:10]
+    for fmt in _DATE_FORMATS:
+        try:
+            return datetime.strptime(text, fmt).date()
+        except ValueError:
+            continue
+    return None
+
+
 
 _ALL_PREFIXES = INTERNSHIP_PREFIXES_FR + INTERNSHIP_PREFIXES_EN
 
@@ -62,6 +82,20 @@ class JobFilter:
 
         return has_any(title, ["alternance", "alternant", "apprenti", "vie",
                                "volontariat international"])
+
+    def is_stale(self, offer) -> bool:
+        """Offre trop ancienne.
+
+        Une offre sans date de publication lisible est CONSERVEE : beaucoup de
+        sites carriere ne publient pas cette information, et la deduplication
+        ecarte de toute facon ce qui a deja ete vu.
+        """
+        if MAX_OFFER_AGE_DAYS <= 0:
+            return False
+        posted = parse_posted_date(offer.date_posted)
+        if posted is None:
+            return False
+        return posted < date.today() - timedelta(days=MAX_OFFER_AGE_DAYS)
 
     def is_excluded_title(self, offer) -> bool:
         title = norm_text(offer.title)
@@ -119,6 +153,10 @@ class JobFilter:
         for offer in offers:
             if self.is_non_stage(offer):
                 self.rejections["pas un stage (CDI/CDD/alternance/VIE)"] += 1
+                continue
+
+            if self.is_stale(offer):
+                self.rejections[f"publiee il y a plus de {MAX_OFFER_AGE_DAYS} jours"] += 1
                 continue
 
             ok, category, why = classify_employer(offer)

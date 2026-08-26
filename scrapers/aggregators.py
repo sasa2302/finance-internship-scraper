@@ -21,18 +21,13 @@ class AggregatorScraper:
     def __init__(self, http_client):
         self.client = http_client
 
-    def scrape(self, keywords: List[str]) -> List[JobOffer]:
+    def scrape(self, keywords: List[str], deadline=None) -> List[JobOffer]:
         offers = []
-
-        # Scrape via python-jobspy (LinkedIn, Indeed, Glassdoor)
-        offers.extend(self._scrape_jobspy(keywords))
-
-        # Scrape Welcome to the Jungle
-        offers.extend(self._scrape_wttj(keywords))
-
+        offers.extend(self._scrape_jobspy(keywords, deadline))
+        offers.extend(self._scrape_wttj(keywords, deadline))
         return offers
 
-    def _scrape_jobspy(self, keywords: List[str]) -> List[JobOffer]:
+    def _scrape_jobspy(self, keywords: List[str], deadline=None) -> List[JobOffer]:
         try:
             from jobspy import scrape_jobs
         except ImportError:
@@ -42,67 +37,77 @@ class AggregatorScraper:
         offers = []
         seen_urls = set()
 
-        # Requetes : on interroge explicitement les DEUX calendriers
-        # (off-cycle et summer) pour alimenter les deux onglets du rapport.
-        core_keywords = ["trading", "sales trading", "structuration", "derivatives",
-                         "fixed income", "quantitative", "market risk",
-                         "hedge fund", "global markets", "portfolio management"]
+        # Plan de requetes HIERARCHISE.
+        # Le produit cartesien complet (16 termes x 14 zones = 224 appels)
+        # depassait largement le temps disponible. On interroge donc a fond
+        # les places prioritaires, et plus legerement les autres.
+        core_terms = [
+            "stage trading", "stage structuration", "stage sales trading",
+            "summer internship global markets", "off-cycle internship trading",
+            "stage quantitative finance de marche",
+        ]
+        wide_terms = ["summer internship trading", "internship global markets"]
 
-        search_terms = []
-        for kw in core_keywords:
-            search_terms.append(f"stage {kw}")            # off-cycle FR
-            search_terms.append(f"off-cycle internship {kw}")
-            search_terms.append(f"summer internship {kw}")
+        priority = {"Paris, France", "London, United Kingdom",
+                    "Switzerland", "Luxembourg"}
 
-        search_terms = search_terms[:AGGREGATOR_MAX_QUERIES]
-        search_locations = AGGREGATOR_SEARCH_LOCATIONS
+        plan = []
+        for location, country in AGGREGATOR_SEARCH_LOCATIONS:
+            terms = core_terms if location in priority else wide_terms
+            for term in terms:
+                plan.append((term, location, country))
 
-        for search_term in search_terms:
-            for location, indeed_country in search_locations:
-                try:
-                    logger.info(f"[Aggregators] Searching '{search_term}' in {location}...")
-                    jobs_df = scrape_jobs(
-                        site_name=["indeed", "linkedin", "glassdoor"],
-                        search_term=search_term,
-                        location=location,
-                        results_wanted=AGGREGATOR_RESULTS_WANTED,
-                        hours_old=AGGREGATOR_HOURS_OLD,
-                        country_indeed=indeed_country,
-                    )
+        logger.info(f"[Aggregators] Plan : {len(plan)} requetes "
+                    f"({len(priority)} zones prioritaires)")
 
-                    if jobs_df is None or jobs_df.empty:
-                        continue
+        for search_term, location, indeed_country in plan:
+            if deadline is not None and deadline.expired():
+                logger.warning("[Aggregators] Budget epuise, arret de la collecte.")
+                break
+            try:
+                logger.info(f"[Aggregators] '{search_term}' dans {location}...")
+                jobs_df = scrape_jobs(
+                    site_name=["indeed", "linkedin", "glassdoor"],
+                    search_term=search_term,
+                    location=location,
+                    results_wanted=AGGREGATOR_RESULTS_WANTED,
+                    hours_old=AGGREGATOR_HOURS_OLD,
+                    country_indeed=indeed_country,
+                )
 
-                    for _, row in jobs_df.iterrows():
-                        url = str(row.get("job_url", ""))
-                        if not url or url in seen_urls:
-                            continue
-                        seen_urls.add(url)
-
-                        offer = JobOffer(
-                            title=str(row.get("title", "")),
-                            company=str(row.get("company", "")),
-                            location=str(row.get("location", "")),
-                            url=url,
-                            date_posted=str(row.get("date_posted", "")),
-                            description_snippet=str(row.get("description", ""))[:300],
-                            source=str(row.get("site", "aggregator")),
-                            # Le vrai type renvoye par jobspy : ne pas forcer
-                            # "internship", sinon tout passe le test is_internship.
-                            job_type=str(row.get("job_type", "") or ""),
-                            duration=None,
-                            department=None,
-                        )
-                        offers.append(offer)
-
-                except Exception as e:
-                    logger.warning(f"[Aggregators] Error for '{search_term}' in {location}: {e}")
+                if jobs_df is None or jobs_df.empty:
                     continue
+
+                for _, row in jobs_df.iterrows():
+                    url = str(row.get("job_url", ""))
+                    if not url or url in seen_urls:
+                        continue
+                    seen_urls.add(url)
+
+                    offer = JobOffer(
+                        title=str(row.get("title", "")),
+                        company=str(row.get("company", "")),
+                        location=str(row.get("location", "")),
+                        url=url,
+                        date_posted=str(row.get("date_posted", "")),
+                        description_snippet=str(row.get("description", ""))[:300],
+                        source=str(row.get("site", "aggregator")),
+                        # Le vrai type renvoye par jobspy : ne pas forcer
+                        # "internship", sinon tout passe le test is_internship.
+                        job_type=str(row.get("job_type", "") or ""),
+                        duration=None,
+                        department=None,
+                    )
+                    offers.append(offer)
+
+            except Exception as e:
+                logger.warning(f"[Aggregators] Erreur '{search_term}' / {location}: {e}")
+                continue
 
         logger.info(f"[Aggregators/JobSpy] Total offers: {len(offers)}")
         return offers
 
-    def _scrape_wttj(self, keywords: List[str]) -> List[JobOffer]:
+    def _scrape_wttj(self, keywords: List[str], deadline=None) -> List[JobOffer]:
         """Scrape Welcome to the Jungle job listings."""
         from bs4 import BeautifulSoup
 
@@ -113,6 +118,9 @@ class AggregatorScraper:
                          "portfolio management", "global markets"]
 
         for kw in core_keywords:
+            if deadline is not None and deadline.expired():
+                logger.warning("[WTTJ] Budget epuise, arret.")
+                break
             query = f"stage {kw}"
             url = (
                 "https://www.welcometothejungle.com/fr/jobs"

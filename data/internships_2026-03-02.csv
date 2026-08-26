@@ -1,119 +1,333 @@
 id,title,company,location,url,date_posted,date_scraped,description_snippet,source,job_type,duration,department,relevance_score,status
-0301e5f7abdb3111,Sales Assistant,RED BIRD ENTERPRISES GROUP,"London, ENG, GB",https://uk.indeed.com/viewjob?jk=74f2431b53266e78,2026-03-02,2026-03-02T08:01:54.669332+00:00,"**Job Summary**
+ee4bc66d8ca42229,Front Office Control Analyst: Professional Placement Year Internship - AXA Investment Managers,Jobs via eFinancialCareers,"London, England, UK",https://www.linkedin.com/jobs/view/4379253605,2026-02-28,2026-03-02T13:07:29.247097+00:00,nan,linkedin,internship,,,0.65,new
+6c77b09616ccd62c,Sales Manager-France,RELX International,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4378202860,2026-02-28,2026-03-02T13:07:29.247126+00:00,nan,linkedin,internship,,,0.65,new
+72730736ac9827a2,Stage - Sales Manager,EGYM | DACH,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4378783646,2026-02-27,2026-03-02T13:07:29.247142+00:00,nan,linkedin,internship,,,0.65,new
+d4cfa2f72f0b6241,Stage: Sales development (DACH),OneFlash,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4377380524,nan,2026-03-02T13:07:29.247157+00:00,nan,linkedin,internship,,,0.65,new
+925521d38a4906af,Morrison's Sales Intern - Summer 2026,Red Bull,"London, England, UK",https://www.linkedin.com/jobs/view/4379908836,nan,2026-03-02T13:07:29.247204+00:00,nan,linkedin,internship,,,0.65,new
+aae9d59091da686e,Stage -  Assistant Post Marché Dpt Dérivés &amp; Forex H/F,BRED Banque Populaire,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4377725273,nan,2026-03-02T13:07:29.247226+00:00,None,linkedin,internship,,,0.65,new
+7597c998dfbf89ec,CDSClear Quantitative Strategist - London Stock Exchange Group,Jobs via eFinancialCareers,"London, England, UK",https://www.linkedin.com/jobs/view/4368662606,nan,2026-03-02T13:07:29.247242+00:00,nan,linkedin,internship,,,0.65,new
+f93da534b2a801c0,2026 Off-cycle Internship – IB Unified Global Markets Risk COO,UBS,"Opfikon, Zurich, Switzerland",https://www.linkedin.com/jobs/view/4379783479,nan,2026-03-02T13:07:29.247262+00:00,nan,linkedin,internship,,,0.63,new
+25d904d447d5f6aa,Stage HF - Assistant Sales - Pôle International – Juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-0204a672c636/candidate/so/pm/1/pl/2/opp/4102-Stage-HF-Assistant-Sales-P%C3%B4le-International-Juillet-2026/en-GB,,2026-03-02T13:07:29.247291+00:00,,custom_html,,,,0.55,new
+ace1c7e4e2cefb59,Stage H/F – Sales Appel d’Offres (Gestion Institutionnelle) – Juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-0204a672c636/candidate/so/pm/1/pl/2/opp/4100-Stage-H-F-Sales-Appel-d-Offres-Gestion-Institutionnelle-Juillet-2026/en-GB,,2026-03-02T13:07:29.247309+00:00,,custom_html,,,,0.55,new
+4746cd5d282f3653,Stage H/F - Assistant de Gestion Fixed Income - juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-0204a672c636/candidate/so/pm/1/pl/2/opp/4075-Stage-H-F-Assistant-de-Gestion-Fixed-Income-juillet-2026/en-GB,,2026-03-02T13:07:29.247320+00:00,,custom_html,,,,0.55,new
+a37f530a5205e8ec,Stage H/F - Analyste Fixed Income Pôle High Yield - juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-0204a672c636/candidate/so/pm/1/pl/2/opp/4074-Stage-H-F-Analyste-Fixed-Income-P%C3%B4le-High-Yield-juillet-2026/en-GB,,2026-03-02T13:07:29.247337+00:00,,custom_html,,,,0.55,new
+dd35e421e977815a,Internship - Application Support Specialist - Front Office,Lombard Odier,,https://lombardodier.wd3.myworkdayjobs.com/Lombard_Odier_Careers/job/Geneva/Application-Support-Specialist---Front-Office--80-100--_R0006590,,2026-03-02T13:07:29.247349+00:00,,custom_html,,,,0.55,new
+5c88fe1255940e32,Global Data Center Sales Operations Leader,Eaton,,https://www.linkedin.com/jobs/view/4348681303,nan,2026-03-02T13:07:29.247365+00:00,nan,linkedin,internship,,,0.55,new
+e012dd4ad5772b60,Salesperson (SDR / BDM / Sales Manager),Kotini,,https://www.linkedin.com/jobs/view/4379792045,nan,2026-03-02T13:07:29.247376+00:00,nan,linkedin,internship,,,0.55,new
+60a45535fb5bd4d7,Sales Manager / SDR (Sales Development Representative),Logistica OS,"Munich, Bavaria, Germany",https://www.linkedin.com/jobs/view/4376665213,nan,2026-03-02T13:07:29.247388+00:00,nan,linkedin,internship,,,0.55,new
+6a1e921939b0d146,Global Data Center Sales Operations Leader,Eaton,,https://www.linkedin.com/jobs/view/4348518087,nan,2026-03-02T13:07:29.247399+00:00,nan,linkedin,internship,,,0.55,new
+7bad6a3a1aa119f4,Power BI Reporting Internship for CAPEX Portfolio Management & OPS Strategy,VAT ​Vakuumventile,"Haag (Rheintal), SG, CH",https://ch.indeed.com/viewjob?jk=564333c8c0256214,2026-03-02,2026-03-02T13:07:29.247413+00:00,"**Location:**Haag, St. Gallen, CH
+**Employment Type:** Fixed Term Contract  
 
-This is a full\-time, entry\-level Sales Assistant role supporting face\-to\-face customer campaigns across London. The position is on\-site and field\-based.
-
-The role involves direct customer engagement, supporting campaign delivery, and maintaining professional standards in resid",indeed,internship,,,0.65,new
-d14f41a76c3d4380,Sales Negotiator (Dubai),Allsopp & Allsopp Group,"London Area, United Kingdom",https://www.linkedin.com/jobs/view/4378493794,nan,2026-03-02T08:01:54.669374+00:00,nan,linkedin,internship,,,0.65,new
-6767c5566699930f,Growth & Sales Intern,Kartaca,"London Area, United Kingdom",https://www.linkedin.com/jobs/view/4379789210,nan,2026-03-02T08:01:54.669402+00:00,nan,linkedin,internship,,,0.65,new
-5c2b71bfc40b25c0,Sales Trader - Internship,OTC FLOW GmbH,"Frankfurt, Hesse, Germany",https://www.linkedin.com/jobs/view/4379789281,nan,2026-03-02T08:01:54.669431+00:00,nan,linkedin,internship,,,0.63,new
-576802d8f01f467b,Stage HF - Assistant Sales - Pôle International – Juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4102-Stage-HF-Assistant-Sales-P%C3%B4le-International-Juillet-2026/en-GB,,2026-03-02T08:01:54.669461+00:00,,custom_html,,,,0.55,new
-3863aaed2eaf4176,Stage H/F – Sales Appel d’Offres (Gestion Institutionnelle) – Juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4100-Stage-H-F-Sales-Appel-d-Offres-Gestion-Institutionnelle-Juillet-2026/en-GB,,2026-03-02T08:01:54.669474+00:00,,custom_html,,,,0.55,new
-e271a4e931d9d949,Stage H/F - Assistant de Gestion Fixed Income - juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4075-Stage-H-F-Assistant-de-Gestion-Fixed-Income-juillet-2026/en-GB,,2026-03-02T08:01:54.669482+00:00,,custom_html,,,,0.55,new
-e68d266af39f99e4,Stage H/F - Analyste Fixed Income Pôle High Yield - juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4074-Stage-H-F-Analyste-Fixed-Income-P%C3%B4le-High-Yield-juillet-2026/en-GB,,2026-03-02T08:01:54.669493+00:00,,custom_html,,,,0.55,new
-4b09aeb8cb77f0e9,Trading Assistant,Sainsbury’s,"Chippenham, ENG, GB",https://uk.indeed.com/viewjob?jk=41f3836493328ad1,2026-03-01,2026-03-02T08:01:54.669501+00:00,"**Trading Assistant**
-=====================
-
-#### **Rate:** **£12\.60 per hour**
-**Location:** **Chippenham Store, Chippenham, SN14 0BJ**
-**Hours:** **Part time, 11\.20 hours per week**
-**Contract type:** **Fixed\-Term Assignment**
-**Business area:** **Retail**
-**Requisition ID:** **400051560**
-
-###",indeed,internship,,,0.55,new
-1fcb54d7886b3fd6,Trading Assistant,Sainsbury’s,"Chippenham, ENG, GB",https://uk.indeed.com/viewjob?jk=24142ec76faab143,2026-03-01,2026-03-02T08:01:54.669508+00:00,"**Trading Assistant**
-=====================
-
-#### **Rate:** **£12\.60 per hour**
-**Location:** **Chippenham Store, Chippenham, SN14 0BJ**
-**Hours:** **Part time, 11\.40 hours per week**
-**Contract type:** **Fixed\-Term Assignment**
-**Business area:** **Retail**
-**Requisition ID:** **400051559**
-
-###",indeed,internship,,,0.55,new
-12e3e1207c2e3a1d,Trading Assistant - Shift,Sainsbury’s,"Woodham Ferrers, ENG, GB",https://uk.indeed.com/viewjob?jk=3c42a4b82df14b97,2026-03-01,2026-03-02T08:01:54.669515+00:00,"**Trading Assistant \- Shift**
-==============================
-
-#### **Rate:** **£12\.60 per hour**
-**Location:** **South Woodham Ferrers Store, South Woodham Ferrers, CM3 5QP**
-**Hours:** **Part time, 18\.30 hours per week**
-**Contract type:** **Permanent**
-**Business area:** **Retail**
-**Closing da",indeed,internship,,,0.55,new
-3f1a6899c188abbe,Trading Assistant - Shift,Sainsbury’s,"Kirkcaldy, SCT, GB",https://uk.indeed.com/viewjob?jk=2e320949c3b07cca,2026-03-01,2026-03-02T08:01:54.669522+00:00,"**Trading Assistant \- Shift**
-==============================
-
-#### **Rate:** **£12\.60 per hour**
-**Location:** **Kirkcaldy Store, Kirkcaldy, KY2 6QL**
-**Hours:** **Part time, 18\.5 hours per week**
-**Contract type:** **Permanent**
-**Business area:** **Retail**
-**Closing date:** **14 March 2026**
-*",indeed,internship,,,0.55,new
-a7fc2f8b367160bf,Trading Assistant - Shift,Sainsbury’s,"Bath, ENG, GB",https://uk.indeed.com/viewjob?jk=76b95c0aaaca46fb,2026-03-01,2026-03-02T08:01:54.669529+00:00,"**Trading Assistant \- Shift**
-==============================
-
-#### **Rate:** **£12\.60 per hour**
-**Location:** **Bath Store, Bath, BA1 2DR**
-**Hours:** **Part time, 18\.5 hours per week**
-**Contract type:** **Permanent**
-**Business area:** **Retail**
-**Closing date:** **10 March 2026**
-**Requisiti",indeed,internship,,,0.55,new
-cdf2dfa9245ab280,Trading Assistant - Shift,Sainsbury’s,"Weston-super-Mare, ENG, GB",https://uk.indeed.com/viewjob?jk=74ada5cf7a1e4452,2026-03-01,2026-03-02T08:01:54.669536+00:00,"**Trading Assistant \- Shift**
-==============================
-
-#### **Rate:** **£12\.60 per hour**
-**Location:** **Worle Store, Weston\-super\-Mare, BS22 6BL**
-**Hours:** **Part time, 18\.50 hours per week**
-**Contract type:** **Permanent**
-**Business area:** **Retail**
-**Closing date:** **07 March ",indeed,internship,,,0.55,new
-f20fd0648320937b,Trading Assistant - Shift,Sainsbury’s,"Hamilton, SCT, GB",https://uk.indeed.com/viewjob?jk=ffca977fe5a97d21,2026-03-01,2026-03-02T08:01:54.669542+00:00,"**Trading Assistant \- Shift**
-==============================
-
-#### **Rate:** **£12\.60 per hour**
-**Location:** **Hamilton Store, Hamilton, ML3 0DF**
-**Hours:** **Part time, 18\.5 hours per week**
-**Contract type:** **Permanent**
-**Business area:** **Retail**
-**Closing date:** **14 March 2026**
-**R",indeed,internship,,,0.55,new
-d9d2f64b835caf9d,Sales Office Coordinator,Kew Green Hotels,"Solihull, ENG, GB",https://uk.indeed.com/viewjob?jk=f8a5c61e5f1c90c5,2026-03-02,2026-03-02T08:01:54.669565+00:00,"**Job Ref:** KGH11339**Branch:** Voco St. Johns**Location:** Voco St.Johns Solihull, Birmingham**Salary/Benefits:** £26707 plus benefits**Contract type:** Permanent**Hours:** Full Time**Hours per week:** 40 hours per week**Posted date:** 02/03/2026**Closing date:** 11/03/2026  
-
-We’re looking for an",indeed,internship,,,0.55,new
-e2eca70fb45ab34e,Creative & Social Coordinator,nan,"London, ENG, GB",https://uk.indeed.com/viewjob?jk=5f085f15f84f0afe,2026-03-02,2026-03-02T08:01:54.669652+00:00,"Based in London, our collections are produced in limited runs and designed with intention. Each piece is imagined as a character of its own, inspired by fairytale femininity and modern confidence.
-
-In just a short time, Cybersweetie has built an international customer base, sold out collections and ",indeed,internship,,,0.3,new
-86b5d5a603501b97,Internship,AVIAREPS India,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4378488396,nan,2026-03-02T08:01:54.669685+00:00,nan,linkedin,internship,,,0.3,new
-7a6b4dc1a01ba129,Monetisation Strategy & Operations Intern (GBS) - 2026 Start (MBA),TikTok,"London, England, UK",https://www.linkedin.com/jobs/view/4307632288,nan,2026-03-02T08:01:54.669696+00:00,nan,linkedin,internship,,,0.3,new
-5890b0c363345432,Stage H/F – Assistant de Gestion Privée (Bruxelles) – septembre 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4139-Stage-H-F-Assistant-de-Gestion-Priv%C3%A9e-Bruxelles-septembre-2026/en-GB,,2026-03-02T08:01:54.669757+00:00,,custom_html,,,,0.2,new
-f4f4680de8c4b109,Stage H/F – Développement Gestion Privée (Luxembourg) – septembre 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4140-Stage-H-F-D%C3%A9veloppement-Gestion-Priv%C3%A9e-Luxembourg-septembre-2026/en-GB,,2026-03-02T08:01:54.669768+00:00,,custom_html,,,,0.2,new
-64919ec710b25a18,Stage – Finance Operations EMEA – H/F – Juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4134-Stage-Finance-Operations-EMEA-H-F-Juillet-2026/en-GB,,2026-03-02T08:01:54.669779+00:00,,custom_html,,,,0.2,new
-12993a4a51c32b3e,Stage – Analyste Actions – H/F – Juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4133-Stage-Analyste-Actions-H-F-Juillet-2026/en-GB,,2026-03-02T08:01:54.669787+00:00,,custom_html,,,,0.2,new
-eea1435a235861b1,Stage H/F - Analyste ESG (Direction ESG) – Juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4131-Stage-H-F-Analyste-ESG-Direction-ESG-Juillet-2026/en-GB,,2026-03-02T08:01:54.669797+00:00,,custom_html,,,,0.2,new
-98260818e100a91e,Stage H/F - Analyste ESG/ISR (Gestion Obligataire) – Juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4130-Stage-H-F-Analyste-ESG-ISR-Gestion-Obligataire-Juillet-2026/en-GB,,2026-03-02T08:01:54.669807+00:00,,custom_html,,,,0.2,new
-f059749fd215d225,Stage - Analyste ESG/ISR (Gestion Actions) H/F - Juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4129-Stage-Analyste-ESG-ISR-Gestion-Actions-H-F-Juillet-2026/en-GB,,2026-03-02T08:01:54.669813+00:00,,custom_html,,,,0.2,new
-f55b0c24e01634ac,Stage – Analyste financier Gestion Privée – H/F – Juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4128-Stage-Analyste-financier-Gestion-Priv%C3%A9e-H-F-Juillet-2026/en-GB,,2026-03-02T08:01:54.669823+00:00,,custom_html,,,,0.2,new
-6ad55017dd768eb6,Stage H/F - Développement Gestion Privée - Paris - Juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4072-Stage-H-F-D%C3%A9veloppement-Gestion-Priv%C3%A9e-Paris-Juillet-2026/en-GB,,2026-03-02T08:01:54.669833+00:00,,custom_html,,,,0.2,new
-b3ec553c4deda45f,Stage H/F - Ingénieur Patrimonial - juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4061-Stage-H-F-Ing%C3%A9nieur-Patrimonial-juillet-2026/en-GB,,2026-03-02T08:01:54.669842+00:00,,custom_html,,,,0.2,new
-5c6cdf0bc955a240,Stage H/F- Ingénieur Data & Automatisation - dès que possible,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-07a24fd939c1/candidate/so/pm/1/pl/2/opp/4031-Stage-H-F-Ing%C3%A9nieur-Data-Automatisation-d%C3%A8s-que-possible/en-GB,,2026-03-02T08:01:54.669851+00:00,,custom_html,,,,0.2,new
-4aac6e43b595f24a,Mechanical Engineering Graduate,Flogas,"Field Based, GB",https://uk.indeed.com/viewjob?jk=c2d693c1756fb5d3,2026-02-27,2026-03-02T08:01:54.669902+00:00,"**Job Title:** Mechanical Engineering Graduate
+**About VAT Group**  
 
 
-**Req ID:** 9182
-**Company:** Flogas Britain
-**Salary:** £34,000 (2 Year Placement)
-**Location:**Field Based, GB
-**Contract Type:** Fixed Term Contract
-**Location Type:** Hybrid
-**Date Posted:** 27 Feb 2026  
 
-**Jod Advert Close Date \- 15th March 202",indeed,internship,,,0.2,new
-7ab7c80e1b6caf0c,Celebrity Journalist and Videographer - Intern UK based,The Shared Humanity Group Limited,,https://www.linkedin.com/jobs/view/4379712074,nan,2026-03-02T08:01:54.669927+00:00,nan,linkedin,internship,,,0.2,new
-43d1d3617988ed71,Merchandiser Intern - EMEA Internship Program - Studentjob.ch,Jobster,"Stabio, Ticino, Switzerland",https://www.linkedin.com/jobs/view/4378471469,nan,2026-03-02T08:01:54.669946+00:00,nan,linkedin,internship,,,0.2,new
-01f6d76e555915f6,Digital Platforms Intern - EMEA Internship Program - Studentjob.ch,Jobster,"Stabio, Ticino, Switzerland",https://www.linkedin.com/jobs/view/4378455497,nan,2026-03-02T08:01:54.669953+00:00,nan,linkedin,internship,,,0.2,new
-98311650be6e4e6f,Intern Go-To-Market Sprayer (m/f/d),NEGU Enterprises,"Walldorf, Baden-Württemberg, Germany",https://www.linkedin.com/jobs/view/4378764131,2026-02-27,2026-03-02T08:01:54.669970+00:00,nan,linkedin,internship,,,0.2,new
-22e2c0c081b77910,Founder’s Associate Intern,FUNDED,"Munich, Bavaria, Germany",https://www.linkedin.com/jobs/view/4376686143,nan,2026-03-02T08:01:54.669978+00:00,nan,linkedin,internship,,,0.2,new
+At VAT, we change the world with vacuum solutions. As the world’s leading supplier of high\-performance vacuum valves, we have been driving innovation for more than 60 years. With over 3,200 employ",indeed,internship,,,0.55,new
+8a4544530fc4df02,Intern MINI Sales Development & Volume Planning (m/w/x),BMW Group,"Munich, Bavaria, Germany",https://www.linkedin.com/jobs/view/4336283011,nan,2026-03-02T13:07:29.247427+00:00,nan,linkedin,internship,,,0.55,new
+5d4cd49ea9a42305,2026 Off-cycle Internship – IB Unified Global Markets Risk COO,UBS,"Opfikon, ZH, CH",https://ch.indeed.com/viewjob?jk=67ea10c0df72fc56,2026-03-01,2026-03-02T13:07:29.247451+00:00,"Switzerland \- Zürich
+Investment Banking, Risk
+Investment Bank
+**Job Reference \#**
+
+
+335352BR
+**City**
+
+
+Opfikon
+**Your role**
+
+
+Are you passionate about non\-financial risk and keen to understand how the IB and particularly Unified Global Markets (UGM) manages it? Would you enjoy working in a dyna",indeed,internship,,,0.55,new
+292c31f773147b5e,"iconQuantitative Analyst: Quants at the D. E. Shaw group apply mathematical techniques and write software to develop, analyze, and implement statistical models for our computerized financial trading…",DE Shaw,,https://www.deshaw.com/careers/quantitative-analyst-2636,,2026-03-02T13:07:29.247476+00:00,,custom_html,,,,0.45,new
+96aa2c15d688b86d,Internship Airline Cooperations Management,Lufthansa Cargo,"Frankfurt am Main, HE, DE",https://de.indeed.com/viewjob?jk=86b23c8527130575,2026-03-02,2026-03-02T13:07:29.247485+00:00,"**Start date:** July 2026, Duration: 6 months
+  
+LOCATION
+  
+  
+
+Frankfurt / Main
+  
+  
+
+EMPLOYMENT LEVEL
+  
+  
+
+University internship
+  
+  
+
+FUNCTION
+  
+  
+
+Procurement
+  
+  
+
+WORKING TIME
+  
+  
+
+Full time
+  
+  
+
+SALARY
+  
+  
+
+The internship will be remunerated.
+  
+  
+
+APPLICATION DEADLINE
+  
+  
+
+0",indeed,internship,6 months,,0.43,new
+d039f66da00ea0d1,Non-Trading Market Risk Analysis & Reporting Manager,Citi,Budapest  Hungary,https://citi.wd5.myworkdayjobs.com/2/job/Budapest--Hungary/Non-Trading-Market-Risk-Analysis---Reporting-Manager_26931229,Posted Today,2026-03-02T13:07:29.247495+00:00,,workday,,,,0.4,new
+8fa63e239465b7e8,United Arab Emirates,Pictet,,https://www.group.pictet/ae/en/careers,,2026-03-02T13:07:29.247553+00:00,,custom_html,,,,0.35,new
+1a6cf0b2ce403101,"Asset servicesStandard and bespoke custody, fund and trading solutions, in addition to cash and securities settlements, corporate actions, valuations and reporting.Our services",Pictet,,https://www.group.pictet/us/en/asset-services,,2026-03-02T13:07:29.247559+00:00,,custom_html,,,,0.35,new
+a463fab63e655f14,Trading Analytics Platform,Vontobel,,https://tca.vontobel.com/,,2026-03-02T13:07:29.247566+00:00,,custom_html,,,,0.35,new
+81a0b47b87ce0c00,Risk Management,DE Shaw,,https://www.deshaw.com/what-we-do/risk-management,,2026-03-02T13:07:29.247572+00:00,,custom_html,,,,0.35,new
+c5fb781190089418,Trading Analytics,Virtu Financial,,https://www.virtu.com/solutions/analytics/,,2026-03-02T13:07:29.247578+00:00,,custom_html,,,,0.35,new
+0cd859a5e356a29a,Institutional Trading,Flow Traders,,https://www.flowtraders.com/what-we-do/institutional-trading/,,2026-03-02T13:07:29.247584+00:00,,custom_html,,,,0.35,new
+e479c7abbb555740,Institutional Sales,Susquehanna (SIG),,https://www.susquehannainstitutionaltrading.com/,,2026-03-02T13:07:29.247591+00:00,,custom_html,,,,0.35,new
+0290332bd072ea40,Trading ➔,Susquehanna (SIG),,https://sig.com/careers/trading/,,2026-03-02T13:07:29.247598+00:00,,custom_html,,,,0.35,new
+805a86c77463ab5d,WorldQuant Announces Completion of Inaugural Global Alphathon Competition,WorldQuant,,https://www.worldquant.com/ideas/worldquant-announces-completion-of-inaugural-global-alphathon-competition/,,2026-03-02T13:07:29.247606+00:00,,custom_html,,,,0.35,new
+33dfaeef3b32f295,WorldQuant Technology Talent NetworkMultiple Locations,WorldQuant,Multiple Locations,https://www.worldquant.com/career-listing/?id=4565984006,,2026-03-02T13:07:29.247612+00:00,,custom_html,,,,0.35,new
+d6e85490738c49b5,WorldQuant Ventures,WorldQuant,,https://worldquantventures.com/,,2026-03-02T13:07:29.247619+00:00,,custom_html,,,,0.35,new
+c003ed52f44d5c59,WorldQuant University,WorldQuant,,https://www.wqu.edu/,,2026-03-02T13:07:29.247624+00:00,,custom_html,,,,0.35,new
+8abbeefe6ef30798,WorldQuant Foundry,WorldQuant,,https://www.worldquantfoundry.com/,,2026-03-02T13:07:29.247631+00:00,,custom_html,,,,0.35,new
+58c8ca6ee8d3dd69,Global Quantitative Strategies,Citadel LLC,,https://www.citadel.com/what-we-do/global-quantitative-strategies,,2026-03-02T13:07:29.247637+00:00,,custom_html,,,,0.35,new
+7aca936c754dd8a0,Fixed Income and Macro Central Bank Challenge,Citadel LLC,,https://www.citadel.com/careers/programs-and-events/the-fixed-income-macro-central-bank-challenge/,,2026-03-02T13:07:29.247643+00:00,,custom_html,,,,0.35,new
+62795de0c33cd3d2,Trading Invitational,Citadel LLC,,https://www.citadel.com/careers/programs-and-events/the-trading-invitational/,,2026-03-02T13:07:29.247649+00:00,,custom_html,,,,0.35,new
+6e16aea29c1cc132,"Working Student – Java, SQL & Data Integration (m/f/d)",Continental,"Hannover, NI, DE",https://de.indeed.com/viewjob?jk=eeb641dff8ee465e,2026-03-02,2026-03-02T13:07:29.247657+00:00,"Your tasks
+
+
+For the Data Engineering team at the location in Hanover, we are looking for a working student (m/f/d) starting as soon as possible. The position comes with a working time of 20 hours per week for at least 6 months.
+
+
+Our Digital Solutions IT team is looking for a motivated Working Stud",indeed,internship,6 months,,0.35,new
+a94d0be90e2f5dd5,"Stage Ingénieur/Master – Suivi de projets photovoltaïques (Développement, Supervision et Exploitati",Exetanch,"Champagne-au-Mont-d'Or, ARA, FR",https://fr.indeed.com/viewjob?jk=af8535f578e45343,2026-03-02,2026-03-02T13:07:29.247666+00:00,"**Stage Ingénieur /Master – Suivi de projets photovoltaïques (Développement, Supervision et Exploitation) \- 6 mois**
+
+**Objet : Renforcement de l’équipe Bureau étude et Service Exploitation**
+
+**1\. Le Projet :** 
+
+En partenariat avec Eren Groupe, engagé depuis 40 années au service de la transition",indeed,internship,6 mois,,0.35,new
+11472e961ee4bb60,Assistant de direction stagiaire H/F,Capfun,"Anse, ARA, FR",https://fr.indeed.com/viewjob?jk=aa2750f0b6e74c39,2026-02-28,2026-03-02T13:07:29.247672+00:00,"**Le Camping CAPFUN les Portes du Beaujolais recherche son stagiaire Assistant de direction H/F**
+
+Poste logé, nécessite une convention de stage. 5 à 6 mois à partir de mars 2026 ( juillet août obligatoire)
+
+Le Camping les Portes du Beaujolais est situé au cœur du beaujolais réputé pour ses paysages",indeed,internship,6 mois,,0.35,new
+dbc02c18a06f6a3f,Stagiaire Commerce International,Barrière,"Paris, A8, FR",https://fr.indeed.com/viewjob?jk=1bdf7b76ff4bf752,2026-03-02,2026-03-02T13:07:29.247682+00:00,"**Description de l'entreprise**  
+
+Barrière recherche un Talent : une ou un Stagiaire Commerce International
+
+
+Vous intégrerez l’équipe Ventes Internationales, au sein du siège du Groupe, situé en plein cœur de Paris.
+
+
+Vous avez envie d'intégrer une équipe fun et dynamique et vous aimez les challen",indeed,internship,,,0.3,new
+ef9009cf6825fc9f,"Operations Manager, Business Operations",Joko,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4365415657,2026-02-28,2026-03-02T13:07:29.247688+00:00,nan,linkedin,internship,,,0.3,new
+ca6a22f90345d3c7,Product Data Analyst Intern - Platform,Mirakl - Labs,"Paris, A8, FR",https://fr.indeed.com/viewjob?jk=b2d5ea1d017d39aa,2026-03-02,2026-03-02T13:07:29.247696+00:00,"**About Mirakl:**
+
+
+
+Mirakl is the leading provider of eCommerce software solutions. Mirakl's suite of solutions provides enterprises with a transformative way to drive significant growth and efficiency in their online business.
+
+
+
+Since 2012, Mirakl has been pioneering the platform economy, empower",indeed,internship,,,0.3,new
+24f6454a000670db,Product Data Analyst Intern - Platform,Mirakl,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4377362393,nan,2026-03-02T13:07:29.247707+00:00,nan,linkedin,internship,,,0.3,new
+b6674c84c81e4657,Digital Customer Success Intern,Aircall,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4334970665,nan,2026-03-02T13:07:29.247713+00:00,nan,linkedin,internship,,,0.3,new
+9ad80d3c7ef4c1c2,eCommerce Category Intern - Summer 2026,Red Bull,"London, England, UK",https://www.linkedin.com/jobs/view/4379917764,nan,2026-03-02T13:07:29.247722+00:00,nan,linkedin,internship,,,0.3,new
+8aab4026e39c7c42,Impulse Category Intern - Summer 2026,Red Bull,"London, England, UK",https://www.linkedin.com/jobs/view/4379916763,nan,2026-03-02T13:07:29.247728+00:00,nan,linkedin,internship,,,0.3,new
+9bf22ff918966e9b,GRADUATE PRODUCT CONSULTANT - EUROPEAN LANGUAGES,Adecco,"City Of London, England, UK",https://www.linkedin.com/jobs/view/4377389707,nan,2026-03-02T13:07:29.247734+00:00,nan,linkedin,internship,,,0.3,new
+a23ace732dc07b43,INGENIEUR EXPERT MDM,RED TIC,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4379905655,nan,2026-03-02T13:07:29.247754+00:00,nan,linkedin,internship,,,0.3,new
+f3e32b9765bed2c1,Stage d'analyste en investissements hôteliers (H/F) - Paris,CBRE,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4379017011,2026-02-27,2026-03-02T13:07:29.247765+00:00,None,linkedin,internship,,,0.3,new
+349a7f88aad742d4,INVESTMENT & DEAL FLOW ANALYST,STATION F,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4377739042,nan,2026-03-02T13:07:29.247772+00:00,None,linkedin,internship,,,0.3,new
+e8736464dc9a237c,IT Security Officer,LSEG,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4325897994,nan,2026-03-02T13:07:29.247778+00:00,None,linkedin,internship,,,0.3,new
+a1de74720a2343e0,"Operations Officer, Futures - CITIC CLSA",Jobs via eFinancialCareers,"London, England, UK",https://www.linkedin.com/jobs/view/4368601348,nan,2026-03-02T13:07:29.247788+00:00,nan,linkedin,internship,,,0.3,new
+cc014a693e0145b0,"Operations Manager, Futures - CITIC CLSA",Jobs via eFinancialCareers,"London, England, UK",https://www.linkedin.com/jobs/view/4368610303,nan,2026-03-02T13:07:29.247794+00:00,nan,linkedin,internship,,,0.3,new
+755196eff230c8b6,Stagiaire Guest Relations F/H,Raffles Hotels & Resorts,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4369536579,2026-02-28,2026-03-02T13:07:29.247804+00:00,nan,linkedin,internship,,,0.3,new
+059f04e3615b1eec,FP&A Analyst,Speechmatics,"London, England, UK",https://www.linkedin.com/jobs/view/4358972560,2026-02-27,2026-03-02T13:07:29.247810+00:00,nan,linkedin,internship,,,0.3,new
+5ec6ea62cd39f1fb,Buy-Side Technology & Ai Recruitment Consultant,AT Talent - Rec2Rec,"London Area, United Kingdom",https://www.linkedin.com/jobs/view/4378798013,2026-02-27,2026-03-02T13:07:29.247817+00:00,nan,linkedin,internship,,,0.3,new
+39041e5985f5bc69,NDC Consultant,United Nations,"Paris, A8, FR",https://fr.indeed.com/viewjob?jk=eb616c42175fdd0f,2026-03-01,2026-03-02T13:07:29.247823+00:00,"Result of Service
+The consultant will support UNEP's Climate Change Division with the global coordination, management and implementation of the NDC Act \& Invest initiative, as well as with relevant activities on NDC 3\.0, long\-term climate action plans, and COP31 preparations. Time allocation is s",indeed,internship,,,0.3,new
+2189ea55f73b8095,Staff Resilience Engineer (H/F/N),Believe,"Paris, A8, FR",https://fr.indeed.com/viewjob?jk=51a356260ae08109,2026-02-27,2026-03-02T13:07:29.247829+00:00,"**Company Description**  
+
+Believe is a global artist development company. We empower local artists, labels and publishers to grow their audiences at each stage of their careers with expertise, respect, fairness and transparency.  
+
+Operating in 50\+ countries, with more than 2,000 employees, Believ",indeed,internship,,,0.3,new
+af64ce4e1578d557,Workplace Experience Operations & HSE Administrator - 6 months FTC,Which?,"London, ENG, GB",https://uk.indeed.com/viewjob?jk=fda92d11f2f81068,2026-03-02,2026-03-02T13:07:29.247835+00:00,"**This role offers a competitive salary, (London office 4\-5 days per week, occasional working from home), 28 days holiday a year plus Bank Holidays and a fantastic pension scheme offering 6% in year one and 11% after this.**
+
+
+**Salary £30,000 \- £34,000 per annum**
+
+
+**Location: London (Office bas",indeed,internship,,,0.3,new
+88c9bcfc46d1028e,Data & Automation Engineer - Internship (4 months),Pigment,"Paris, A8, FR",https://fr.indeed.com/viewjob?jk=8ec8bc7ac014aad7,2026-02-27,2026-03-02T13:07:29.247840+00:00,"**Join Pigment: The AI Platform Redefining Business Planning**  
+
+Pigment is the AI\-powered business planning and performance management platform built for agility and scale. We connect people, data, and processes in one intuitive, feature\-rich solution, empowering every team—from Finance to HR—to",indeed,internship,,,0.3,new
+683404413c261d3a,BI Analyst/ Payments Operations Coordinator,EBA CLEARING,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4378816814,nan,2026-03-02T13:07:29.247846+00:00,nan,linkedin,internship,,,0.3,new
+0b4d9a004b041ff9,Payment Systems Test & Operations Coordinator,EBA CLEARING,"Paris, Île-de-France, France",https://www.linkedin.com/jobs/view/4378810913,nan,2026-03-02T13:07:29.247852+00:00,nan,linkedin,internship,,,0.3,new
+c5656542d934b7ae,Lippincott - Design Intern (Arabic),Marsh McLennan,"London, ENG, GB",https://uk.indeed.com/viewjob?jk=bd79da373b89d51e,2026-02-27,2026-03-02T13:07:29.247858+00:00,"**Company:**
+------------
+
+Lippincott
+**Description:**
+----------------
+
+As a **Visual Communication Design** **Intern** you will work with our expert design team on a variety of projects in and related to brand identity, across print, digital and interactive experiences. If you’re creative, motivat",indeed,internship,,,0.3,new
+299451f135cb11a8,Lippincott - Design Intern (Arabic),Marsh McLennan,"London, ENG, GB",https://uk.indeed.com/viewjob?jk=d9c3db999ef4530c,2026-02-27,2026-03-02T13:07:29.247864+00:00,"As a **Visual Communication Design** **Intern** you will work with our expert design team on a variety of projects in and related to brand identity, across print, digital and interactive experiences. If you’re creative, motivated, and highly articulate you’ve come to the right place!
+
+  
+
+We seek de",indeed,internship,,,0.3,new
+b2e7d1ffef3f62a2,Global Corporate Trust Summer Intern,U.S. Bank,"London, ENG, GB",https://uk.indeed.com/viewjob?jk=239d7b2b81281bae,2026-02-26,2026-03-02T13:07:29.247870+00:00,"At U.S. Bank, we’re on a journey to do our best. Helping the customers and businesses we serve to make better and smarter financial decisions and enabling the communities we support to grow and succeed. We believe it takes all of us to bring our shared ambition to life, and each person is unique in ",indeed,internship,,,0.3,new
+9169f67ee66ccb2a,Business Analyst,Talkspirit,"Little London, England, UK",https://www.linkedin.com/jobs/view/4379750248,2026-03-01,2026-03-02T13:07:29.247876+00:00,nan,linkedin,internship,,,0.3,new
+c17349bb21f83810,Technology Risk & Controls Assurance Analyst,Moore Kingston Smith,"London, England, UK",https://www.linkedin.com/jobs/view/4379242496,2026-02-28,2026-03-02T13:07:29.247882+00:00,nan,linkedin,internship,,,0.3,new
+60d020aa30b2ab8c,Actuarial Summer Internship,targetjobs UK,"London, England, UK",https://www.linkedin.com/jobs/view/4378216235,2026-02-28,2026-03-02T13:07:29.247888+00:00,nan,linkedin,internship,,,0.3,new
+6b24a6ab23786231,Technology Risk & Controls Assurance Analyst,Moore Kingston Smith,"City Of London, England, UK",https://www.linkedin.com/jobs/view/4379033443,2026-02-27,2026-03-02T13:07:29.247894+00:00,nan,linkedin,internship,,,0.3,new
+ea2609f7674db6e1,Field Applications Engineering Intern,Texas Instruments,"Glattbrugg, Zurich, Switzerland",https://www.linkedin.com/jobs/view/4322181077,nan,2026-03-02T13:07:29.247905+00:00,nan,linkedin,internship,,,0.28,new
+932b48e22c472d45,Internship in Project Management GIS Installation 80 - 100% (f/m/d),Hitachi Energy,"Zurich, Zurich, Switzerland",https://www.linkedin.com/jobs/view/4368764320,2026-02-27,2026-03-02T13:07:29.247912+00:00,nan,linkedin,internship,,,0.28,new
+eeb694d2a9b4e903,Intern - ICT Risk Analysis (f/m/d),Deutsche Börse,"Frankfurt am Main, HE, DE",https://de.indeed.com/viewjob?jk=8b6f757962bca7b5,2026-02-27,2026-03-02T13:07:29.247918+00:00,"### **Build the future of financial markets. Build yours.**
+
+Ready to make a real impact in the financial industry? At Deutsche Börse Group, we'll empower you to grow your career in a supportive and inclusive environment. With our unique business model, driven by 15,000 colleagues around the globe, ",indeed,internship,,,0.28,new
+813eee7421fc180f,"Real Estate Investment Intern, Frankfurt or Munich",Urban Partners,"Frankfurt, Hesse, Germany",https://www.linkedin.com/jobs/view/4379002534,2026-02-27,2026-03-02T13:07:29.247924+00:00,nan,linkedin,internship,,,0.28,new
+865f477a9e06eed5,Intern - ICT Risk Analysis (f/m/d),Deutsche Börse Group,"Frankfurt, Hesse, Germany",https://www.linkedin.com/jobs/view/4377945130,2026-02-27,2026-03-02T13:07:29.247930+00:00,nan,linkedin,internship,,,0.28,new
+52fb6189568d2d0a,Stage - Assistant E-Commerce media activation H/F - Rueil-Malmaison (92),The HEINEKEN Company,"Rueil-Malmaison, A8, FR",https://fr.indeed.com/viewjob?jk=ae94d519aad3614d,2026-03-02,2026-03-02T13:07:29.247936+00:00,"Prêt(e) à nous rejoindre ?  
+
+Localisation : Rueil  
+
+Fonction : Commerce  
+
+Département : Commerce \- Sales \- ALI  
+
+Type de contrat : CDD
+
+
+
+L'aventure HEINEKEN France c'est :
+
+
+* HEINEKEN ENTREPRISE, le brasseur de marques incontournables (Heineken, Desperados, Affligem, Pelforth…) avec 3 brasse",indeed,internship,,,0.25,new
+be0555c6a0f7ad1e,Internship Automation & Greenfield Support,LEONI,"Kitzingen, BY, DE",https://de.indeed.com/viewjob?jk=6609cb0b30606cda,2026-03-02,2026-03-02T13:07:29.247945+00:00,"**Company Description**
+-----------------------
+
+
+LEONI is a global leading provider of products, solutions and services for energy and data management in the automotive industry. With around 86,000 employees in 21 countries and consolidated sales of EUR 3\.9 billion in 2025 (excluding the former Au",indeed,internship,,,0.25,new
+434f173b521beb65,Stage – Analyste Actions – H/F – Juillet 2026,Lazard,,https://lazard-careers.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-0204a672c636/candidate/so/pm/1/pl/2/opp/4133-Stage-Analyste-Actions-H-F-Juillet-2026/en-GB,,2026-03-02T13:07:29.247957+00:00,,custom_html,,,,0.2,new
+f3b7d56a25ff7c22,International IT Services Specialist (80-100%),Lombard Odier,,https://lombardodier.wd3.myworkdayjobs.com/Lombard_Odier_Careers/job/Luxembourg/International-IT-Services-Specialist_R0006792,,2026-03-02T13:07:29.247998+00:00,,custom_html,,,,0.2,new
+96d31a75ac7e9527,BEM work-study banking internship for Maturité holders,Pictet,,https://www.group.pictet/us/en/careers/vocational-training#BEM-work-study-banking-internship-for-Maturit-holders-1,,2026-03-02T13:07:29.248006+00:00,,custom_html,,,,0.2,new
+4294db4b2d6353cf,Graduate programmes,Pictet,,https://www.group.pictet/us/en/careers/graduate-programmes,,2026-03-02T13:07:29.248012+00:00,,custom_html,,,,0.2,new
+9a10ac6a76e964b2,Internships,Pictet,,https://www.group.pictet/us/en/careers/intership-programmes,,2026-03-02T13:07:29.248018+00:00,,custom_html,,,,0.2,new
+6227b083c112bbd5,Internships and placementsJoining Schroders as an intern or placement year student,Schroders,,https://www.schroders.com/en/global/individual/careers/internships-and-placements/,,2026-03-02T13:07:29.248024+00:00,,custom_html,,,,0.2,new
+83fdf5d723af20dd,Internships,Two Sigma,,https://www.twosigma.com/careers/internships/,,2026-03-02T13:07:29.248031+00:00,,custom_html,,,,0.2,new
+fe6dbf9f96467589,Internships,DE Shaw,,https://www.deshaw.com/careers/internships,,2026-03-02T13:07:29.248037+00:00,,custom_html,,,,0.2,new
+31ae8493669e4bec,Interns→,DRW,,https://drw.com/work-at-drw/interns,,2026-03-02T13:07:29.248044+00:00,,custom_html,,,,0.2,new
+563beab4c8dda9b8,Internships + Co-ops ➔,Susquehanna (SIG),,https://sig.com/careers/interns-co-ops/,,2026-03-02T13:07:29.248050+00:00,,custom_html,,,,0.2,new
+d567a4d6ca5eeec9,"Data Science InternBeijing or Shanghai, China",WorldQuant,"Beijing or Shanghai, China",https://www.worldquant.com/career-listing/?id=4069460006,,2026-03-02T13:07:29.248057+00:00,,custom_html,,,,0.2,new
+06e0fa9002d153da,Citadel International Equities,Citadel LLC,,https://www.citadel.com/what-we-do/equities/citadel-international-equities/,,2026-03-02T13:07:29.248063+00:00,,custom_html,,,,0.2,new
+d3b4edf4a9f18771,Internships,Citadel LLC,,https://www.citadel.com/careers/internships/,,2026-03-02T13:07:29.248069+00:00,,custom_html,,,,0.2,new
+dccbccfef2f6c489,Internships,Citadel LLC,,"https://www.citadel.com/careers/open-opportunities?experience-filter=internships&selected-job-sections=388,389,387,390&current_page=1&sort_order=DESC&per_page=10&action=careers_listing_filter",,2026-03-02T13:07:29.248075+00:00,,custom_html,,,,0.2,new
+a34a56f61e86340d,"InternshipsInternshipsFrom the beginning, we equip our interns to make critical contributions to what we do and how we do it.ExploreInternships",Citadel LLC,,https://www.citadel.com/careers/students/internships/,,2026-03-02T13:07:29.248082+00:00,,custom_html,,,,0.2,new
+9e8031c0b5a1ad42,Project buyer,AMETEK,"Gennevilliers, A8, FR",https://fr.indeed.com/viewjob?jk=db2fffc984cd01b9,2026-03-02,2026-03-02T13:07:29.248091+00:00,"**Location:**Gennevilliers Cedex, J, FR, 92622
+**Business Unit:** Cameca
+**Posting Date:** Mar 2, 2026
+**Job Description:**CAMECA is a world leading supplier of microanalytical and metrology instrumentation for research and process control. Our instruments measure elemental and isotopic composition ",indeed,internship,,,0.2,new
+cce802c254f7aae7,BTA / Biologielaborant / BSc als Lab Technician (m/w/d) - Biosafety,Charles River Laboratories,"Erkrath, NW, DE",https://de.indeed.com/viewjob?jk=3bb17a0a2c80c605,2026-03-01,2026-03-02T13:07:29.248103+00:00,"For 75 years, Charles River employees have worked together to assist in the discovery, development and safe manufacture of new drug therapies. When you join our family, you will have a significant impact on the health and well\-being of people across the globe. Whether your background is in life sci",indeed,internship,,,0.2,new
+60d0cdee2b51beda,Growth Intern (all genders),revel8,"Munich, Bavaria, Germany",https://www.linkedin.com/jobs/view/4346223941,nan,2026-03-02T13:07:29.248125+00:00,nan,linkedin,internship,,,0.2,new
+ec171ae279800074,"Working Student – Java, SQL & Data Integration (m/f/d) - REF94511O",Continental,"Hannover, Lower Saxony, Germany",https://www.linkedin.com/jobs/view/4379916439,nan,2026-03-02T13:07:29.248136+00:00,nan,linkedin,internship,,,0.2,new
+8749006b1e0d6ede,Stagiaire Achat H/F,Château La Coste,"Le Puy-Sainte-Réparade, B8, FR",https://fr.indeed.com/viewjob?jk=67790722f987166a,2026-03-02,2026-03-02T13:07:29.248142+00:00,"**À propos de Château La Coste**
+
+Situé au cœur de la Provence, Château La Coste est bien plus qu’un domaine viticole : c’est un lieu où art, architecture et gastronomie se rencontrent pour offrir une expérience unique. Entre vignes, oliveraies et sculptures contemporaines, nous accueillons des visi",indeed,internship,,,0.2,new
+9172950a9baa4cb8,Assistant.e QSE F/H,SEE YOU SUN,"Cesson-Sévigné, A2, FR",https://fr.indeed.com/viewjob?jk=3b9f7a915e4bbfa0,2026-03-02,2026-03-02T13:07:29.248147+00:00,"**L'entreprise**
+----------------
+
+
+Face à la nécessaire transition énergétique, nous avons à cœur de favoriser l’émergence de communautés produisant et consommant une énergie décarbonée à l’échelle du quartier.
+
+
+Nous concevons, construisons et exploitons des solutions photovoltaïques partout en Fr",indeed,internship,,,0.2,new
+1174bb071e8a9248,Stage Chargé(e) de dossier de conception R&D F/H,Newclip Technics,"Haute-Goulaine, B5, FR",https://fr.indeed.com/viewjob?jk=e4eb862d5980cdec,2026-03-02,2026-03-02T13:07:29.248155+00:00,"**L'entreprise**
+----------------
+
+
+Chez NEWCLIP TECHNICS, nous concevons, fabriquons et commercialisons des gammes d'instruments et d'implants d'ostéosynthèse destinés aux chirurgiens de centres hospitaliers et cliniques dans le monde.
+
+
+Notre ETI industrielle et innovante, située près de Nantes, i",indeed,internship,,,0.2,new
+58de2198a3c95344,Stagiaire polyvalent en production et organisation agricole agroécologique,Breizh Oasis,"Plélauff, Brittany, France",https://www.linkedin.com/jobs/view/4379575351,2026-03-01,2026-03-02T13:07:29.248168+00:00,nan,linkedin,internship,,,0.2,new
+f85e10ecc0fc41e3,Stagiaire assistant de direction H/F,Chateau de Boisson,"Allègre-les-Fumades, O, FR",https://fr.indeed.com/viewjob?jk=a64e55d04b257363,2026-03-02,2026-03-02T13:07:29.248177+00:00,"*Stage assistant de direction H/F rémunéré de mars / avril ou mai à Août 2026 \- logé*  
+NOUS RECHERCHONS :
+
+Stagiaire Assistant de direction au sein de notre camping dans le Gard (Niveau BAC \+3 à Bac\+5\)
+
+Stage de Avril à fin Août/ début Septembre 2025 (Possibilité de logement)
+
+Rémunération : 10",indeed,internship,,,0.2,new
+cec7e4513e9ba8ad,Stage - Géométrie algorithmique : positionnement d'un capteur souple sur une pièce complexe H/F,CEA,"Saclay, Île-de-France, France",https://www.linkedin.com/jobs/view/4322218350,2026-02-28,2026-03-02T13:07:29.248204+00:00,nan,linkedin,internship,,,0.2,new
+f8eeb817e36bdcd5,Stagiaire Ingénieur en Synthèse Organique H/F,DRT - Les Dérivés Résiniques et Terpéniques,"Castets, Nouvelle-Aquitaine, France",https://www.linkedin.com/jobs/view/4361073288,2026-02-27,2026-03-02T13:07:29.248212+00:00,nan,linkedin,internship,,,0.2,new
+f156ec5c0dd5c6a0,Support drafting and finalizing the 2025 UN Plan of Action on DRR progress report,United Nations,"Genève, GE, CH",https://ch.indeed.com/viewjob?jk=5b0d764d7bfb8693,2026-02-26,2026-03-02T13:07:29.248218+00:00,"Result of Service
+The consultancy will contribute to UNDRR Strategic Framework 2026\-2030 Deliverable 5\.5\.2 on “Leadership, coordination and partnerships on inclusive risk\-informed action enhance the contribution of the UN system in the implementation of the Sendai Framework”.
+Work Location
+Home\",indeed,internship,,,0.2,new
+e22913fa0de18ec6,Global Semiconductor Materials Buyer (m/f/d),TSMC,"Dresden, SN, DE",https://de.indeed.com/viewjob?jk=50afc9e974b3c77e,2026-01-30,2026-03-02T13:07:29.248224+00:00,"European Semiconductor Manufacturing Company (ESMC) is a joint venture between four technology leaders, TSMC, Bosch, Infineon and NXP, to establish a state\-of\-the\-art semiconductor fab in the heart of Europe. ESMC represents our shared commitment to strengthening the European semiconductor ecosys",indeed,internship,,,0.2,new
+023be285726614bc,Advanced Quality Excellence Engineer (m/f/d) - target start date: 1.st Oct. 2026,TSMC,"Dresden, SN, DE",https://de.indeed.com/viewjob?jk=6cb2e976ddf8e628,2026-01-26,2026-03-02T13:07:29.248230+00:00,"European Semiconductor Manufacturing Company (ESMC) is a joint venture between four technology leaders, TSMC, Bosch, Infineon and NXP, to establish a state\-of\-the\-art semiconductor fab in the heart of Europe. ESMC represents our shared commitment to strengthening the European semiconductor ecosys",indeed,internship,,,0.2,new
+a0b5c1d8a5d9c531,Strategic IT & General Affairs Buyer (m/f/d),TSMC,"Dresden, SN, DE",https://de.indeed.com/viewjob?jk=9b9ea624cea58d7e,2026-01-16,2026-03-02T13:07:29.248236+00:00,"European Semiconductor Manufacturing Company (ESMC) is a joint venture between four technology leaders, TSMC, Bosch, Infineon and NXP, to establish a state\-of\-the\-art semiconductor fab in the heart of Europe. ESMC represents our shared commitment to strengthening the European semiconductor ecosys",indeed,internship,,,0.2,new
+a7ee0d2ab6105a4c,ESMC GSM Manager (m/f/d),TSMC,"Dresden, SN, DE",https://de.indeed.com/viewjob?jk=edebf224152fc9b6,2026-01-07,2026-03-02T13:07:29.248242+00:00,"European Semiconductor Manufacturing Company (ESMC) is a joint venture between four technology leaders, TSMC, Bosch, Infineon and NXP, to establish a state\-of\-the\-art semiconductor fab in the heart of Europe. ESMC represents our shared commitment to strengthening the European semiconductor ecosys",indeed,internship,,,0.2,new
+221b8e20b92cd366,Chemical Analysis Engineer (m/f/d),TSMC,"Dresden, SN, DE",https://de.indeed.com/viewjob?jk=680572d90e629e54,2026-01-05,2026-03-02T13:07:29.248249+00:00,"European Semiconductor Manufacturing Company (ESMC) is a joint venture between four technology leaders, TSMC, Bosch, Infineon and NXP, to establish a state\-of\-the\-art semiconductor fab in the heart of Europe. ESMC represents our shared commitment to strengthening the European semiconductor ecosys",indeed,internship,,,0.2,new
+7cdef2dbc84e18d0,Quality and Reliability Engineer (m/f/d),TSMC,"Dresden, SN, DE",https://de.indeed.com/viewjob?jk=7aa339c97bf66367,2026-01-02,2026-03-02T13:07:29.248256+00:00,"European Semiconductor Manufacturing Company (ESMC) is a joint venture between four technology leaders, TSMC, Bosch, Infineon and NXP, to establish a state\-of\-the\-art semiconductor fab in the heart of Europe. ESMC represents our shared commitment to strengthening the European semiconductor ecosys",indeed,internship,,,0.2,new
+d105da78a9782155,Fire Protection System Engineer (m/f/d),TSMC,"Dresden, SN, DE",https://de.indeed.com/viewjob?jk=7df4be3a7ef089e1,2025-06-02,2026-03-02T13:07:29.248262+00:00,"European Semiconductor Manufacturing Company (ESMC) is a joint venture between four technology leaders, TSMC, Bosch, Infineon and NXP, to establish a state\-of\-the\-art semiconductor fab in the heart of Europe. ESMC represents our shared commitment to strengthening the European semiconductor ecosys",indeed,internship,,,0.2,new
+cc4e6f02d58f3bf4,Slurry Distribution Systems Engineer (SDS) (m/f/d),TSMC,"Dresden, SN, DE",https://de.indeed.com/viewjob?jk=69c25abec37e8aa1,2025-03-07,2026-03-02T13:07:29.248268+00:00,"European Semiconductor Manufacturing Company (ESMC) is a joint venture between four technology leaders, TSMC, Bosch, Infineon and NXP, to establish a state\-of\-the\-art semiconductor fab in the heart of Europe. ESMC represents our shared commitment to strengthening the European semiconductor ecosys",indeed,internship,,,0.2,new
+1c83e13ed236d2c3,Bulk & Specialty Gas Systems Engineer (GDS) (m/f/d),TSMC,"Dresden, SN, DE",https://de.indeed.com/viewjob?jk=ad84ddd09bdb85fd,2025-03-07,2026-03-02T13:07:29.248274+00:00,"European Semiconductor Manufacturing Company (ESMC) is a joint venture between four technology leaders, TSMC, Bosch, Infineon and NXP, to establish a state\-of\-the\-art semiconductor fab in the heart of Europe. ESMC represents our shared commitment to strengthening the European semiconductor ecosys",indeed,internship,,,0.2,new
+6688efc72a0720ad,Chemical Distribution Systems Engineer (CDS) (m/f/d),TSMC,"Dresden, SN, DE",https://de.indeed.com/viewjob?jk=580235aae9d103d5,2025-03-07,2026-03-02T13:07:29.248280+00:00,"European Semiconductor Manufacturing Company (ESMC) is a joint venture between four technology leaders, TSMC, Bosch, Infineon and NXP, to establish a state\-of\-the\-art semiconductor fab in the heart of Europe. ESMC represents our shared commitment to strengthening the European semiconductor ecosys",indeed,internship,,,0.2,new
+9f832235d22ee2f9,QMS & Regulatory Intern – Medical Device (Class I) | Remote | UK/India,Dentilligence,,https://www.linkedin.com/jobs/view/4379910623,nan,2026-03-02T13:07:29.248288+00:00,nan,linkedin,internship,,,0.2,new
+17b67faa1bf76dc3,"Junior Technical Support Engineer (50%, on-site)",RepRisk,"Zürich, ZH, CH",https://ch.indeed.com/viewjob?jk=ecff1095745eb4ff,2026-03-02,2026-03-02T13:07:29.248294+00:00,"**Company Description** **About Us**
+
+
+RepRisk is the world’s most respected Data as a Service (DaaS) company for reputational risks and responsible business conduct. Our mission is to provide transparency on business conduct risks to drive positive change. Combining advanced AI with deep human expe",indeed,internship,,,0.2,new
+54920c1b1551566c,0151 TEACHER (MUSIC),US Department of Defense Education Activity,"Landstuhl, RP, DE",https://de.indeed.com/viewjob?jk=346ba4c00b6268eb,2026-02-27,2026-03-02T13:07:29.248300+00:00,"**Summary**
+-----------
+
+
+**About the Position:**  
+
+  
+
+This position is a Part\-Time 0151 TEACHER (MUSIC) located at Landstuhl ES, in Landstuhl, Germany. You must be in the local commuting area.  
+
+  
+
+**IMPORTANT INFORMATION**: If you are interested in applying you must submit a completed applica",indeed,internship,,,0.2,new
+834c6328a5b11a6e,Physician (Family Medicine),US Military Treatment Facilities under DHA,"Stuttgart, BW, DE",https://de.indeed.com/viewjob?jk=adcc0c2b7a65d11b,2026-02-27,2026-03-02T13:07:29.248306+00:00,"**Summary**
+-----------
+
+
+**About the Position:** Serves as a Family Medicine provider for the Army Health Clinic Stuttgart, independently developing comprehensive treatment plans, diagnosing and managing illnesses, coordinating multidisciplinary care, applying advanced clinical procedures, conducti",indeed,internship,,,0.2,new
+cf69dee0628d669b,Teacher (Art),US Department of Defense Education Activity,"Ramstein-Miesenbach, RP, DE",https://de.indeed.com/viewjob?jk=b1ca64ee50fc68cb,2026-02-27,2026-03-02T13:07:29.248312+00:00,"**Summary**
+-----------
+
+
+**About the Position:**  
+
+This position is a 0150 Teacher (Art) at Ramstein ES, Ramstein Germany, Europe Central. This vacancy is for the SY 26/27\.  
+
+  
+
+  
+
+**IMPORTANT INFORMATION**: If you are interested in applying you must submit a completed application package thro",indeed,internship,,,0.2,new
+faf33955e2acfd72,Business Analyst - Thesis Internship (m/w/d),Picnic Technologies,"Düsseldorf, North Rhine-Westphalia, Germany",https://www.linkedin.com/jobs/view/4190487310,2026-03-01,2026-03-02T13:07:29.248319+00:00,nan,linkedin,internship,,,0.2,new
+bf2dfce33bf4c16c,Business Analyst - Internship (m/w/d),Picnic Technologies,"Düsseldorf, North Rhine-Westphalia, Germany",https://www.linkedin.com/jobs/view/4190609916,2026-02-28,2026-03-02T13:07:29.248324+00:00,nan,linkedin,internship,,,0.2,new
+bb97c573abc2f8bb,Working Student PMO (m/f/d),Allianz Technology,"Unterföhring, Bavaria, Germany",https://www.linkedin.com/jobs/view/4379010323,2026-02-27,2026-03-02T13:07:29.248330+00:00,nan,linkedin,internship,,,0.2,new
+750cd2094961a1dd,Working Student in Customer Contract Management Function (m/f/d),Allianz Technology,"Unterföhring, Bavaria, Germany",https://www.linkedin.com/jobs/view/4378797723,2026-02-27,2026-03-02T13:07:29.248337+00:00,nan,linkedin,internship,,,0.2,new
+772243034a7b671d,BI Analyst/ Payments Operations Coordinator,EBA CLEARING,,https://www.linkedin.com/jobs/view/4378806858,nan,2026-03-02T13:07:29.248343+00:00,nan,linkedin,internship,,,0.2,new
+4936376c8c7e2a6a,Payment Systems Test & Operations Coordinator,EBA CLEARING,,https://www.linkedin.com/jobs/view/4378820766,nan,2026-03-02T13:07:29.248349+00:00,nan,linkedin,internship,,,0.2,new
+b10a40abd516beaa,Internship Programme 2026,Mercury,"Lower Saxony, Germany",https://www.linkedin.com/jobs/view/4299035855,nan,2026-03-02T13:07:29.248354+00:00,nan,linkedin,internship,,,0.2,new

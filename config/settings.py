@@ -42,8 +42,17 @@ OFF_CYCLE_START_MIN = (2027, 1)   # (annee, mois)
 # Une offre dont la periode n'est pas identifiable est CONSERVEE et signalee
 # dans la colonne "Periode" du rapport, plutot que jetee en silence.
 
-# Sorties
-CSV_DIR = "data"
+# ---------------------------------------------------------------------------
+# SORTIE : UN SEUL FICHIER
+# ---------------------------------------------------------------------------
+REPORT_PATH = "data/stages_finance_marche.xlsx"
+
+# Les offres restent dans le classeur pendant cette duree, pour ne pas perdre
+# celles d'hier si le fichier n'a pas ete ouvert. Les nouveautes du jour sont
+# en tete de chaque onglet, marquees "NOUVEAU".
+REPORT_WINDOW_DAYS = 60
+
+# Fichiers techniques (memoire du scraper, pas des livrables)
 HASHES_PATH = "data/seen_hashes.json"
 RUN_LOG_PATH = "data/run_log.json"
 

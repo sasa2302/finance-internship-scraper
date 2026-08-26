@@ -7,18 +7,23 @@ onglet Summer**.
 
 ## Ce que produit le scraper
 
-Chaque run écrit dans `data/` :
+**Un seul fichier** : `data/stages_finance_marche.xlsx`, mis à jour à chaque run.
 
-| Fichier | Contenu |
+| Onglet | Contenu |
 |---|---|
-| `stages_finance_marche_AAAA-MM-JJ.xlsx` | **Le livrable.** Onglets : Résumé, Off-Cycle, Summer, À trier |
-| `off_cycle_AAAA-MM-JJ.csv` | Les stages longs seuls |
-| `summer_AAAA-MM-JJ.csv` | Les summer internships seuls |
-| `internships_AAAA-MM-JJ.csv` | Toutes les offres retenues |
-| `run_log.json` | Statistiques du run et motifs de rejet |
+| **Résumé** | Nouveautés du run, totaux, répartition géographique et par type d'employeur |
+| **Off-Cycle** | Stages longs / césure |
+| **Summer** | Programmes d'été |
+| **À trier** | Calendrier non identifié — rien n'est jeté |
+| `_donnees` | Feuille technique masquée, relue au run suivant |
 
-Le classeur trie chaque onglet par **zone prioritaire** puis par score, colore le
-score (vert / orange / rouge), et met un lien cliquable vers chaque offre.
+Les offres du jour sont **en tête de chaque onglet, marquées NOUVEAU**. Les
+précédentes restent visibles pendant `REPORT_WINDOW_DAYS` (60 jours par défaut)
+puis sortent automatiquement : à ~2,5 offres/jour, le fichier se stabilise
+autour de 150 lignes et ne dérive pas.
+
+`data/seen_hashes.json` et `data/run_log.json` sont des fichiers techniques
+(mémoire de déduplication et journal du run), pas des livrables.
 
 ### Off-Cycle vs Summer
 

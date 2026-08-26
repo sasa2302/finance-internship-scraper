@@ -26,7 +26,7 @@ from config.settings import (
 from utils.budget import Deadline
 from utils.http_client import HttpClient
 from utils.dedup import DeduplicationManager
-from utils.csv_manager import CSVManager
+from utils.report import ReportManager
 from utils.filters import JobFilter
 from scrapers.workday import WorkdayScraper
 from scrapers.custom_html import CustomHTMLScraper
@@ -130,7 +130,7 @@ def main():
         dedup.seen = set()
         logger.info("Deduplication desactivee (l'historique ne sera pas modifie).")
 
-    csv_mgr = CSVManager()
+    report = ReportManager()
     job_filter = JobFilter()
 
     all_offers, errors, collect_stats = collect_offers(
@@ -145,7 +145,7 @@ def main():
                 f"summer {len(buckets['summer'])}, "
                 f"a trier {len(buckets['unknown'])})")
 
-    logger.info("Phase 4 : deduplication et ecriture des rapports...")
+    logger.info("Phase 4 : mise a jour du rapport...")
     run_stats = {
         "Offres brutes collectees": len(all_offers),
         "Retenues apres filtrage": len(kept),
@@ -153,7 +153,7 @@ def main():
         "Erreurs de scraping": len(errors),
         "Sites non interroges (budget)": collect_stats["companies_skipped"],
     }
-    added, fresh_buckets = csv_mgr.save(kept, buckets, dedup, run_stats=run_stats)
+    added, report_buckets = report.save(kept, dedup, run_stats=run_stats)
     if args.no_dedup:
         logger.info("Historique de deduplication laisse intact (--no-dedup).")
     else:
@@ -164,12 +164,12 @@ def main():
         "total_raw_offers": len(all_offers),
         "total_after_filter": len(kept),
         "new_offers_added": added,
-        "by_type": {k: len(v) for k, v in fresh_buckets.items()},
+        "by_type": {k: len(v) for k, v in buckets.items()},
         "companies_scraped": run_stats["Sites carriere interroges"],
         "rejections": dict(job_filter.rejections),
         "errors_count": len(errors),
         "errors": errors,
-        "excel_report": str(csv_mgr.excel_path),
+        "report": str(report.path),
     }
     log_path = Path(RUN_LOG_PATH)
     log_path.parent.mkdir(parents=True, exist_ok=True)
@@ -180,10 +180,11 @@ def main():
     logger.info(f"  Offres brutes        : {len(all_offers)}")
     logger.info(f"  Retenues (marche)    : {len(kept)}")
     logger.info(f"  Nouvelles ce jour    : {added}")
-    logger.info(f"    - Off-Cycle        : {len(fresh_buckets['off_cycle'])}")
-    logger.info(f"    - Summer           : {len(fresh_buckets['summer'])}")
-    logger.info(f"    - A trier          : {len(fresh_buckets['unknown'])}")
-    logger.info(f"  Rapport Excel        : {csv_mgr.excel_path}")
+    logger.info(f"    - Off-Cycle        : {sum(1 for r in report_buckets['off_cycle'] if r.get('_is_new'))}")
+    logger.info(f"    - Summer           : {sum(1 for r in report_buckets['summer'] if r.get('_is_new'))}")
+    logger.info(f"    - A trier          : {sum(1 for r in report_buckets['unknown'] if r.get('_is_new'))}")
+    logger.info(f"  Rapport              : {report.path} "
+                f"({sum(len(v) for v in report_buckets.values())} lignes au total)")
     logger.info(f"  Erreurs              : {len(errors)}")
     for err in errors[:10]:
         logger.info(f"    - {err['company']}: {err['error'][:70]}")

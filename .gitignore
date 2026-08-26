@@ -11,3 +11,10 @@ venv/
 env/
 .env
 .DS_Store
+
+# Anciens exports dates - remplaces par le fichier unique
+# data/stages_finance_marche.xlsx
+data/internships*.csv
+data/off_cycle_*.csv
+data/summer_*.csv
+data/stages_finance_marche_*.xlsx

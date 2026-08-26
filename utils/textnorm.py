@@ -2,6 +2,7 @@
 
 import re
 import unicodedata
+from functools import lru_cache
 
 # Suffixes juridiques / corporatifs a retirer d'un nom d'entreprise
 _LEGAL_SUFFIXES = [
@@ -42,17 +43,29 @@ def norm_company(name: str) -> str:
     return " ".join(tokens) if tokens else base
 
 
+@lru_cache(maxsize=8192)
+def _compile_phrase(phrase: str):
+    """Motif compile pour une expression, mis en cache.
+
+    Sans ce cache, chaque appel de has_phrase recompilait une regex : avec
+    ~400 employeurs x ~200 mots-cles x plusieurs milliers d'offres, le run
+    devenait beaucoup trop lent.
+    """
+    p = norm_text(phrase)
+    if not p:
+        return None
+    pattern = r"(?<![a-z0-9])" + r"\s+".join(re.escape(w) for w in p.split()) + r"(?![a-z0-9])"
+    return re.compile(pattern)
+
+
 def has_phrase(haystack_norm: str, phrase: str) -> bool:
     """Recherche d'une expression avec frontieres de mots.
 
     Evite les faux positifs du `in` brut : "roma" ne matche plus "romania",
-    "75" ne matche plus "1975", "ey" ne matche plus "money".
+    "75" ne matche plus "1975", "sea" ne matche plus "research".
     """
-    p = norm_text(phrase)
-    if not p:
-        return False
-    pattern = r"(?<![a-z0-9])" + r"\s+".join(re.escape(w) for w in p.split()) + r"(?![a-z0-9])"
-    return re.search(pattern, haystack_norm) is not None
+    rx = _compile_phrase(phrase)
+    return rx is not None and rx.search(haystack_norm) is not None
 
 
 def has_any(haystack_norm: str, phrases) -> bool:

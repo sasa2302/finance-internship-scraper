@@ -36,6 +36,26 @@ autour de 150 lignes et ne dérive pas.
 Un stage français annoncé « Juillet 2026 » est classé **Off-Cycle** : en France
 un stage démarrant en juillet est un 6 mois, pas un programme d'été.
 
+## Sources scrapées
+
+Le scraper n'interroge que des **API JSON**, mesurées comme productives :
+
+| Type | Sources | Exemples |
+|---|---|---|
+| Greenhouse | 17 | Jane Street, Point72, DRW, IMC, Jump Trading, Man Group, AQR, Virtu, Flow Traders, WorldQuant, Squarepoint, Tower Research, Schonfeld |
+| Workday | 8 | Barclays, Morgan Stanley, Citi, Nomura, Macquarie, UBS, Bank of America |
+| Oracle HCM | 2 | JP Morgan, Schroders |
+| Agrégateurs | 4 | LinkedIn, Indeed, Glassdoor, Welcome to the Jungle |
+
+Les 84 sites carrière restants (Société Générale, BNP, Goldman, Deutsche…)
+sont dans `PENDING_ATS` et **ne sont pas scrapés** : ce sont des applications
+JavaScript dont le parsing HTML rendait 0 offre sur 10 sites testés, tout en
+consommant la totalité du budget de temps. Leur couverture passe par les
+agrégateurs, et ces employeurs restent dans la whitelist.
+
+Pour en récupérer un, il faut identifier son ATS réel et ajouter la config :
+HSBC et Goldman sont sur Avature, Standard Chartered sur SuccessFactors.
+
 ## Périmètre
 
 **Employeurs** — whitelist de ~390 noms (`config/employers.py`), organisée en

@@ -120,7 +120,11 @@ EXCLUDE_TITLE_KEYWORDS = [
     "data engineer", "data scientist", "software engineer", "developpeur",
     "developer", "devops", "cloud engineer", "cybersecurity", "mechanical engineer",
     "support engineer", "platform engineer", "infrastructure engineer",
-    "site reliability", "qa engineer",
+    "site reliability", "qa engineer", "fpga", "hardware", "asic",
+    "network engineer", "systems engineer", "linux", "web scraping",
+    # Fonctions internes des salles de marche, hors metier
+    "leadership rotation", "campus recruiter", "recruiting", "recruiter",
+    "people team", "office experience",
     "go to market", "founder s associate", "founder associate",
     # Projet / design / contenu
     "chef de projet", "project manager", "product manager", "product owner",

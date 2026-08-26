@@ -1,138 +1,90 @@
+"""Scraper Oracle Cloud Recruiting (Oracle HCM).
+
+API REST publique utilisee par les sites carriere Oracle Cloud :
+    https://{host}/hcmRestApi/resources/latest/recruitingCEJobRequisitions
+      ?onlyData=true&expand=requisitionList
+      &finder=findReqs;siteNumber={site},keyword={mot},limit={n}
+
+Confirme sur JP Morgan (jpmc.fa.oraclecloud.com, CX_1001) et Schroders
+(ekbq.fa.em2.oraclecloud.com, CX_1).
+
+Remplace la version precedente, qui devinait un motif d'URL et ne renvoyait
+jamais rien.
+"""
+
 import logging
 from typing import List
+
 from scrapers.base import BaseScraper, JobOffer
 
 logger = logging.getLogger(__name__)
 
+API_PATH = "/hcmRestApi/resources/latest/recruitingCEJobRequisitions"
+JOB_URL = "https://{host}/hcmUI/CandidateExperience/en/sites/{site}/job/{job_id}"
+
+# Peu de mots-cles suffisent : l'API cherche dans tout le contenu de l'annonce,
+# et le filtrage fin est fait ensuite par utils/filters.py
+KEYWORDS = ["internship", "intern", "stage", "summer analyst"]
+PAGE_LIMIT = 200
+
 
 class OracleHCMScraper(BaseScraper):
-    """
-    Scraper for Oracle HCM Cloud career sites.
-    Uses the internal REST API that the JS frontend calls.
-    Companies: JP Morgan.
-    """
-
     def scrape(self, keywords: List[str]) -> List[JobOffer]:
-        offers = []
-        seen_ids = set()
-        base_url = self.config["base_url"]
+        host = self.config.get("host")
+        site = self.config.get("site_number")
+        if not host or not site:
+            logger.warning(f"[OracleHCM/{self.company_name}] host ou site_number manquant")
+            return []
 
-        queries = self._build_search_queries(keywords)
-        queries = queries[:10]
+        offers, seen = [], set()
+        for keyword in KEYWORDS:
+            offers.extend(self._search(host, site, keyword, seen))
 
-        for query in queries:
-            page_offers = self._search(base_url, query, seen_ids)
-            offers.extend(page_offers)
-
-        logger.info(f"[OracleHCM/{self.company_name}] Total unique offers: {len(offers)}")
+        logger.info(f"[OracleHCM/{self.company_name}] {len(offers)} offres")
         return offers
 
-    def _search(self, base_url: str, query: str, seen_ids: set) -> List[JobOffer]:
-        offers = []
-
-        # Oracle HCM uses a REST API for requisition search
-        # The frontend at jpmc.fa.oraclecloud.com calls this API
-        api_url = base_url.rstrip("/")
-
-        # Try the common Oracle HCM API pattern
-        search_url = f"{api_url}"
+    def _search(self, host, site, keyword, seen) -> List[JobOffer]:
         params = {
-            "keyword": query,
-            "mode": "location",
-            "sortBy": "RELEVANCE",
-            "limit": 25,
-            "offset": 0,
+            "onlyData": "true",
+            "expand": "requisitionList",
+            "finder": f"findReqs;siteNumber={site},keyword={keyword},limit={PAGE_LIMIT}",
         }
-
-        resp = self._safe_get(search_url, params=params)
-        if not resp:
-            # Fallback: try POST-based search
-            resp = self._safe_post(
-                search_url,
-                json={
-                    "keyword": query,
-                    "limit": 25,
-                    "offset": 0,
-                    "sortBy": "RELEVANCE",
-                },
-                headers={
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                },
-            )
-
-        if not resp:
-            return offers
+        resp = self._safe_get(f"https://{host}{API_PATH}", params=params)
+        if resp is None:
+            return []
 
         try:
-            data = resp.json()
-        except Exception:
-            # If JSON fails, try HTML parsing as fallback
-            return self._parse_html_fallback(resp.text, base_url, seen_ids)
+            items = resp.json().get("items") or []
+        except ValueError:
+            logger.warning(f"[OracleHCM/{self.company_name}] JSON invalide ('{keyword}')")
+            return []
+        if not items:
+            return []
 
-        # Parse Oracle HCM JSON response
-        items = data.get("items", data.get("requisitionList", []))
-        if isinstance(data, list):
-            items = data
-
-        for item in items:
-            req_id = str(item.get("Id", item.get("requisitionId", item.get("id", ""))))
-            if req_id in seen_ids:
-                continue
-            seen_ids.add(req_id)
-
-            title = item.get("Title", item.get("title", ""))
-            location = item.get("PrimaryLocation", item.get("primaryLocation", ""))
-            if isinstance(location, dict):
-                location = location.get("name", str(location))
-
-            job_url = f"{base_url}/{req_id}" if req_id else base_url
-
-            offer = JobOffer(
-                title=title,
-                company=self.company_name,
-                location=str(location),
-                url=job_url,
-                date_posted=item.get("PostedDate", item.get("postedDate", "")),
-                description_snippet=str(item.get("ShortDescriptionStr", item.get("description", "")))[:300],
-                source="oracle_hcm",
-                job_type=item.get("JobType", item.get("jobType", "")),
-                duration=None,
-                department=item.get("Organization", item.get("department", "")),
-            )
-            offers.append(offer)
-
-        return offers
-
-    def _parse_html_fallback(self, html: str, base_url: str, seen_ids: set) -> List[JobOffer]:
-        """Fallback HTML parsing if API returns HTML instead of JSON."""
-        from bs4 import BeautifulSoup
         offers = []
-
-        soup = BeautifulSoup(html, "lxml")
-        job_links = soup.find_all("a", href=True)
-
-        for link in job_links:
-            href = link.get("href", "")
-            if "requisition" not in href.lower() and "job" not in href.lower():
+        for job in items[0].get("requisitionList") or []:
+            job_id = str(job.get("Id") or "").strip()
+            title = str(job.get("Title") or "").strip()
+            if not job_id or not title or job_id in seen:
                 continue
+            seen.add(job_id)
 
-            title = link.get_text(strip=True)
-            if not title or len(title) < 5:
-                continue
+            # L'API expose la duree du contrat : precieux pour off-cycle vs summer
+            duration = ""
+            months = job.get("WorkDurationMonths")
+            if months:
+                duration = f"{months} mois"
 
-            job_url = href if href.startswith("http") else f"{base_url}/{href.lstrip('/')}"
-            if job_url in seen_ids:
-                continue
-            seen_ids.add(job_url)
-
-            offer = JobOffer(
+            offers.append(JobOffer(
                 title=title,
                 company=self.company_name,
-                location="",
-                url=job_url,
+                location=str(job.get("PrimaryLocation") or ""),
+                url=JOB_URL.format(host=host, site=site, job_id=job_id),
+                date_posted=str(job.get("PostedDate") or "")[:10],
+                description_snippet=str(job.get("ShortDescriptionStr") or "")[:600],
                 source="oracle_hcm",
-            )
-            offers.append(offer)
-
+                job_type=str(job.get("JobType") or "") or None,
+                duration=duration or None,
+                department=str(job.get("Department") or "") or None,
+            ))
         return offers

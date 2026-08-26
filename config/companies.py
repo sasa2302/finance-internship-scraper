@@ -1,5 +1,32 @@
+"""Sources scrapees directement.
+
+COMPANIES ne contient que les sources a API JSON, mesurees comme productives.
+Le parsing HTML generique rendait 0 offre sur 10 sites testes (ce sont des
+applications JavaScript) tout en consommant la totalite du budget de temps :
+ces sites sont donc listes dans PENDING_ATS, non scrapes, en attendant un
+scraper adapte a leur ATS reel.
+
+Leur couverture n'est pas perdue pour autant : ces employeurs restent dans la
+whitelist config/employers.py, donc leurs offres remontees par LinkedIn,
+Indeed ou Glassdoor sont bien retenues.
+"""
+
 COMPANIES = [
-    # === Workday API (confirmed working) ===
+    # === Oracle Cloud Recruiting (API REST publique) ===
+    {
+        "name": "JP Morgan",
+        "scraper_type": "oracle_hcm",
+        "host": "jpmc.fa.oraclecloud.com",
+        "site_number": "CX_1001",
+    },
+    {
+        "name": "Schroders",
+        "scraper_type": "oracle_hcm",
+        "host": "ekbq.fa.em2.oraclecloud.com",
+        "site_number": "CX_1",
+    },
+
+    # === Workday (API CXS) ===
     {
         "name": "Barclays",
         "scraper_type": "workday",
@@ -42,526 +69,14 @@ COMPANIES = [
         "base_url": "https://ubs.wd3.myworkdayjobs.com/en-US/Find_a_job_at_UBS",
         "wday_path": "ubs/Find_a_job_at_UBS",
     },
-
-    # === Custom HTML / SPA scrapers ===
-    # These sites are JS-rendered SPAs - the scraper will attempt HTML parsing
-    # but most results will come from the aggregators (LinkedIn, Indeed)
-    {
-        "name": "Societe Generale",
-        "scraper_type": "custom_html",
-        "base_url": "https://careers.societegenerale.com/en/job-offers",
-        "search_url": "https://careers.societegenerale.com/en/job-offers",
-    },
-    {
-        "name": "BNP Paribas",
-        "scraper_type": "custom_html",
-        "base_url": "https://group.bnpparibas/emploi-carriere/toutes-offres-emploi",
-        "search_url": "https://group.bnpparibas/emploi-carriere/toutes-offres-emploi",
-    },
-    {
-        "name": "Natixis",
-        "scraper_type": "custom_html",
-        "base_url": "https://recrutement.natixis.com",
-        "search_url": "https://recrutement.natixis.com",
-    },
-    {
-        "name": "CACIB",
-        "scraper_type": "custom_html",
-        "base_url": "https://careers.ca-cib.com/offres-emploi",
-        "search_url": "https://careers.ca-cib.com/offres-emploi",
-    },
-    {
-        "name": "Goldman Sachs",
-        "scraper_type": "custom_html",
-        "base_url": "https://higher.gs.com/results",
-        "search_url": "https://higher.gs.com/results",
-    },
-    {
-        "name": "JP Morgan",
-        "scraper_type": "custom_html",
-        "base_url": "https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/jobs",
-        "search_url": "https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/jobs",
-    },
-    {
-        "name": "Lazard",
-        "scraper_type": "custom_html",
-        "base_url": "https://lazard-careers.tal.net/vx/lang-en-GB/appcentre-ext/brand-4/candidate/jobboard/vacancy/2/adv/",
-        "search_url": "https://lazard-careers.tal.net/vx/lang-en-GB/appcentre-ext/brand-4/candidate/jobboard/vacancy/2/adv/",
-    },
-    {
-        "name": "Deutsche Bank",
-        "scraper_type": "custom_html",
-        "base_url": "https://careers.db.com/professionals/search-roles",
-        "search_url": "https://careers.db.com/professionals/search-roles",
-    },
-    {
-        "name": "Murex",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.murex.com/careers",
-        "search_url": "https://www.murex.com/careers",
-    },
-    {
-        "name": "Kepler Cheuvreux",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.keplercheuvreux.com/en/careers",
-        "search_url": "https://www.keplercheuvreux.com/en/careers",
-    },
-    {
-        "name": "Rothschild & Co",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.rothschildandco.com/en/careers/",
-        "search_url": "https://www.rothschildandco.com/en/careers/",
-    },
-    {
-        "name": "HSBC",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.hsbc.com/careers/students-and-graduates",
-        "search_url": "https://www.hsbc.com/careers/students-and-graduates",
-    },
-    {
-        "name": "UBS",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.ubs.com/global/en/careers/students.html",
-        "search_url": "https://www.ubs.com/global/en/careers/students.html",
-    },
     {
         "name": "Bank of America",
-        "scraper_type": "custom_html",
-        "base_url": "https://campus.bankofamerica.com/careers",
-        "search_url": "https://campus.bankofamerica.com/careers",
-    },
-    # === Additional banks - Finance de Marché ===
-    {
-        "name": "Cantor Fitzgerald",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.cantorfitzgerald.com/careers",
-        "search_url": "https://www.cantorfitzgerald.com/careers",
-    },
-    {
-        "name": "Jefferies",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.jefferies.com/careers/",
-        "search_url": "https://www.jefferies.com/careers/",
-    },
-    {
-        "name": "Standard Chartered",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.sc.com/en/careers/",
-        "search_url": "https://www.sc.com/en/careers/",
-    },
-    {
-        "name": "Credit Mutuel CIC",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.creditmutuel.com/fr/recrutement.html",
-        "search_url": "https://www.creditmutuel.com/fr/recrutement.html",
-    },
-    {
-        "name": "Commerzbank",
-        "scraper_type": "custom_html",
-        "base_url": "https://jobs.commerzbank.com/",
-        "search_url": "https://jobs.commerzbank.com/",
-    },
-    {
-        "name": "ING",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.ing.jobs/global/en.htm",
-        "search_url": "https://www.ing.jobs/global/en.htm",
-    },
-    {
-        "name": "ABN AMRO",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.abnamro.com/en/careers",
-        "search_url": "https://www.abnamro.com/en/careers",
-    },
-    {
-        "name": "Exane (BNP Paribas)",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.exane.com/en/careers/",
-        "search_url": "https://www.exane.com/en/careers/",
-    },
-    {
-        "name": "Millennium Management",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.mlp.com/careers/",
-        "search_url": "https://www.mlp.com/careers/",
-    },
-    {
-        "name": "Citadel Securities",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.citadelsecurities.com/careers/",
-        "search_url": "https://www.citadelsecurities.com/careers/",
-    },
-    {
-        "name": "Jane Street",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.janestreet.com/join-jane-street/open-roles/",
-        "search_url": "https://www.janestreet.com/join-jane-street/open-roles/",
-    },
-    {
-        "name": "Optiver",
-        "scraper_type": "custom_html",
-        "base_url": "https://optiver.com/working-at-optiver/career-opportunities/",
-        "search_url": "https://optiver.com/working-at-optiver/career-opportunities/",
-    },
-    {
-        "name": "Qube Research & Technologies",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.qube-rt.com/careers/",
-        "search_url": "https://www.qube-rt.com/careers/",
-    },
-    {
-        "name": "Euronext",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.euronext.com/en/careers",
-        "search_url": "https://www.euronext.com/en/careers",
-    },
-    {
-        "name": "Amundi",
-        "scraper_type": "custom_html",
-        "base_url": "https://careers.amundi.com/",
-        "search_url": "https://careers.amundi.com/",
-    },
-    {
-        "name": "AXA Investment Managers",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.axa-im.com/careers",
-        "search_url": "https://www.axa-im.com/careers",
-    },
-    {
-        "name": "Ostrum Asset Management (Natixis)",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.ostrum.com/en/careers",
-        "search_url": "https://www.ostrum.com/en/careers",
-    },
-    {
-        "name": "Mediobanca",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.mediobanca.com/en/careers.html",
-        "search_url": "https://www.mediobanca.com/en/careers.html",
-    },
-    {
-        "name": "Unicredit",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.unicreditgroup.eu/en/careers.html",
-        "search_url": "https://www.unicreditgroup.eu/en/careers.html",
-    },
-    {
-        "name": "Oddo BHF",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.oddo-bhf.com/en/careers/",
-        "search_url": "https://www.oddo-bhf.com/en/careers/",
-    },
-    {
-        "name": "Berenberg",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.berenberg.com/en/careers",
-        "search_url": "https://www.berenberg.com/en/careers",
-    },
-    # === From Dauphine césure CSVs - Finance de Marché ===
-    {
-        "name": "BRED Banque Populaire",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.bred.fr/nous-rejoindre",
-        "search_url": "https://www.bred.fr/nous-rejoindre",
-    },
-    {
-        "name": "La Banque Postale",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.labanquepostale.com/carrieres",
-        "search_url": "https://www.labanquepostale.com/carrieres",
-    },
-    {
-        "name": "Banque de France",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.banque-france.fr/recrutement",
-        "search_url": "https://www.banque-france.fr/recrutement",
-    },
-    {
-        "name": "Coface",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.coface.com/careers",
-        "search_url": "https://www.coface.com/careers",
-    },
-    {
-        "name": "SILEX Investment Partners",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.silex-ip.com/careers",
-        "search_url": "https://www.silex-ip.com/careers",
-    },
-    {
-        "name": "Feefty",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.feefty.com/careers",
-        "search_url": "https://www.feefty.com/careers",
-    },
-    {
-        "name": "Market Securities",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.marketsecurities.com/careers",
-        "search_url": "https://www.marketsecurities.com/careers",
-    },
-    {
-        "name": "Magen Financial",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.magenfinancial.com/careers",
-        "search_url": "https://www.magenfinancial.com/careers",
-    },
-    {
-        "name": "Generali Investments",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.generali-investments.com/careers",
-        "search_url": "https://www.generali-investments.com/careers",
-    },
-    {
-        "name": "Deutsche Pfandbriefbank",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.pfandbriefbank.com/en/careers.html",
-        "search_url": "https://www.pfandbriefbank.com/en/careers.html",
-    },
-    {
-        "name": "China Merchants Securities",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.cmschina.com/en/careers",
-        "search_url": "https://www.cmschina.com/en/careers",
-    },
-    {
-        "name": "Groupe BPCE",
-        "scraper_type": "custom_html",
-        "base_url": "https://groupebpce.com/carrieres",
-        "search_url": "https://groupebpce.com/carrieres",
-    },
-    # === Brokers / Interdealer ===
-    {
-        "name": "Tradition Securities (TSAF)",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.tradition.com/careers.html",
-        "search_url": "https://www.tradition.com/careers.html",
-    },
-    {
-        "name": "ICAP (TP ICAP)",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.tpicap.com/careers",
-        "search_url": "https://www.tpicap.com/careers",
-    },
-    {
-        "name": "BGC Partners",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.bgcg.com/careers",
-        "search_url": "https://www.bgcg.com/careers",
-    },
-    # === Swiss Private Banks / Asset Managers ===
-    {
-        "name": "Lombard Odier",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.lombardodier.com/home/careers.html",
-        "search_url": "https://www.lombardodier.com/home/careers.html",
-    },
-    {
-        "name": "Pictet",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.group.pictet/careers",
-        "search_url": "https://www.group.pictet/careers",
-    },
-    {
-        "name": "Julius Baer",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.juliusbaer.com/en/careers/",
-        "search_url": "https://www.juliusbaer.com/en/careers/",
-    },
-    {
-        "name": "Vontobel",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.vontobel.com/en-int/careers/",
-        "search_url": "https://www.vontobel.com/en-int/careers/",
-    },
-    # === French Boutiques / Specialist AM ===
-    {
-        "name": "CIC Market Solutions",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.cic-marketsolutions.eu/en/careers",
-        "search_url": "https://www.cic-marketsolutions.eu/en/careers",
-    },
-    {
-        "name": "Tikehau Capital",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.tikehaucapital.com/en/careers",
-        "search_url": "https://www.tikehaucapital.com/en/careers",
-    },
-    {
-        "name": "Sycomore AM",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.sycomore-am.com/Nous-rejoindre",
-        "search_url": "https://www.sycomore-am.com/Nous-rejoindre",
-    },
-    {
-        "name": "CPR Asset Management",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.cpr-am.com/careers",
-        "search_url": "https://www.cpr-am.com/careers",
-    },
-    {
-        "name": "Rothschild Martin Maurel",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.rothschildmartinmaurel.com/fr/carrieres/",
-        "search_url": "https://www.rothschildmartinmaurel.com/fr/carrieres/",
-    },
-    # === UK / International Asset Managers ===
-    {
-        "name": "Schroders",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.schroders.com/en/global/individual/careers/",
-        "search_url": "https://www.schroders.com/en/global/individual/careers/",
-    },
-    {
-        "name": "Aviva Investors",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.avivainvestors.com/en-gb/about/careers/",
-        "search_url": "https://www.avivainvestors.com/en-gb/about/careers/",
-    },
-    {
-        "name": "Man Group",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.man.com/careers",
-        "search_url": "https://www.man.com/careers",
-    },
-    # === Prop Trading / Quant / HF ===
-    {
-        "name": "Two Sigma",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.twosigma.com/careers/",
-        "search_url": "https://www.twosigma.com/careers/",
-    },
-    {
-        "name": "DE Shaw",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.deshaw.com/careers",
-        "search_url": "https://www.deshaw.com/careers",
-    },
-    {
-        "name": "Virtu Financial",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.virtu.com/careers/",
-        "search_url": "https://www.virtu.com/careers/",
-    },
-    {
-        "name": "Flow Traders",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.flowtraders.com/careers",
-        "search_url": "https://www.flowtraders.com/careers",
-    },
-    {
-        "name": "IMC Trading",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.imc.com/eu/careers/",
-        "search_url": "https://www.imc.com/eu/careers/",
-    },
-    {
-        "name": "DRW",
-        "scraper_type": "custom_html",
-        "base_url": "https://drw.com/careers/",
-        "search_url": "https://drw.com/careers/",
-    },
-    {
-        "name": "Susquehanna (SIG)",
-        "scraper_type": "custom_html",
-        "base_url": "https://sig.com/careers/",
-        "search_url": "https://sig.com/careers/",
-    },
-    # === Hedge Funds ===
-    {
-        "name": "Brevan Howard",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.brevanhoward.com/careers",
-        "search_url": "https://www.brevanhoward.com/careers",
-    },
-    {
-        "name": "Capula Investment Management",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.capula.com/careers/",
-        "search_url": "https://www.capula.com/careers/",
-    },
-    {
-        "name": "Marshall Wace",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.mwam.com/careers/",
-        "search_url": "https://www.mwam.com/careers/",
-    },
-    {
-        "name": "Eisler Capital",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.eislercapital.com/careers",
-        "search_url": "https://www.eislercapital.com/careers",
-    },
-    {
-        "name": "Squarepoint Capital",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.squarepoint-capital.com/careers",
-        "search_url": "https://www.squarepoint-capital.com/careers",
-    },
-    {
-        "name": "Winton Group",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.winton.com/careers",
-        "search_url": "https://www.winton.com/careers",
-    },
-    {
-        "name": "Capital Fund Management (CFM)",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.cfm.fr/careers/",
-        "search_url": "https://www.cfm.fr/careers/",
-    },
-    {
-        "name": "Point72",
-        "scraper_type": "custom_html",
-        "base_url": "https://point72.com/careers/",
-        "search_url": "https://point72.com/careers/",
-    },
-    {
-        "name": "Balyasny Asset Management",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.balyasny.com/careers",
-        "search_url": "https://www.balyasny.com/careers",
-    },
-    {
-        "name": "WorldQuant",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.worldquant.com/career-listing/",
-        "search_url": "https://www.worldquant.com/career-listing/",
-    },
-    {
-        "name": "AQR Capital Management",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.aqr.com/About-Us/Careers",
-        "search_url": "https://www.aqr.com/About-Us/Careers",
-    },
-    {
-        "name": "ExodusPoint Capital",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.exoduspoint.com/careers/",
-        "search_url": "https://www.exoduspoint.com/careers/",
-    },
-    {
-        "name": "Aspect Capital",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.aspectcapital.com/careers/",
-        "search_url": "https://www.aspectcapital.com/careers/",
-    },
-    {
-        "name": "Bridgewater Associates",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.bridgewater.com/careers",
-        "search_url": "https://www.bridgewater.com/careers",
-    },
-    {
-        "name": "Citadel LLC",
-        "scraper_type": "custom_html",
-        "base_url": "https://www.citadel.com/careers/",
-        "search_url": "https://www.citadel.com/careers/",
+        "scraper_type": "workday",
+        "base_url": "https://ghr.wd1.myworkdayjobs.com/en-us/lateral-us",
+        "wday_path": "ghr/lateral-us",
     },
 
-    # === Greenhouse (API JSON publique - hedge funds & prop trading) ===
-    # Boards verifies un par un : ce sont les sources les plus fiables du
-    # scraper, une seule requete chacune et aucun JavaScript a executer.
+    # === Greenhouse (API JSON des job boards) ===
     {
         "name": "Jane Street",
         "scraper_type": "greenhouse",
@@ -647,4 +162,95 @@ COMPANIES = [
         "scraper_type": "greenhouse",
         "board_token": "oldmissioncapital",
     },
+]
+
+
+# Sites carriere sans scraper adapte : applications JavaScript dont le
+# parsing HTML ne tire rien. A migrer vers leur ATS reel (Avature pour HSBC
+# et Goldman, SuccessFactors pour Standard Chartered, etc.).
+PENDING_ATS = [
+    "Societe Generale",
+    "BNP Paribas",
+    "Natixis",
+    "CACIB",
+    "Goldman Sachs",
+    "JP Morgan",
+    "Lazard",
+    "Deutsche Bank",
+    "Murex",
+    "Kepler Cheuvreux",
+    "Rothschild & Co",
+    "HSBC",
+    "UBS",
+    "Bank of America",
+    "Cantor Fitzgerald",
+    "Jefferies",
+    "Standard Chartered",
+    "Credit Mutuel CIC",
+    "Commerzbank",
+    "ING",
+    "ABN AMRO",
+    "Exane (BNP Paribas)",
+    "Millennium Management",
+    "Citadel Securities",
+    "Jane Street",
+    "Optiver",
+    "Qube Research & Technologies",
+    "Euronext",
+    "Amundi",
+    "AXA Investment Managers",
+    "Ostrum Asset Management (Natixis)",
+    "Mediobanca",
+    "Unicredit",
+    "Oddo BHF",
+    "Berenberg",
+    "BRED Banque Populaire",
+    "La Banque Postale",
+    "Banque de France",
+    "Coface",
+    "SILEX Investment Partners",
+    "Feefty",
+    "Market Securities",
+    "Magen Financial",
+    "Generali Investments",
+    "Deutsche Pfandbriefbank",
+    "China Merchants Securities",
+    "Groupe BPCE",
+    "Tradition Securities (TSAF)",
+    "ICAP (TP ICAP)",
+    "BGC Partners",
+    "Lombard Odier",
+    "Pictet",
+    "Julius Baer",
+    "Vontobel",
+    "CIC Market Solutions",
+    "Tikehau Capital",
+    "Sycomore AM",
+    "CPR Asset Management",
+    "Rothschild Martin Maurel",
+    "Schroders",
+    "Aviva Investors",
+    "Man Group",
+    "Two Sigma",
+    "DE Shaw",
+    "Virtu Financial",
+    "Flow Traders",
+    "IMC Trading",
+    "DRW",
+    "Susquehanna (SIG)",
+    "Brevan Howard",
+    "Capula Investment Management",
+    "Marshall Wace",
+    "Eisler Capital",
+    "Squarepoint Capital",
+    "Winton Group",
+    "Capital Fund Management (CFM)",
+    "Point72",
+    "Balyasny Asset Management",
+    "WorldQuant",
+    "AQR Capital Management",
+    "ExodusPoint Capital",
+    "Aspect Capital",
+    "Bridgewater Associates",
+    "Citadel LLC",
 ]

@@ -558,4 +558,93 @@ COMPANIES = [
         "base_url": "https://www.citadel.com/careers/",
         "search_url": "https://www.citadel.com/careers/",
     },
+
+    # === Greenhouse (API JSON publique - hedge funds & prop trading) ===
+    # Boards verifies un par un : ce sont les sources les plus fiables du
+    # scraper, une seule requete chacune et aucun JavaScript a executer.
+    {
+        "name": "Jane Street",
+        "scraper_type": "greenhouse",
+        "board_token": "janestreet",
+    },
+    {
+        "name": "Point72",
+        "scraper_type": "greenhouse",
+        "board_token": "point72",
+    },
+    {
+        "name": "IMC Trading",
+        "scraper_type": "greenhouse",
+        "board_token": "imc",
+    },
+    {
+        "name": "Man Group",
+        "scraper_type": "greenhouse",
+        "board_token": "mangroup",
+    },
+    {
+        "name": "AQR Capital Management",
+        "scraper_type": "greenhouse",
+        "board_token": "aqr",
+    },
+    {
+        "name": "Virtu Financial",
+        "scraper_type": "greenhouse",
+        "board_token": "virtu",
+    },
+    {
+        "name": "Flow Traders",
+        "scraper_type": "greenhouse",
+        "board_token": "flowtraders",
+    },
+    {
+        "name": "Jump Trading",
+        "scraper_type": "greenhouse",
+        "board_token": "jumptrading",
+    },
+    {
+        "name": "ExodusPoint Capital",
+        "scraper_type": "greenhouse",
+        "board_token": "exoduspoint",
+    },
+    {
+        "name": "Schonfeld",
+        "scraper_type": "greenhouse",
+        "board_token": "schonfeld",
+    },
+    {
+        "name": "Quadrature Capital",
+        "scraper_type": "greenhouse",
+        "board_token": "quadraturecapital",
+    },
+    {
+        "name": "WorldQuant",
+        "scraper_type": "greenhouse",
+        "board_token": "worldquant",
+    },
+    {
+        "name": "DRW",
+        "scraper_type": "greenhouse",
+        "board_token": "drweng",
+    },
+    {
+        "name": "Squarepoint Capital",
+        "scraper_type": "greenhouse",
+        "board_token": "squarepointcapital",
+    },
+    {
+        "name": "Tower Research Capital",
+        "scraper_type": "greenhouse",
+        "board_token": "towerresearchcapital",
+    },
+    {
+        "name": "Akuna Capital",
+        "scraper_type": "greenhouse",
+        "board_token": "akunacapital",
+    },
+    {
+        "name": "Old Mission Capital",
+        "scraper_type": "greenhouse",
+        "board_token": "oldmissioncapital",
+    },
 ]

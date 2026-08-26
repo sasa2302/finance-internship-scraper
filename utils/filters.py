@@ -60,7 +60,15 @@ class JobFilter:
 
     # --- etapes unitaires -------------------------------------------------
     def is_internship(self, offer) -> bool:
-        text = norm_text(f"{offer.title} {offer.description_snippet} {offer.job_type or ''}")
+        """Le marqueur de stage doit etre dans l'INTITULE ou le type de contrat.
+
+        Se fier a la description laissait passer des postes temps plein : les
+        annonces mentionnent souvent les programmes de stage de la maison en
+        texte generique. Mesure sur 1 512 offres Greenhouse : 14 offres etaient
+        retenues sur ce seul critere, et les 14 etaient des faux positifs
+        ("Linux Engineer", "Campus Recruiter", "Graduate Trader").
+        """
+        text = norm_text(f"{offer.title} {offer.job_type or ''}")
         return has_any(text, _ALL_PREFIXES)
 
     def matches_role(self, offer) -> bool:

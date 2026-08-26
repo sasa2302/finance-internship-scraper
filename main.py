@@ -30,6 +30,13 @@ from utils.report import ReportManager
 from utils.filters import JobFilter
 from scrapers.workday import WorkdayScraper
 from scrapers.custom_html import CustomHTMLScraper
+from scrapers.greenhouse import GreenhouseScraper
+from scrapers.smartrecruiters import SmartRecruitersScraper
+from scrapers.taleo import TaleoScraper
+from scrapers.oracle_hcm import OracleHCMScraper
+from scrapers.talentlink import TalentLinkScraper
+from scrapers.goldman_avature import GoldmanAvatureScraper
+from scrapers.deutsche_recsolu import DeutscheRecsoluScraper
 from scrapers.aggregators import AggregatorScraper
 
 logging.basicConfig(
@@ -40,8 +47,31 @@ logging.basicConfig(
 logger = logging.getLogger("main")
 
 SCRAPER_REGISTRY = {
+    "greenhouse": GreenhouseScraper,
     "workday": WorkdayScraper,
+    "smartrecruiters": SmartRecruitersScraper,
+    "taleo": TaleoScraper,
+    "oracle_hcm": OracleHCMScraper,
+    "talentlink": TalentLinkScraper,
+    "goldman_avature": GoldmanAvatureScraper,
+    "deutsche_recsolu": DeutscheRecsoluScraper,
     "custom_html": CustomHTMLScraper,
+}
+
+# Ordre de passage : les sources a API JSON d'abord, le parsing HTML generique
+# en dernier. Mesure faite sur 10 sites : custom_html rend 0 offre (ce sont des
+# applications JavaScript), Workday en rend 120 sur 3 sites. Si le budget de
+# temps s'epuise, on ne perd donc que les sources improductives.
+SCRAPER_PRIORITY = {
+    "greenhouse": 0,
+    "workday": 1,
+    "smartrecruiters": 2,
+    "taleo": 3,
+    "oracle_hcm": 4,
+    "talentlink": 5,
+    "goldman_avature": 6,
+    "deutsche_recsolu": 7,
+    "custom_html": 9,
 }
 
 
@@ -61,7 +91,9 @@ def collect_offers(http_client, skip_companies=False, skip_aggregators=False):
     if not skip_companies:
         logger.info(f"Phase 1 : {len(COMPANIES)} sites carriere "
                     f"(budget {companies_budget:.0f} min)...")
-        for company_config in COMPANIES:
+        ordered = sorted(COMPANIES,
+                         key=lambda c: SCRAPER_PRIORITY.get(c["scraper_type"], 8))
+        for company_config in ordered:
             scraper_type = company_config["scraper_type"]
             name = company_config["name"]
 

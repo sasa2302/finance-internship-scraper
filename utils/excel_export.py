@@ -26,6 +26,7 @@ COLUMNS = [
     ("Lieu", 28, "location"),
     ("Zone", 16, "zone_label"),
     ("Duree", 14, "duration"),
+    ("Periode visee", 16, "_period"),
     ("Type de stage", 14, "_type_label"),
     ("Pourquoi ce type", 30, "type_reason"),
     ("Score", 8, "relevance_score"),
@@ -62,6 +63,10 @@ def _score_fill(score):
 def _value(offer, attr, type_label):
     if attr == "_type_label":
         return type_label
+    if attr == "_period":
+        label = getattr(offer, "period_label", "") or ""
+        note = getattr(offer, "period_note", "") or ""
+        return label or ("a confirmer" if note else "")
     val = getattr(offer, attr, "")
     if val is None:
         return ""

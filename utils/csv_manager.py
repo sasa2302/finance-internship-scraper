@@ -15,7 +15,8 @@ logger = logging.getLogger(__name__)
 class CSVManager:
     COLUMNS = [
         "id", "title", "company", "employer_category", "location", "zone",
-        "zone_label", "internship_type", "type_label", "type_reason",
+        "zone_label", "period_label", "period_note", "internship_type",
+        "type_label", "type_reason",
         "duration", "url", "date_posted", "date_scraped",
         "description_snippet", "source", "job_type", "department",
         "relevance_score", "status",
@@ -38,6 +39,8 @@ class CSVManager:
             "location": offer.location or "",
             "zone": offer.zone or "",
             "zone_label": offer.zone_label or "",
+            "period_label": getattr(offer, "period_label", "") or "",
+            "period_note": getattr(offer, "period_note", "") or "",
             "internship_type": offer.internship_type or "unknown",
             "type_label": LABELS.get(offer.internship_type, "A trier"),
             "type_reason": offer.type_reason or "",

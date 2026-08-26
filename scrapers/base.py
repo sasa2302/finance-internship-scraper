@@ -25,6 +25,8 @@ class JobOffer:
     type_reason: str = ""            # motif de la classification calendaire
     zone: str = ""                   # CORE | EUROPE | GLOBAL | INCONNU
     zone_label: str = ""             # "Paris / IDF", "Londres", "Hong Kong"...
+    period_label: str = ""           # "janvier 2027", "2027", "" si inconnue
+    period_note: str = ""            # "date non identifiee" le cas echeant
 
 
 class BaseScraper(ABC):

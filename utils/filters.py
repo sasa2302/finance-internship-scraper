@@ -26,6 +26,8 @@ from utils.textnorm import norm_text, has_any, has_phrase
 from utils.employer_match import classify_employer
 from utils.location_match import evaluate as evaluate_location, zone_bonus
 from utils.classify import classify as classify_period, extract_duration, LABELS
+from utils.period import detect_period, format_period, summer_ok, off_cycle_ok
+from config.settings import TARGET_SUMMER_YEARS, OFF_CYCLE_START_MIN
 
 logger = logging.getLogger(__name__)
 
@@ -149,6 +151,21 @@ class JobFilter:
                 norm_text(f"{offer.description_snippet} {offer.duration or ''} {offer.title}")
             ) or (offer.duration or "")
             offer.internship_type, offer.type_reason = classify_period(offer)
+
+            # Campagne visee : ete 2027 pour les summer, demarrage >= janvier
+            # 2027 pour les off-cycle. Une offre sans date reste dans le
+            # rapport, signalee dans la colonne "Periode".
+            period = detect_period(offer)
+            offer.period_label = format_period(period)
+            if offer.internship_type == "summer":
+                ok_period, note = summer_ok(period, TARGET_SUMMER_YEARS)
+            else:
+                ok_period, note = off_cycle_ok(period, OFF_CYCLE_START_MIN)
+            if not ok_period:
+                self.rejections[f"hors campagne visee ({note})"] += 1
+                continue
+            offer.period_note = note
+
             offer.relevance_score = self.compute_relevance_score(offer)
             results.append(offer)
 

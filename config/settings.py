@@ -13,6 +13,18 @@ AGGREGATOR_RESULTS_WANTED = 30   # par mot-cle et par site
 AGGREGATOR_HOURS_OLD = 72        # offres publiees dans les 72 dernieres heures
 AGGREGATOR_MAX_QUERIES = 16      # garde-fou anti rate-limit
 
+# ---------------------------------------------------------------------------
+# CAMPAGNE VISEE  (a mettre a jour chaque annee)
+# ---------------------------------------------------------------------------
+# Summer : uniquement l'ete 2027
+TARGET_SUMMER_YEARS = [2027]
+
+# Off-cycle : stages de 6 mois demarrant a partir de janvier 2027
+OFF_CYCLE_START_MIN = (2027, 1)   # (annee, mois)
+
+# Une offre dont la periode n'est pas identifiable est CONSERVEE et signalee
+# dans la colonne "Periode" du rapport, plutot que jetee en silence.
+
 # Sorties
 CSV_DIR = "data"
 HASHES_PATH = "data/seen_hashes.json"

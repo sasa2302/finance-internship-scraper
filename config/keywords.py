@@ -95,7 +95,9 @@ EXCLUDE_TITLE_KEYWORDS = [
     "debt capital markets", "equity capital markets", "origination",
     "restructuring advisory",
     "transaction services", "due diligence", "project finance",
-    "real estate finance", "infrastructure finance",
+    "real estate", "immobilier", "infrastructure finance",
+    "private investments", "private credit", "private debt",
+    "direct lending", "growth equity", "buyout",
     # Gestion privee / patrimoine / ESG -- hors perimetre
     "gestion privee", "private banking", "wealth management", "patrimoine",
     "patrimonial", "banque privee", "conseiller clientele", "esg", "isr",

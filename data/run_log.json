@@ -1,27 +1,26 @@
 {
-  "timestamp": "2026-08-30T12:46:36.058577+00:00",
-  "total_raw_offers": 3186,
-  "total_after_filter": 91,
-  "new_offers_added": 3,
+  "timestamp": "2026-08-31T15:01:13.402579+00:00",
+  "total_raw_offers": 3062,
+  "total_after_filter": 89,
+  "new_offers_added": 14,
   "by_type": {
-    "off_cycle": 9,
-    "summer": 39,
-    "unknown": 43
+    "off_cycle": 12,
+    "summer": 36,
+    "unknown": 41
   },
   "companies_scraped": 27,
   "rejections": {
-    "intitule hors finance de marche": 767,
-    "pas identifie comme stage": 698,
-    "hors places financieres ciblees": 325,
-    "metier hors finance de marche": 70,
-    "employeur inconnu, aucun signal marche": 437,
-    "publiee il y a plus de 30 jours": 586,
-    "pas un stage (CDI/CDD/alternance/VIE)": 126,
+    "intitule hors finance de marche": 744,
+    "pas identifie comme stage": 671,
+    "hors places financieres ciblees": 320,
+    "metier hors finance de marche": 59,
+    "employeur inconnu, aucun signal marche": 426,
+    "publiee il y a plus de 30 jours": 589,
+    "pas un stage (CDI/CDD/alternance/VIE)": 102,
     "pays exclu (Espagne)": 2,
     "pays exclu (Italie)": 1,
     "UK/IE hors Londres-Dublin": 2,
-    "employeur hors finance de marche": 79,
-    "doublon (meme societe/intitule/zone)": 2
+    "employeur hors finance de marche": 57
   },
   "errors_count": 0,
   "errors": [],

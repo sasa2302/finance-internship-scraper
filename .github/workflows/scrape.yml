@@ -45,7 +45,29 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/stages_finance_marche.xlsx \
-                  data/seen_hashes.json data/run_log.json
-          git diff --staged --quiet || git commit -m "Scrape $(date -u +'%Y-%m-%d') - rapport off-cycle / summer"
-          git push
+
+          # Le depot a pu bouger pendant le run (un commit pousse a la main,
+          # ou un autre run). Un simple `git push` echoue alors en
+          # non-fast-forward et fait tomber tout le job, alors meme que le
+          # scraping a reussi. On se recale donc sur l'etat distant avant de
+          # commiter : `reset --soft` deplace HEAD sans toucher aux fichiers
+          # qu'on vient de generer, qui restent donc prioritaires.
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --soft FETCH_HEAD
+            git add data/stages_finance_marche.xlsx \
+                    data/seen_hashes.json data/run_log.json
+            if git diff --staged --quiet; then
+              echo "Aucun changement a commiter."
+              exit 0
+            fi
+            git commit -m "Scrape $(date -u +'%Y-%m-%d') - rapport off-cycle / summer"
+            if git push origin main; then
+              echo "Pousse (tentative $attempt)."
+              exit 0
+            fi
+            echo "Push refuse, le depot a bouge. Nouvelle tentative..."
+            sleep 5
+          done
+          echo "Push impossible apres 3 tentatives."
+          exit 1

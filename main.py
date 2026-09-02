@@ -31,6 +31,7 @@ from utils.filters import JobFilter
 from scrapers.workday import WorkdayScraper
 from scrapers.custom_html import CustomHTMLScraper
 from scrapers.greenhouse import GreenhouseScraper
+from scrapers.socgen import SocGenScraper
 from scrapers.smartrecruiters import SmartRecruitersScraper
 from scrapers.taleo import TaleoScraper
 from scrapers.oracle_hcm import OracleHCMScraper
@@ -48,6 +49,7 @@ logger = logging.getLogger("main")
 
 SCRAPER_REGISTRY = {
     "greenhouse": GreenhouseScraper,
+    "socgen": SocGenScraper,
     "workday": WorkdayScraper,
     "smartrecruiters": SmartRecruitersScraper,
     "taleo": TaleoScraper,
@@ -64,6 +66,7 @@ SCRAPER_REGISTRY = {
 # temps s'epuise, on ne perd donc que les sources improductives.
 SCRAPER_PRIORITY = {
     "greenhouse": 0,
+    "socgen": 0,
     "workday": 1,
     "smartrecruiters": 2,
     "taleo": 3,

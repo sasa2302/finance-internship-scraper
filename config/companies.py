@@ -12,6 +12,15 @@ Indeed ou Glassdoor sont bien retenues.
 """
 
 COMPANIES = [
+    # === Societe Generale (liste complete rendue cote serveur) ===
+    # Attention : cette page est le catalogue INTERNATIONAL. Elle ne contient
+    # aucune offre parisienne (0 sur 660 verifiees) ; les stages France sont
+    # publies sur un portail distinct, non encore identifie.
+    {
+        "name": "Societe Generale",
+        "scraper_type": "socgen",
+    },
+
     # === Oracle Cloud Recruiting (API REST publique) ===
     {
         "name": "JP Morgan",
@@ -50,24 +59,6 @@ COMPANIES = [
         "scraper_type": "workday",
         "base_url": "https://fil.wd3.myworkdayjobs.com/001",
         "wday_path": "fil/001",
-    },
-    {
-        "name": "Nomura",
-        "scraper_type": "workday",
-        "base_url": "https://nomuracareers.wd1.myworkdayjobs.com/en-US/NomuraExternalCareers",
-        "wday_path": "nomuracareers/NomuraExternalCareers",
-    },
-    {
-        "name": "Macquarie",
-        "scraper_type": "workday",
-        "base_url": "https://macquarie.wd3.myworkdayjobs.com/en-US/Macquarie_Careers",
-        "wday_path": "macquarie/Macquarie_Careers",
-    },
-    {
-        "name": "Credit Suisse (UBS)",
-        "scraper_type": "workday",
-        "base_url": "https://ubs.wd3.myworkdayjobs.com/en-US/Find_a_job_at_UBS",
-        "wday_path": "ubs/Find_a_job_at_UBS",
     },
     {
         "name": "Bank of America",
@@ -168,6 +159,15 @@ COMPANIES = [
 # Sites carriere sans scraper adapte : applications JavaScript dont le
 # parsing HTML ne tire rien. A migrer vers leur ATS reel (Avature pour HSBC
 # et Goldman, SuccessFactors pour Standard Chartered, etc.).
+# Endpoints Workday qui repondent 422 : le chemin du site a change et n'a pas
+# pu etre retrouve. A reidentifier depuis leur page carriere.
+BROKEN_WORKDAY = ["Nomura", "Macquarie", "UBS"]
+
+# Sites proteges par un pare-feu anti-bot (Akamai pour BNP Paribas, HTTP 403).
+# Volontairement non contournes. Leurs offres restent couvertes par les
+# agregateurs, ces employeurs etant dans la whitelist config/employers.py.
+BOT_PROTECTED = ["BNP Paribas"]
+
 PENDING_ATS = [
     "Societe Generale",
     "BNP Paribas",

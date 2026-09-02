@@ -1,26 +1,29 @@
 {
-  "timestamp": "2026-08-26T12:31:32.131110+00:00",
-  "total_raw_offers": 1337,
-  "total_after_filter": 33,
-  "new_offers_added": 26,
+  "timestamp": "2026-09-01T12:33:33.997178+00:00",
+  "total_raw_offers": 3175,
+  "total_after_filter": 121,
+  "new_offers_added": 44,
   "by_type": {
-    "off_cycle": 3,
-    "summer": 11,
-    "unknown": 12
+    "off_cycle": 23,
+    "summer": 55,
+    "unknown": 43
   },
-  "companies_scraped": 91,
+  "companies_scraped": 27,
   "rejections": {
-    "pas identifie comme stage": 431,
-    "hors places financieres ciblees": 52,
-    "intitule hors finance de marche": 132,
-    "metier hors finance de marche": 37,
-    "employeur inconnu, aucun signal marche": 475,
-    "pas un stage (CDI/CDD/alternance/VIE)": 86,
-    "hors campagne visee (demarrage 2026 (cible : a partir de 01/2027))": 3,
-    "employeur hors finance de marche": 87,
-    "doublon (meme societe/intitule/zone)": 1
+    "intitule hors finance de marche": 775,
+    "pas identifie comme stage": 679,
+    "hors places financieres ciblees": 326,
+    "metier hors finance de marche": 89,
+    "employeur inconnu, aucun signal marche": 431,
+    "publiee il y a plus de 30 jours": 537,
+    "pas un stage (CDI/CDD/alternance/VIE)": 133,
+    "pays exclu (Espagne)": 3,
+    "pays exclu (Italie)": 3,
+    "UK/IE hors Londres-Dublin": 5,
+    "employeur hors finance de marche": 69,
+    "doublon (meme societe/intitule/zone)": 4
   },
   "errors_count": 0,
   "errors": [],
-  "excel_report": "data/stages_finance_marche_2026-08-26.xlsx"
+  "report": "data/stages_finance_marche.xlsx"
 }

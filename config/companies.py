@@ -168,6 +168,28 @@ BROKEN_WORKDAY = ["Nomura", "Macquarie", "UBS"]
 # agregateurs, ces employeurs etant dans la whitelist config/employers.py.
 BOT_PROTECTED = ["BNP Paribas"]
 
+# Employeurs a couvrir PAR LES AGREGATEURS plutot qu'en direct : soit leur
+# site bloque (Akamai chez BNP), soit il est illisible sans JavaScript, soit
+# son endpoint a change. Plutot que d'insister sur leurs serveurs -- ce qui
+# risquerait de faire blacklister le scraper sans rien rapporter -- on les
+# cherche nommement sur LinkedIn, Indeed et Glassdoor, ou ils publient de
+# toute facon leurs offres.
+# (nom recherche, zone de recherche, code pays Indeed)
+AGGREGATOR_TARGETED_EMPLOYERS = [
+    ("BNP Paribas", "Paris, France", "france"),
+    ("Societe Generale", "Paris, France", "france"),
+    ("Natixis", "Paris, France", "france"),
+    ("Credit Agricole CIB", "Paris, France", "france"),
+    ("Amundi", "Paris, France", "france"),
+    ("Kepler Cheuvreux", "Paris, France", "france"),
+    ("Goldman Sachs", "London, United Kingdom", "uk"),
+    ("HSBC", "London, United Kingdom", "uk"),
+    ("Nomura", "London, United Kingdom", "uk"),
+    ("Macquarie", "London, United Kingdom", "uk"),
+    ("UBS", "Switzerland", "switzerland"),
+    ("Deutsche Bank", "Frankfurt, Germany", "germany"),
+]
+
 PENDING_ATS = [
     "Societe Generale",
     "BNP Paribas",

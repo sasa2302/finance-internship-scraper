@@ -7,6 +7,7 @@ from config.settings import (
     AGGREGATOR_MAX_QUERIES,
 )
 from config.locations import AGGREGATOR_SEARCH_LOCATIONS
+from config.companies import AGGREGATOR_TARGETED_EMPLOYERS
 
 logger = logging.getLogger(__name__)
 
@@ -51,14 +52,34 @@ class AggregatorScraper:
         priority = {"Paris, France", "London, United Kingdom",
                     "Switzerland", "Luxembourg"}
 
+        # ORDRE VOLONTAIRE : les recherches nominatives d'abord.
+        # Ce sont les banques dont le site direct ne peut pas etre scrape
+        # (pare-feu anti-bot, JavaScript, endpoint change). Elles publient de
+        # toute facon sur les agregateurs : on passe par la voie normale au
+        # lieu de matraquer leurs serveurs pour rien. Comme le budget de temps
+        # peut interrompre la collecte, elles doivent passer en tete.
         plan = []
+        targeted = 0
+        for employer, location, country in AGGREGATOR_TARGETED_EMPLOYERS:
+            plan.append((f"{employer} stage trading", location, country))
+            plan.append((f"{employer} internship markets", location, country))
+            targeted += 2
+
+        # Puis le balayage generique, zones prioritaires d'abord
         for location, country in AGGREGATOR_SEARCH_LOCATIONS:
-            terms = core_terms if location in priority else wide_terms
-            for term in terms:
+            if location not in priority:
+                continue
+            for term in core_terms:
+                plan.append((term, location, country))
+        for location, country in AGGREGATOR_SEARCH_LOCATIONS:
+            if location in priority:
+                continue
+            for term in wide_terms:
                 plan.append((term, location, country))
 
         logger.info(f"[Aggregators] Plan : {len(plan)} requetes "
-                    f"({len(priority)} zones prioritaires)")
+                    f"({len(priority)} zones prioritaires, "
+                    f"{targeted} recherches nominatives)")
 
         for search_term, location, indeed_country in plan:
             if deadline is not None and deadline.expired():

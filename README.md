@@ -53,8 +53,24 @@ JavaScript dont le parsing HTML rendait 0 offre sur 10 sites testés, tout en
 consommant la totalité du budget de temps. Leur couverture passe par les
 agrégateurs, et ces employeurs restent dans la whitelist.
 
-Pour en récupérer un, il faut identifier son ATS réel et ajouter la config :
-HSBC et Goldman sont sur Avature, Standard Chartered sur SuccessFactors.
+### Banques non scrapables en direct
+
+Certaines banques ne peuvent pas être interrogées directement : BNP Paribas
+est derrière un pare-feu anti-bot (Akamai, HTTP 403), Goldman et Natixis sont
+des applications JavaScript sans API accessible, UBS / Nomura / Macquarie ont
+changé de chemin Workday.
+
+**Insister sur leurs serveurs ferait risquer un blocage sans rien rapporter.**
+Elles sont donc cherchées **nommément sur les agrégateurs**, où elles publient
+de toute façon — voir `AGGREGATOR_TARGETED_EMPLOYERS` dans
+`config/companies.py`. Ces requêtes passent **en premier** dans le plan, pour
+qu'une interruption par le budget de temps ne les sacrifie pas.
+
+### Charge envoyée
+
+86 requêtes par run au total, espacées de 1,5 à 3 s : 1 requête par jour et
+par board Greenhouse, 1 pour Société Générale, 4 par site Oracle, 12 par site
+Workday. Volontairement en dessous d'un usage humain normal.
 
 ## Périmètre
 

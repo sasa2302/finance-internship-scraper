@@ -25,12 +25,20 @@ _INDEX = sorted(
 
 
 def match_employer(company: str):
-    """Renvoie (categorie, nom_whitelist) ou (None, None)."""
-    cnorm = norm_company(company)
-    if not cnorm:
+    """Renvoie (categorie, nom_whitelist) ou (None, None).
+
+    On teste DEUX formes du nom : avec et sans les suffixes juridiques.
+    Le retrait des suffixes aide pour "Barclays PLC" -> "barclays", mais il
+    casse les entrees de whitelist qui contiennent justement ce suffixe :
+    "Man Group" devenait "man" et ne matchait plus "man group". Meme probleme
+    pour CME Group et Fidelity International.
+    """
+    stripped = norm_company(company)
+    full = norm_text(company)
+    if not stripped and not full:
         return None, None
     for name, category in _INDEX:
-        if has_phrase(cnorm, name):
+        if has_phrase(full, name) or has_phrase(stripped, name):
             return category, name
     return None, None
 

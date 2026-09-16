@@ -111,7 +111,7 @@ class AggregatorScraper:
                         location=str(row.get("location", "")),
                         url=url,
                         date_posted=str(row.get("date_posted", "")),
-                        description_snippet=str(row.get("description", ""))[:300],
+                        description_snippet=str(row.get("description", ""))[:4000],
                         source=str(row.get("site", "aggregator")),
                         # Le vrai type renvoye par jobspy : ne pas forcer
                         # "internship", sinon tout passe le test is_internship.

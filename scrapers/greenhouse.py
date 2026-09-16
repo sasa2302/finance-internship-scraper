@@ -22,7 +22,7 @@ _TAG_RE = re.compile(r"<[^>]+>")
 _WS_RE = re.compile(r"\s+")
 
 
-def strip_html(raw: str, limit: int = 600) -> str:
+def strip_html(raw: str, limit: int = 4000) -> str:
     if not raw:
         return ""
     text = html.unescape(str(raw))

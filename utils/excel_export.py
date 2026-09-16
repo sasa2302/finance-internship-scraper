@@ -20,13 +20,15 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 
+from utils.metier import classify_metier, metier_priority
+
 logger = logging.getLogger(__name__)
 
 # Schema technique (feuille masquee) : sert de base de donnees entre les runs
 DATA_FIELDS = [
     "id", "title", "company", "employer_category", "location", "zone",
     "zone_label", "period_label", "period_note", "internship_type",
-    "type_reason", "duration", "url", "date_posted", "date_added",
+    "type_reason", "metier", "duration", "url", "date_posted", "date_added",
     "source", "relevance_score", "description_snippet",
 ]
 
@@ -34,6 +36,7 @@ DATA_FIELDS = [
 COLUMNS = [
     ("Nouveau", 10, "_is_new"),
     ("Poste", 50, "title"),
+    ("Metier", 20, "_metier"),
     ("Entreprise", 24, "company"),
     ("Type employeur", 22, "employer_category"),
     ("Lieu", 26, "location"),
@@ -114,6 +117,8 @@ def read_existing(path):
 def _cell_value(row, key):
     if key == "_is_new":
         return "NOUVEAU" if row.get("_is_new") else ""
+    if key == "_metier":
+        return row.get("metier") or classify_metier(str(row.get("title") or ""))
     if key == "_period":
         label = str(row.get("period_label") or "")
         note = str(row.get("period_note") or "")
@@ -143,9 +148,11 @@ def _write_sheet(ws, rows, sheet_title):
         ws.column_dimensions[get_column_letter(idx)].width = width
     ws.row_dimensions[2].height = 28
 
-    # Nouveautes d'abord, puis zone prioritaire, puis score
+    # Nouveautes d'abord, puis front office (sales / trading / structuration),
+    # puis zone prioritaire, puis score
     ordered = sorted(rows, key=lambda r: (
         0 if r.get("_is_new") else 1,
+        metier_priority(r.get("metier") or classify_metier(str(r.get("title") or ""))),
         ZONE_ORDER.get(str(r.get("zone") or "INCONNU"), 9),
         -float(r.get("relevance_score") or 0),
         str(r.get("company") or ""),

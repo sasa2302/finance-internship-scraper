@@ -27,6 +27,8 @@ class JobOffer:
     zone_label: str = ""             # "Paris / IDF", "Londres", "Hong Kong"...
     period_label: str = ""           # "janvier 2027", "2027", "" si inconnue
     period_note: str = ""            # "date non identifiee" le cas echeant
+    metier: str = ""                 # Sales / Trading / Structuration / ...
+    start_period: Optional[tuple] = None  # (annee, mois) lu sur la page de detail
 
 
 class BaseScraper(ABC):

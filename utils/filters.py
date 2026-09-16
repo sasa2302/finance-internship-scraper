@@ -22,14 +22,20 @@ from config.keywords import (
     EXCLUDE_TITLE_KEYWORDS,
     EXCLUDE_DURATION_PATTERNS,
     NON_STAGE_TYPES,
+    DIVISION_LABELS,
+    MARKETS_TITLE_TERMS,
+    SUPPORT_LABELS_CONDITIONAL,
+    STRONG_MARKETS_TITLE_TERMS,
 )
 from utils.textnorm import norm_text, has_any, has_phrase
 from utils.employer_match import classify_employer
 from utils.location_match import evaluate as evaluate_location, zone_bonus
 from utils.classify import classify as classify_period, extract_duration, LABELS
 from utils.period import detect_period, format_period, summer_ok, off_cycle_ok
+from utils.metier import is_quant_or_tech, classify_metier
 from config.settings import (
     TARGET_SUMMER_YEARS, OFF_CYCLE_START_MIN, MAX_OFFER_AGE_DAYS,
+    EXCLUDE_QUANT_ROLES,
 )
 
 logger = logging.getLogger(__name__)
@@ -72,8 +78,13 @@ class JobFilter:
         return has_any(text, _ALL_PREFIXES)
 
     def matches_role(self, offer) -> bool:
-        text = norm_text(f"{offer.title} {offer.description_snippet}")
-        return has_any(text, ROLE_KEYWORDS)
+        """Le metier de marche doit figurer dans l'INTITULE.
+
+        La description ne suffit pas : celle d'une prop firm ou d'une banque
+        parle toujours de trading, ce qui laissait passer "IT Intern", "Asset
+        Servicing", "Client Support" ou "Company Secretarial Assistant".
+        """
+        return has_any(norm_text(offer.title), ROLE_KEYWORDS)
 
     def is_non_stage(self, offer) -> bool:
         """Rejette ce qui n'est manifestement pas un stage."""
@@ -113,10 +124,17 @@ class JobFilter:
             return True
         if has_any(title, EXCLUDE_TITLE_KEYWORDS):
             return True
-        for pattern in EXCLUDE_DURATION_PATTERNS:
-            if re.search(pattern, text, re.IGNORECASE):
-                return True
+        # Libelle de division banque d'affaires sans aucun metier de marche
+        if has_any(title, DIVISION_LABELS) and not has_any(title, MARKETS_TITLE_TERMS):
+            return True
+        if (has_any(title, SUPPORT_LABELS_CONDITIONAL)
+                and not has_any(title, STRONG_MARKETS_TITLE_TERMS)):
+            return True
         return False
+
+    def has_excluded_duration(self, offer) -> bool:
+        text = norm_text(f"{offer.title} {offer.description_snippet}")
+        return any(re.search(p, text, re.IGNORECASE) for p in EXCLUDE_DURATION_PATTERNS)
 
     # --- score ------------------------------------------------------------
     def compute_relevance_score(self, offer) -> float:
@@ -177,7 +195,21 @@ class JobFilter:
                 self.rejections["intitule hors finance de marche"] += 1
                 continue
 
+            if self.has_excluded_duration(offer):
+                self.rejections["duree exclue (12 mois et plus, alternance)"] += 1
+                continue
+
+            if EXCLUDE_QUANT_ROLES and is_quant_or_tech(offer.title):
+                self.rejections["poste quant / tech (profil non vise)"] += 1
+                continue
+
             loc_ok, zone, zone_label, loc_why = evaluate_location(offer.location or "")
+            if not loc_ok and loc_why == "hors places financieres ciblees":
+                # Le lieu est parfois un simple pays ("Mainland China") et la
+                # ville n'apparait que dans l'intitule ("... - Shanghai").
+                t_ok, t_zone, t_label, _ = evaluate_location(offer.title)
+                if t_ok and t_zone != "INCONNU":
+                    loc_ok, zone, zone_label = True, t_zone, t_label
             if not loc_ok:
                 self.rejections[loc_why] += 1
                 continue
@@ -197,6 +229,7 @@ class JobFilter:
                 norm_text(f"{offer.description_snippet} {offer.duration or ''} {offer.title}")
             ) or (offer.duration or "")
             offer.internship_type, offer.type_reason = classify_period(offer)
+            offer.metier = classify_metier(offer.title)
 
             # Campagne visee : ete 2027 pour les summer, demarrage >= janvier
             # 2027 pour les off-cycle. Une offre sans date reste dans le

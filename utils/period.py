@@ -38,6 +38,9 @@ _YEAR_MONTH = re.compile(rf"\b(20\d{{2}})\s+({_MONTH_ALT})\b")
 _NUM_MY = re.compile(r"\b(0?[1-9]|1[0-2])[/-](20\d{2})\b")
 _NUM_YM = re.compile(r"\b(20\d{2})-(0?[1-9]|1[0-2])\b")
 _YEAR = re.compile(r"\b(20\d{2})\b")
+_GRAD_YEAR_RE = re.compile(
+    r"(?i)\b(?:class\s+of|graduat\w*(?:\s+in)?|promotion|promo)\s+20\d{2}\b"
+    r"|\b20\d{2}\s+(?:graduates?|graduation|grads?|diplom\w*)\b")
 
 # Un intitule "Summer 2027" designe l'ete : on l'assimile a juin.
 SUMMER_MONTH = 6
@@ -69,6 +72,9 @@ def extract_period(text: str):
     """
     if not text:
         return None
+    # "Summer Internship 2027 (2028 Graduates)" : 2028 est l'annee de diplome,
+    # pas la campagne. Ces mentions sont retirees avant l'analyse.
+    text = _GRAD_YEAR_RE.sub(" ", str(text))
     t = norm_text(text)
     raw = _norm_keep_separators(text)
     if not t:
@@ -100,7 +106,14 @@ def extract_period(text: str):
 
 
 def detect_period(offer):
-    """Periode de l'offre : l'intitule prime sur la description."""
+    """Periode de l'offre.
+
+    Une date de debut lue sur la page de detail (champ start_period) prime ;
+    sinon l'intitule, puis la description.
+    """
+    forced = getattr(offer, "start_period", None)
+    if forced:
+        return tuple(forced)
     return extract_period(offer.title) or extract_period(offer.description_snippet or "")
 
 

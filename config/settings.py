@@ -21,9 +21,19 @@ COMPANIES_BUDGET_SHARE = 0.55
 # ---------------------------------------------------------------------------
 # FRAICHEUR
 # ---------------------------------------------------------------------------
-# On ne garde que les offres publiees recemment. Une offre sans date de
-# publication exploitable est conservee (la deduplication fait le tri).
-MAX_OFFER_AGE_DAYS = 30
+# DESACTIVE (0). Les sources ne renvoient que des offres encore ouvertes, et
+# une campagne reste en ligne des semaines : JP Morgan "2027 Markets Summer
+# Analyst Program", publie le 31 mai, etait toujours ouvert mi-septembre et
+# etait jete par un filtre a 30 jours. Les repetitions sont evitees par la
+# deduplication, et les campagnes passees par le filtre d'annee ci-dessus.
+MAX_OFFER_AGE_DAYS = 0
+
+# ---------------------------------------------------------------------------
+# PROFIL VISE
+# ---------------------------------------------------------------------------
+# True : les postes quant et tech sont ecartes (profil sales / trading /
+# structuration). Passer a False pour les recuperer.
+EXCLUDE_QUANT_ROLES = True
 
 # Agregateurs
 AGGREGATOR_RESULTS_WANTED = 30   # par mot-cle et par site

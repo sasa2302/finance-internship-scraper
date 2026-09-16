@@ -12,6 +12,7 @@ prop trading / market makers, brokers, asset managers, bourses & infrastructure.
 BANKS = [
     # US
     "goldman sachs", "morgan stanley", "jp morgan", "jpmorgan", "j p morgan",
+    "jpmorganchase", "jpmorgan chase",
     "bank of america", "merrill lynch", "bofa", "citi", "citigroup", "citibank",
     "wells fargo", "jefferies", "cantor fitzgerald", "evercore", "houlihan",
     "raymond james", "stifel", "piper sandler", "bny mellon", "bank of new york",

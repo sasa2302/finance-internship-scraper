@@ -36,6 +36,26 @@ autour de 150 lignes et ne dérive pas.
 Un stage français annoncé « Juillet 2026 » est classé **Off-Cycle** : en France
 un stage démarrant en juillet est un 6 mois, pas un programme d'été.
 
+## Profil visé
+
+Stages **sales, trading, structuration** (Global Markets). Les postes quant et
+tech sont écartés (`EXCLUDE_QUANT_ROLES` dans `config/settings.py`), et chaque
+offre porte une colonne **Métier** : Sales, Trading, Structuration, Global
+Markets, Gestion (buy-side), Recherche, Risque / Contrôle. Le front office est
+classé en tête de chaque onglet.
+
+Le métier doit apparaître **dans l'intitulé** : la description d'une banque ou
+d'une prop firm parle toujours de trading, ce qui laissait passer des postes IT
+ou support.
+
+À chaque run, les offres déjà présentes dans le classeur **repassent le filtre
+actuel** : un changement de règle nettoie aussi l'historique.
+
+L'onglet **À trier** contient les offres dont le calendrier (Summer ou
+Off-Cycle) n'a pas pu être déterminé. Pour Société Générale, la page de détail
+est lue afin d'obtenir la date de début, mais uniquement pour les offres qui ont
+déjà passé tous les autres filtres.
+
 ## Sources scrapées
 
 Le scraper n'interroge que des **API JSON**, mesurées comme productives :
@@ -45,6 +65,8 @@ Le scraper n'interroge que des **API JSON**, mesurées comme productives :
 | Greenhouse | 17 | Jane Street, Point72, DRW, IMC, Jump Trading, Man Group, AQR, Virtu, Flow Traders, WorldQuant, Squarepoint, Tower Research, Schonfeld |
 | Workday | 8 | Barclays, Morgan Stanley, Citi, Nomura, Macquarie, UBS, Bank of America |
 | Oracle HCM | 2 | JP Morgan, Schroders |
+| BrassRing | 1 | UBS (site graduates) |
+| Page serveur | 1 | Société Générale |
 | Agrégateurs | 4 | LinkedIn, Indeed, Glassdoor, Welcome to the Jungle |
 
 Les 84 sites carrière restants (Société Générale, BNP, Goldman, Deutsche…)

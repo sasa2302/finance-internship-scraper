@@ -21,6 +21,16 @@ COMPANIES = [
         "scraper_type": "socgen",
     },
 
+    # === UBS - IBM Kenexa BrassRing, site "Job Board for Graduates" ===
+    # L'ancien site Workday "Find_a_job_at_UBS" repond desormais en erreur.
+    {
+        "name": "UBS",
+        "scraper_type": "brassring",
+        "host": "jobs.ubs.com",
+        "partner_id": "25008",
+        "site_id": "5131",
+    },
+
     # === Oracle Cloud Recruiting (API REST publique) ===
     {
         "name": "JP Morgan",
@@ -161,7 +171,7 @@ COMPANIES = [
 # et Goldman, SuccessFactors pour Standard Chartered, etc.).
 # Endpoints Workday qui repondent 422 : le chemin du site a change et n'a pas
 # pu etre retrouve. A reidentifier depuis leur page carriere.
-BROKEN_WORKDAY = ["Nomura", "Macquarie", "UBS"]
+BROKEN_WORKDAY = ["Nomura", "Macquarie"]
 
 # Sites proteges par un pare-feu anti-bot (Akamai pour BNP Paribas, HTTP 403).
 # Volontairement non contournes. Leurs offres restent couvertes par les

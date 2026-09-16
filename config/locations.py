@@ -67,7 +67,7 @@ GLOBAL_LOCATIONS = {
         "new york", "new york city", "nyc", "manhattan", "ny us", "ny usa",
         "wall street", "jersey city", "stamford connecticut",
     ],
-    "USA (autre)": ["chicago", "boston", "greenwich connecticut", "stamford"],
+    "USA (autre)": ["chicago", "boston", "greenwich", "stamford"],
     "Japon": ["japan", "japon", "tokyo", "tokio", "marunouchi"],
     "Chine": ["shanghai", "shenzhen", "beijing", "pekin"],
     "Australie": ["australia", "australie", "sydney", "melbourne", "brisbane", "perth"],

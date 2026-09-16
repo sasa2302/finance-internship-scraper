@@ -13,6 +13,7 @@ Global Markets a Paris, la zone prioritaire de l'utilisatrice.
 
 import logging
 import re
+from datetime import date
 from typing import List
 
 from bs4 import BeautifulSoup
@@ -74,3 +75,31 @@ class SocGenScraper(BaseScraper):
 
         logger.info(f"[SocGen/{self.company_name}] {len(offers)} offres")
         return offers
+
+
+    # ------------------------------------------------------------------
+    # Enrichissement : appele uniquement sur les offres deja retenues
+    # ------------------------------------------------------------------
+    _START_RE = re.compile(r"Start date\s+(\d{4})/(\d{2})/\d{2}")
+    _START_NOW_RE = re.compile(r"Start date\s+Immediately", re.I)
+
+    def enrich(self, offer) -> None:
+        """Lit la page de detail : date de debut et texte complet.
+
+        La liste ne donne ni la duree ni la date de debut, d'ou beaucoup
+        d'offres "A trier". La page de detail indique "Start date 2026/11/16"
+        ou "Start date Immediately", et souvent la duree du contrat.
+        """
+        resp = self._safe_get(offer.url)
+        if resp is None:
+            return
+        text = BeautifulSoup(resp.text, "html.parser").get_text(" ", strip=True)
+        match = self._START_RE.search(text)
+        if match:
+            offer.start_period = (int(match.group(1)), int(match.group(2)))
+        elif self._START_NOW_RE.search(text):
+            today = date.today()
+            offer.start_period = (today.year, today.month)
+        start = text.find("Responsibilities")
+        body = text[start:] if start >= 0 else text
+        offer.description_snippet = f"{offer.description_snippet} {body}"[:4000]

@@ -32,6 +32,7 @@ from scrapers.workday import WorkdayScraper
 from scrapers.custom_html import CustomHTMLScraper
 from scrapers.greenhouse import GreenhouseScraper
 from scrapers.socgen import SocGenScraper
+from scrapers.brassring import BrassRingScraper
 from scrapers.smartrecruiters import SmartRecruitersScraper
 from scrapers.taleo import TaleoScraper
 from scrapers.oracle_hcm import OracleHCMScraper
@@ -50,6 +51,7 @@ logger = logging.getLogger("main")
 SCRAPER_REGISTRY = {
     "greenhouse": GreenhouseScraper,
     "socgen": SocGenScraper,
+    "brassring": BrassRingScraper,
     "workday": WorkdayScraper,
     "smartrecruiters": SmartRecruitersScraper,
     "taleo": TaleoScraper,
@@ -67,6 +69,7 @@ SCRAPER_REGISTRY = {
 SCRAPER_PRIORITY = {
     "greenhouse": 0,
     "socgen": 0,
+    "brassring": 0,
     "workday": 1,
     "smartrecruiters": 2,
     "taleo": 3,
@@ -141,6 +144,33 @@ def collect_offers(http_client, skip_companies=False, skip_aggregators=False):
     return all_offers, errors, stats
 
 
+def enrich_and_refilter(kept, http_client, job_filter):
+    """Complete les offres retenues dont la source a une page de detail utile.
+
+    Uniquement sur les offres qui ont DEJA passe les filtres : une quinzaine de
+    requetes par run au lieu d'une par offre du catalogue. Elles repassent
+    ensuite le filtre, notamment celui de la campagne visee.
+    """
+    enrichers = {"socgen": SocGenScraper}
+    to_enrich = [o for o in kept if o.source in enrichers]
+    if not to_enrich:
+        return kept
+    logger.info(f"  Lecture de {len(to_enrich)} page(s) de detail...")
+    for offer in to_enrich:
+        scraper = enrichers[offer.source]({"name": offer.company}, http_client)
+        try:
+            scraper.enrich(offer)
+        except Exception as e:
+            logger.warning(f"  Detail illisible ({offer.url}): {e}")
+    second = JobFilter()
+    refiltered = second.filter_and_score(to_enrich)
+    job_filter.rejections.update(second.rejections)
+    others = [o for o in kept if o.source not in enrichers]
+    merged = others + refiltered
+    merged.sort(key=lambda o: (-o.relevance_score, o.company or "", o.title))
+    return merged
+
+
 def main():
     parser = argparse.ArgumentParser(description="Scraper stages finance de marche")
     parser.add_argument("--skip-companies", action="store_true",
@@ -173,6 +203,7 @@ def main():
 
     logger.info(f"Phase 3 : filtrage de {len(all_offers)} offres brutes...")
     kept = job_filter.filter_and_score(all_offers)
+    kept = enrich_and_refilter(kept, http_client, job_filter)
     job_filter.log_rejections()
     buckets = job_filter.split_by_period(kept)
     logger.info(f"    -> {len(kept)} offres retenues "

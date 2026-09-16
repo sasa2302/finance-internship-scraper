@@ -12,6 +12,8 @@ from pathlib import Path
 
 from config.settings import REPORT_PATH, REPORT_WINDOW_DAYS
 from utils.excel_export import build_workbook, read_existing
+from utils.metier import classify_metier
+from scrapers.base import JobOffer
 
 logger = logging.getLogger(__name__)
 
@@ -47,6 +49,7 @@ class ReportManager:
             "period_note": getattr(offer, "period_note", "") or "",
             "internship_type": offer.internship_type or "unknown",
             "type_reason": offer.type_reason or "",
+            "metier": getattr(offer, "metier", "") or classify_metier(offer.title),
             "duration": offer.duration or "",
             "url": offer.url,
             "date_posted": (offer.date_posted or "")[:10],
@@ -56,6 +59,33 @@ class ReportManager:
             "description_snippet": (offer.description_snippet or "")[:400],
             "_is_new": True,
         }
+
+    @staticmethod
+    def _still_valid(row) -> bool:
+        """Refait passer une ligne du classeur dans le filtre actuel.
+
+        Met aussi a jour son type (off-cycle / summer), sa zone et son metier.
+        """
+        from utils.filters import JobFilter  # import local : evite un cycle
+
+        g = lambda k: "" if row.get(k) is None else str(row.get(k))
+        offer = JobOffer(
+            title=g("title"), company=g("company"), location=g("location"),
+            url=g("url"), date_posted=g("date_posted"),
+            description_snippet=g("description_snippet"), source=g("source"),
+        )
+        kept = JobFilter().filter_and_score([offer])
+        if not kept:
+            return False
+        o = kept[0]
+        row.update({
+            "employer_category": o.employer_category, "zone": o.zone,
+            "zone_label": o.zone_label, "internship_type": o.internship_type,
+            "type_reason": o.type_reason, "metier": o.metier,
+            "period_label": o.period_label or row.get("period_label", ""),
+            "period_note": o.period_note,
+        })
+        return True
 
     def save(self, offers, dedup_manager, run_stats=None):
         """Fusionne les nouvelles offres avec le rapport precedent.
@@ -81,7 +111,7 @@ class ReportManager:
             added += 1
 
         # 2. Les offres des runs precedents, dans la fenetre
-        kept_old, expired = 0, 0
+        kept_old, expired, removed = 0, 0, 0
         for row in previous:
             url = str(row.get("url") or "")
             if not url or url in seen_urls:
@@ -89,6 +119,12 @@ class ReportManager:
             day = _parse_day(row.get("date_added"))
             if day is not None and day < cutoff:
                 expired += 1
+                continue
+            # Les regles ont pu changer depuis que l'offre a ete ajoutee : elle
+            # repasse le filtre actuel, et sort du classeur si elle n'y
+            # satisfait plus (poste quant, fonction support, etc.).
+            if not self._still_valid(row):
+                removed += 1
                 continue
             row["_is_new"] = False
             key = str(row.get("internship_type") or "unknown")
@@ -100,6 +136,7 @@ class ReportManager:
 
         total = sum(len(v) for v in buckets.values())
         logger.info(f"  {added} nouvelle(s), {kept_old} conservee(s), "
-                    f"{expired} sortie(s) de la fenetre {self.window_days} j "
+                    f"{expired} sortie(s) de la fenetre {self.window_days} j, "
+                    f"{removed} retiree(s) par les regles actuelles "
                     f"-> {total} lignes dans {self.path.name}")
         return added, buckets

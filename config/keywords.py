@@ -14,10 +14,11 @@ donc plus de faux positifs du type "sea" qui matchait "reSEArch".
 ROLE_KEYWORDS = [
     # Trading / Sales / Structuration
     "trading", "trader", "sales", "sales trading", "structuration", "structuring",
-    "derivatives", "derives", "fixed income", "taux", "credit", "equity",
+    "derivatives", "derives", "fixed income", "taux", "credit", "equity", "equities",
+    "markets", "public markets", "multi asset", "cross asset",
     "equity derivatives", "flow trading", "exotic", "exotics", "global markets",
     "capital markets", "commodities", "matieres premieres", "fx", "forex",
-    "change", "interest rate", "rates", "volatility", "volatilite", "pricing",
+    "marche des changes", "interest rate", "rates", "volatility", "volatilite", "pricing",
     "front office", "middle office", "market making", "market maker",
     "electronic trading", "algo trading", "algorithmic trading", "delta one",
     "securitisation", "securitization", "titrisation", "repo",
@@ -91,26 +92,36 @@ EXCLUDE_TITLE_KEYWORDS = [
     # Corporate finance / M&A / PE -- pas de la finance de marche
     "m a", "mergers", "acquisitions", "private equity", "venture capital",
     "leveraged finance", "corporate finance", "corporate banking",
-    "investment banking", "ibd", "advisory", "ecm", "dcm",
+    # NB : "investment banking" n'est PAS ici. Chez JP Morgan toute la division
+    # marches s'appelle "Commercial & Investment Bank" : le bannir supprimait
+    # leurs stages Sales et Global Markets. Voir DIVISION_LABELS plus bas.
+    "advisory", "ecm", "dcm",
     "debt capital markets", "equity capital markets", "origination",
     "restructuring advisory",
     "transaction services", "due diligence", "project finance",
-    "real estate", "immobilier", "infrastructure finance",
+    "real estate", "immobilier", "infrastructure finance", "infrastructure equity",
+    "private markets", "cash management", "payments", "transaction banking", "gtps",
     "private investments", "private credit", "private debt",
     "direct lending", "growth equity", "buyout",
     # Gestion privee / patrimoine / ESG -- hors perimetre
     "gestion privee", "private banking", "wealth management", "patrimoine",
     "patrimonial", "banque privee", "conseiller clientele", "esg", "isr",
+    "sustainability", "sustainable", "financial advisor", "financial adviser",
+    "private wealth", "wealth planning",
     "sustainable finance", "impact investing", "responsable investissement",
     "developpement gestion",
     # Retail / commerce
-    "retail sales", "sales assistant", "sales negotiator", "sales coordinator",
-    "sales office", "trading assistant", "trading store", "business development",
+    # "sales assistant" et "trading assistant" retires : ce sont de vrais postes
+    # de salle des marches en banque ; le retail est deja ecarte par la
+    # whitelist employeur.
+    "retail sales", "sales negotiator", "sales coordinator",
+    "sales office", "trading store", "business development",
     "account manager", "vente", "vendeur", "vendeuse", "chef de rayon",
     "responsable magasin", "store manager", "merchandiser", "monetisation",
     "monetization", "telesales", "inside sales", "field sales",
     # Fonctions support
-    "marketing", "communication", "ressources humaines", "human resources",
+    # "marketing" n'est pas ici : voir SUPPORT_LABELS_CONDITIONAL plus bas.
+    "communication", "ressources humaines", "human resources",
     "recruitment", "talent acquisition", "supply chain", "logistics",
     "logistique", "it support", "helpdesk", "comptabilite", "accounting",
     "controle de gestion", "audit", "compliance", "conformite", "legal",
@@ -137,4 +148,50 @@ EXCLUDE_TITLE_KEYWORDS = [
     "associatif", "travailleur social",
     # Divers
     "strategy operations", "business operations", "office manager",
+    "business analytics", "coo", "chief operating office", "business change",
+    "project delivery",
+]
+
+
+# ---------------------------------------------------------------------------
+# LIBELLES DE DIVISION : exclus seulement en l'absence de metier de marche
+# ---------------------------------------------------------------------------
+# "2027 Commercial & Investment Banking - Sales - Off-cycle" est un stage de
+# marche ; "Investment Banking Summer Analyst" est du M&A.
+DIVISION_LABELS = [
+    "investment banking", "investment bank", "corporate and investment bank",
+    "corporate investment bank", "ibd",
+    # "Global Banking" seul = couverture corporate / M&A ; "Global Banking and
+    # Markets" (HSBC) contient "markets" et reste donc garde.
+    "global banking",
+]
+MARKETS_TITLE_TERMS = [
+    "markets", "sales", "trading", "trader", "structuring", "structuration",
+    "structurer", "structured", "derivatives", "fixed income", "fx", "rates",
+    "equities", "commodities", "execution", "delta one", "prime brokerage",
+    "salle des marches", "credit trading",
+]
+
+# ---------------------------------------------------------------------------
+# PROFILS QUANT / TECH : exclus (demande utilisatrice : sales, trading,
+# structuration -- pas de postes quant ou techniques)
+# ---------------------------------------------------------------------------
+QUANT_TECH_TERMS = [
+    "quant", "quants", "quantitative", "researcher", "strats",
+    "developer", "developpeur", "engineer", "engineering", "ingenieur logiciel",
+    "software", "data scientist", "data science", "data engineer",
+    "machine learning", "artificial intelligence", "deep learning",
+    "phd", "technology", "technologist", "tech", "fpga", "hardware", "it",
+]
+
+# ---------------------------------------------------------------------------
+# FONCTIONS SUPPORT exclues seulement sans vrai terme de marche
+# ---------------------------------------------------------------------------
+# "Structured Products - Sales Assistant / Marketing" et "Markets Program -
+# Sales & Marketing" sont des postes de salle des marches ; "P&C Marketing &
+# Digital Sales" n'en est pas un. "sales" seul ne suffit donc pas a garder.
+SUPPORT_LABELS_CONDITIONAL = ["marketing"]
+STRONG_MARKETS_TITLE_TERMS = [
+    "markets", "structured", "structuring", "derivatives", "trading", "trader",
+    "fixed income", "equities", "fx", "rates", "commodities", "delta one",
 ]

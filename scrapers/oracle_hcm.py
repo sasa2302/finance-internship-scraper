@@ -26,6 +26,7 @@ JOB_URL = "https://{host}/hcmUI/CandidateExperience/en/sites/{site}/job/{job_id}
 # et le filtrage fin est fait ensuite par utils/filters.py
 KEYWORDS = ["internship", "intern", "stage", "summer analyst"]
 PAGE_LIMIT = 200
+MAX_RESULTS = 1000  # garde-fou par mot-cle
 
 
 class OracleHCMScraper(BaseScraper):
@@ -44,25 +45,44 @@ class OracleHCMScraper(BaseScraper):
         return offers
 
     def _search(self, host, site, keyword, seen) -> List[JobOffer]:
+        """Recherche paginee.
+
+        Sans pagination, seule la premiere page etait lue : 199 stages sur 396
+        chez JP Morgan pour le mot-cle "internship".
+        """
+        offers, offset = [], 0
+        while offset < MAX_RESULTS:
+            page, total = self._fetch_page(host, site, keyword, offset)
+            if not page:
+                break
+            offers.extend(self._parse(page, host, site, seen))
+            offset += len(page)
+            if total is not None and offset >= total:
+                break
+        return offers
+
+    def _fetch_page(self, host, site, keyword, offset):
         params = {
             "onlyData": "true",
             "expand": "requisitionList",
-            "finder": f"findReqs;siteNumber={site},keyword={keyword},limit={PAGE_LIMIT}",
+            "finder": (f"findReqs;siteNumber={site},keyword={keyword},"
+                       f"limit={PAGE_LIMIT},offset={offset}"),
         }
         resp = self._safe_get(f"https://{host}{API_PATH}", params=params)
         if resp is None:
-            return []
-
+            return [], None
         try:
             items = resp.json().get("items") or []
         except ValueError:
             logger.warning(f"[OracleHCM/{self.company_name}] JSON invalide ('{keyword}')")
-            return []
+            return [], None
         if not items:
-            return []
+            return [], None
+        return items[0].get("requisitionList") or [], items[0].get("TotalJobsCount")
 
+    def _parse(self, page, host, site, seen) -> List[JobOffer]:
         offers = []
-        for job in items[0].get("requisitionList") or []:
+        for job in page:
             job_id = str(job.get("Id") or "").strip()
             title = str(job.get("Title") or "").strip()
             if not job_id or not title or job_id in seen:
@@ -81,7 +101,7 @@ class OracleHCMScraper(BaseScraper):
                 location=str(job.get("PrimaryLocation") or ""),
                 url=JOB_URL.format(host=host, site=site, job_id=job_id),
                 date_posted=str(job.get("PostedDate") or "")[:10],
-                description_snippet=str(job.get("ShortDescriptionStr") or "")[:600],
+                description_snippet=str(job.get("ShortDescriptionStr") or "")[:4000],
                 source="oracle_hcm",
                 job_type=str(job.get("JobType") or "") or None,
                 duration=duration or None,

@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-09-22T12:25:55.275708+00:00",
-  "total_raw_offers": 4974,
+  "timestamp": "2026-09-22T12:35:50.155596+00:00",
+  "total_raw_offers": 4978,
   "total_after_filter": 69,
   "new_offers_added": 9,
   "by_type": {
@@ -10,17 +10,17 @@
   },
   "companies_scraped": 26,
   "rejections": {
-    "pas un stage (CDI/CDD/alternance/VIE)": 670,
-    "intitule hors finance de marche": 1644,
+    "pas un stage (CDI/CDD/alternance/VIE)": 674,
+    "intitule hors finance de marche": 1647,
     "poste quant / tech (profil non vise)": 536,
-    "hors places financieres ciblees": 553,
+    "hors places financieres ciblees": 554,
     "metier hors finance de marche": 185,
     "duree exclue (12 mois et plus, alternance)": 31,
     "pays exclu (Italie)": 8,
-    "pas identifie comme stage": 697,
+    "pas identifie comme stage": 694,
     "pays exclu (Espagne)": 5,
     "UK/IE hors Londres-Dublin": 15,
-    "employeur inconnu, aucun signal marche": 478,
+    "employeur inconnu, aucun signal marche": 477,
     "employeur hors finance de marche": 72,
     "hors campagne visee (demarrage 2026 (cible : a partir de 01/2027))": 11
   },
